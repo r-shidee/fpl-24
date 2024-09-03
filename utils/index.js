@@ -55,7 +55,6 @@ export async function getTeamFixtures(players, paramsID) {
 
 export async function getFixtures(playersID) {
     const url = baseURL + "element-summary/" + playersID + endURL;
-    console.log(baseURL);
     const response = await fetch(url);
     const result = await response.json();
     const fixtures = result;
