@@ -18,6 +18,15 @@ export async function fetchPlayers() {
     return players;
 }
 
+export async function fetchPlayer(playerID) {
+    const url = baseURL + "bootstrap-static" + endURL;
+    const response = await fetch(url);
+    const result = await response.json();
+    const players = result.elements;
+    const foundPlayer = players.find(({ id }) => id === Number(playerID));
+    return foundPlayer;
+}
+
 export async function fetchGameweek() {
     const url = baseURL + "fixtures" + endURL;
     const response = await fetch(url);

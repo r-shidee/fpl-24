@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -56,13 +57,13 @@ export const columns: ColumnDef<Player>[] = [
 			const name = row.original.web_name;
 			const posID = row.original.element_type;
 			const teamId = row.original.team_code;
+			const playerID = row.original.id;
 
 			return (
 				<div className="flex items-center gap-2">
 					<div className="mr-2 p-1 rounded bg-slate-400 w-8 flex items-center justify-center">
 						{positions[posID]}
 					</div>
-
 					<Image
 						src={
 							"https://resources.premierleague.com/premierleague/badges/rb/t" +
@@ -74,7 +75,7 @@ export const columns: ColumnDef<Player>[] = [
 						alt={name}
 						className="h-5 w-5"
 					/>
-					{name}
+					<Link href={`/player/${playerID}`}>{name}</Link>
 				</div>
 			);
 		},
