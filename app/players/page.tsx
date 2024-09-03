@@ -12,7 +12,6 @@ async function getData(): Promise<Player[]> {
 	let allData = await data.json();
 	let players = allData.elements;
 	return players;
-
 }
 export default async function DemoPage() {
 	const data = await getData();

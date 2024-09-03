@@ -1,11 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { getClubLogo } from "@/utils/index";
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Player = {
 	id: string;
 	web_name: string;
@@ -13,6 +13,7 @@ export type Player = {
 	minutes: number;
 	now_cost: number;
 	team: number;
+	team_code: number;
 	element_type: number;
 };
 
@@ -54,11 +55,25 @@ export const columns: ColumnDef<Player>[] = [
 		cell: ({ row }) => {
 			const name = row.original.web_name;
 			const posID = row.original.element_type;
+			const teamId = row.original.team_code;
+
 			return (
-				<div className="flex items-center">
+				<div className="flex items-center gap-2">
 					<div className="mr-2 p-1 rounded bg-slate-400 w-8 flex items-center justify-center">
 						{positions[posID]}
 					</div>
+
+					<Image
+						src={
+							"https://resources.premierleague.com/premierleague/badges/rb/t" +
+							teamId +
+							".svg"
+						}
+						width={20}
+						height={20}
+						alt={name}
+						className="h-5 w-5"
+					/>
 					{name}
 				</div>
 			);
@@ -72,29 +87,15 @@ export const columns: ColumnDef<Player>[] = [
 			return (price / 10).toFixed(1);
 		},
 	},
-	{
-		accessorKey: "team",
-		header: "team",
-		cell: ({ row }) => {
-			const teamId = row.original.team;
-			return teamNames[teamId] || "Unknown Team";
-		},
-	},
-	{
-		accessorKey: "element_type",
-		header: "position",
-		cell: ({ row }) => {
-			const posID = row.original.element_type;
-			return positions[posID] || "Unknown Pos";
-		},
-	},
+
 	{
 		accessorKey: "minutes",
 		header: ({ column }) => {
 			return (
 				<Button
 					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="p-0">
 					mins
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
@@ -106,6 +107,7 @@ export const columns: ColumnDef<Player>[] = [
 		header: ({ column }) => {
 			return (
 				<Button
+					className="p-0"
 					variant="ghost"
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
 					xgI
