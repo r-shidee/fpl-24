@@ -60,7 +60,10 @@ const Standings: React.FC<StandingsProps> = ({
 
 	return (
 		<div>
-			<p className="mb-4">{description}</p>
+			<div className="flex justify-between">
+				<p className="mb-4">{description}</p>
+				<Link href={`/charts/${sortBy}`}>View all</Link>
+			</div>
 			{players?.map(
 				(player, index) =>
 					index < 5 && (

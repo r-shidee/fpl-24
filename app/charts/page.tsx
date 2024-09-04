@@ -1,6 +1,3 @@
-import { Player, columns } from "./columns";
-import { DataTable } from "./data-table";
-
 async function getData(): Promise<Player[]> {
 	// Fetch data from your API here.
 	let data = await fetch(
@@ -29,15 +26,14 @@ async function getData(): Promise<Player[]> {
 	return filteredPlayers;
 }
 
-export default async function PlayerPage() {
-	const data = await getData();
+export default async function Page() {
+	const players = await getData();
 
 	return (
-		<div className="container mx-auto py-10">
-			<DataTable
-				columns={columns}
-				data={data}
-			/>
-		</div>
+		<ul>
+			{players.map((player) => (
+				<li key={player.id}>{player.web_name}</li>
+			))}
+		</ul>
 	);
 }
