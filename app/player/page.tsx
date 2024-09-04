@@ -17,6 +17,7 @@ async function getData(): Promise<Player[]> {
 		assists: any;
 		status: any;
 		expected_goal_involvements: number;
+		expected_goals_conceded: number;
 		id: number;
 	}) {
 		const goalsassist = player.goals_scored + player.assists;
@@ -24,7 +25,7 @@ async function getData(): Promise<Player[]> {
 
 		return (
 			// costperxg > 0.5 &&
-			player.status == "a"
+			player.status == "a" && player.expected_goals_conceded < 3
 			// difference > 0 &&
 			// player.now_cost < 40 &&
 			// player.points_per_game > 3 &&
@@ -42,7 +43,7 @@ async function getData(): Promise<Player[]> {
 	});
 	return filteredPlayers;
 }
-export default async function DemoPage() {
+export default async function PlayerPage() {
 	const data = await getData();
 
 	return (

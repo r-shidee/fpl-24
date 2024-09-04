@@ -11,6 +11,7 @@ import {
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
+
 import {
 	ChartConfig,
 	ChartContainer,
@@ -28,6 +29,14 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 export default function ChartPoints(props: any) {
+	let totalMatchesPlayed = props.fixtures.length;
+
+	const totalPoints = props.fixtures.map(
+		(item: { total_points: any }) => item.total_points
+	);
+	const sum = totalPoints.reduce((acc: any, points: any) => acc + points, 0);
+	const average = sum / props.fixtures.length;
+
 	return (
 		<Card>
 			<CardHeader>
@@ -74,10 +83,10 @@ export default function ChartPoints(props: any) {
 			</CardContent>
 			<CardFooter className="flex-col items-start gap-2 text-sm">
 				<div className="flex gap-2 font-medium leading-none">
-					Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+					{sum} pts after {totalMatchesPlayed} matches
 				</div>
 				<div className="leading-none text-muted-foreground">
-					Showing total visitors for the last 6 months
+					Averaging {average.toFixed(2)} per match.
 				</div>
 			</CardFooter>
 		</Card>

@@ -16,6 +16,7 @@ export type Player = {
 	team: number;
 	team_code: number;
 	element_type: number;
+	bps: number;
 };
 
 const teamNames: { [key: number]: string } = {
@@ -112,6 +113,20 @@ export const columns: ColumnDef<Player>[] = [
 					variant="ghost"
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
 					xgI
+					<ArrowUpDown className="ml-2 h-4 w-4" />
+				</Button>
+			);
+		},
+	},
+	{
+		accessorKey: "bps",
+		header: ({ column }) => {
+			return (
+				<Button
+					className="p-0"
+					variant="ghost"
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					bps
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);

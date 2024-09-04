@@ -23,7 +23,7 @@ export default function RootLayout({
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange>
-					{children}
+					<div className="max-w-7xl m-auto p-4">{children}</div>
 				</ThemeProvider>
 			</body>
 		</html>
