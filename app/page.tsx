@@ -23,7 +23,7 @@ export default async function Page() {
 				/>
 				<Standings
 					players={players}
-					description="Top Saves"
+					description="Saves"
 					sortBy="saves"
 				/>
 				<Standings
