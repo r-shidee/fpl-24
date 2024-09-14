@@ -58,6 +58,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 	const [filter, setFilter] = useState<string | null>(null);
 
 	let filteredPlayers = players.filter((player) => {
+		if (player[slug] <= 0) return false;
+
 		if (!filter) return true;
 		if (filter === "gk") {
 			return player.element_type == 1;
