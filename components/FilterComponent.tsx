@@ -6,7 +6,24 @@ import Link from "next/link";
 const clubClasses: { [key: number]: string } = {
 	1: "bg-gradient-to-tr from-clubs-ars",
 	2: "bg-gradient-to-tr from-clubs-avl",
-	// ... (rest of the club classes)
+	3: "bg-gradient-to-tr from-clubs-bou",
+	4: "bg-gradient-to-tr from-clubs-bre",
+	5: "bg-gradient-to-tr from-clubs-bha",
+	6: "bg-gradient-to-tr from-clubs-che",
+	7: "bg-gradient-to-tr from-clubs-cry",
+	8: "bg-gradient-to-tr from-clubs-eve",
+	9: "bg-gradient-to-tr from-clubs-ful",
+	10: "bg-gradient-to-tr from-clubs-ips",
+	11: "bg-gradient-to-tr from-clubs-lei",
+	12: "bg-gradient-to-tr from-clubs-liv",
+	13: "bg-gradient-to-tr from-clubs-mci",
+	14: "bg-gradient-to-tr from-clubs-mun",
+	15: "bg-gradient-to-tr from-clubs-new",
+	16: "bg-gradient-to-tr from-clubs-nfo",
+	17: "bg-gradient-to-tr from-clubs-sou",
+	18: "bg-gradient-to-tr from-clubs-tot",
+	19: "bg-gradient-to-tr from-clubs-whu",
+	20: "bg-gradient-to-tr from-clubs-wol",
 };
 
 const positions: { [key: number]: string } = {
