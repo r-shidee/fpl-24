@@ -42,15 +42,14 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 
 	let filteredPlayers = players.filter((player) => {
 		if (!filter) return true;
-
 		if (filter === "gk") {
-			return player.element_type == 1 && player[slug] > 0;
+			return player.element_type == 1;
 		} else if (filter === "df") {
-			return player.element_type == 2 && player[slug] > 0;
+			return player.element_type == 2;
 		} else if (filter === "md") {
-			return player.element_type == 3 && player[slug] > 0;
+			return player.element_type == 3;
 		} else if (filter === "fw") {
-			return player.element_type == 4 && player[slug] > 0;
+			return player.element_type == 4;
 		}
 
 		return true;

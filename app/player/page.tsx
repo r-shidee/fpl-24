@@ -23,7 +23,7 @@ async function getData(): Promise<Player[]> {
 		const goalsassist = player.goals_scored + player.assists;
 		const difference = goalsassist - player.expected_goal_involvements;
 
-		return player.status == "a" && player.expected_goals_conceded < 3;
+		return player.status == "a" || player.status == "i";
 		// return difference > 0 && player.minutes > 230 && player.now_cost <= 50;
 	});
 	return filteredPlayers;
