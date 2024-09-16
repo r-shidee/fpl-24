@@ -128,7 +128,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 									}
 									width={20}
 									height={20}
-									alt={player.team}
+									alt={player.team_code.toString()}
 									className="absolute top-1 left-1 h-5 w-5 "
 								/>
 								<div className=" absolute top-1 right-1 leading-tight">

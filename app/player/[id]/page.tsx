@@ -27,6 +27,10 @@ interface Item {
 	season_name: string;
 	total_points: number;
 	element_code: number;
+	minutes: number;
+	goals_scored: number;
+	assists: number;
+	saves: number;
 }
 
 export default async function Page({ params }: { params: { id: number } }) {
