@@ -6,6 +6,7 @@ import { fetchTeams } from "@/utils";
 // Define the Team type
 interface Team {
 	id: number;
+	code: number;
 	name: string;
 }
 
