@@ -1,37 +1,15 @@
-async function getData(): Promise<Player[]> {
-	// Fetch data from your API here.
-	let data = await fetch(
-		"https://fantasy.premierleague.com/api/bootstrap-static/",
-		{
-			cache: "no-store",
-		}
-	);
-	let allData = await data.json();
-	let players = allData.elements;
+import { fetchPlayers } from "@/utils";
 
-	let filteredPlayers = players.filter(function (player: {
-		goals_scored: any;
-		assists: any;
-		status: any;
-		expected_goal_involvements: number;
-		expected_goals_conceded: number;
-		id: number;
-	}) {
-		const goalsassist = player.goals_scored + player.assists;
-		const difference = goalsassist - player.expected_goal_involvements;
-
-		return player.status == "a" && player.expected_goals_conceded < 3;
-		// return difference > 0 && player.minutes > 230 && player.now_cost <= 50;
-	});
-	return filteredPlayers;
-}
-
+type Player = {
+	id: number;
+	web_name: string;
+};
 export default async function Page() {
-	const players = await getData();
+	const players = await fetchPlayers();
 
 	return (
 		<ul>
-			{players.map((player) => (
+			{players.map((player: Player) => (
 				<li key={player.id}>{player.web_name}</li>
 			))}
 		</ul>

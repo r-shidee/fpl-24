@@ -17,7 +17,7 @@ export default async function Navbar() {
 		<nav className="border-b">
 			<Link href="/">Home</Link>
 			<Link href="/player">Players</Link>
-			<div className="flex gap-2">
+			<div className="grid">
 				{teams.map((team) => (
 					<Image
 						key={team.id}
