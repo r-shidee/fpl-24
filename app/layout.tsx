@@ -26,7 +26,9 @@ export default function RootLayout({
 					enableSystem
 					disableTransitionOnChange>
 					<Navbar />
-					<div className="max-w-7xl m-auto p-4">{children}</div>
+					<div className="max-w-7xl mt-4 mx-auto rounded-xl overflow-hidden">
+						{children}
+					</div>
 				</ThemeProvider>
 			</body>
 		</html>

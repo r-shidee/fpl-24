@@ -2,7 +2,7 @@ import { data } from "autoprefixer";
 let baseURL = "https://fantasy.premierleague.com/api/";
 let endURL = "/";
 
-type Teams = {
+type Team = {
 	code: number;
 	draw: number;
 	form: null;
@@ -63,12 +63,21 @@ export async function fetchGameweek() {
 	return result;
 }
 
-export async function fetchTeams(): Promise<Teams[]> {
+export async function fetchTeams(): Promise<Team[]> {
 	const url = baseURL + "bootstrap-static" + endURL;
 	const response = await fetch(url);
 	const result = await response.json();
 	const teams = result.teams;
 	return teams;
+}
+
+export async function fetchTeamsByName(teamName: string): Promise<Team[]> {
+	const url = baseURL + "bootstrap-static" + endURL;
+	const response = await fetch(url);
+	const result = await response.json();
+	const teams = result.teams;
+	const foundTeam = teams.find((team: Team) => team.name === String(teamName));
+	return foundTeam;
 }
 
 // export async function getTeamFixtures(players, paramsID) {

@@ -1,7 +1,6 @@
 import { fetchPlayer, getFixtures } from "@/utils";
 import Image from "next/image";
 import { getPlayersPosition } from "@/utils";
-
 import {
 	Table,
 	TableBody,
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/card";
 
 import ChartPoints from "@/components/widgets/ChartPoints";
+import ChartStats from "@/components/widgets/ChartStats";
 
 interface Item {
 	season_name: string;
