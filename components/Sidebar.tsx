@@ -21,13 +21,15 @@ export default function Sidebar() {
 					</Link>
 				</div>
 				<div>
-					<div className="text-lg">Stats</div>
+					<div className="text-lg">
+						<Link href="/stats">Stats</Link>
+					</div>
 					<div className="pl-2 flex flex-col">
-						<Link href="/charts/goals_scored">Goals</Link>
-						<Link href="/charts/assists">Assists</Link>
-						<Link href="/charts/saves">Saves</Link>
-						<Link href="/charts/bps">Bonus Points</Link>
-						<Link href="/charts/points_per_game">Points Per Game</Link>
+						<Link href="/stats/goals_scored">Goals</Link>
+						<Link href="/stats/assists">Assists</Link>
+						<Link href="/stats/saves">Saves</Link>
+						<Link href="/stats/bps">Bonus Points</Link>
+						<Link href="/stats/points_per_game">Points Per Game</Link>
 					</div>
 				</div>
 			</nav>

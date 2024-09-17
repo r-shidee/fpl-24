@@ -1,15 +1,16 @@
+import { fetchPlayers } from "@/utils";
 import Standings from "@/components/widgets/Standings";
 
+type Player = {
+	id: number;
+	web_name: string;
+};
 export default async function Page() {
-	let data = await fetch(
-		"https://fantasy.premierleague.com/api/bootstrap-static/"
-	);
-	let allData = await data.json();
-	let players = allData.elements;
+	const players = await fetchPlayers();
 
 	return (
-		<div className="flex flex-col gap-4 p-4">
-			<h1 className="text-2xl">Premier League 2024/25</h1>
+		<div className="p-4">
+			<h1 className="text-2xl">Stats</h1>
 			<div className="grid grid-cols-3 gap-4">
 				<Standings
 					players={players}
