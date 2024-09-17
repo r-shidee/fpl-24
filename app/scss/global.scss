@@ -293,3 +293,29 @@ $color in $clubs {
         @apply bg-background text-foreground;
     }
 }
+
+
+.layout--main {
+    display: grid;
+    grid-template-areas: "main-nav main-nav main-nav"
+        "left-sidebar main-content right-sidebar";
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+    padding: .5rem;
+}
+
+.sidebar--left {
+    display: grid;
+    grid-area: left-sidebar;
+}
+
+.navbar--main {
+    display: grid;
+    grid-area: main-nav;
+}
+
+.content--main {
+    display: grid;
+    grid-area: main-content;
+}

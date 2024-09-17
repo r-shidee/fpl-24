@@ -4,6 +4,7 @@ import "./globals.css";
 import "./scss/global.scss";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
+import Sidebar from "@/components/Sidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,9 +26,12 @@ export default function RootLayout({
 					defaultTheme="system"
 					enableSystem
 					disableTransitionOnChange>
-					<Navbar />
-					<div className="max-w-7xl mt-4 mx-auto rounded-xl overflow-hidden">
-						{children}
+					<div className="layout--main">
+						<Navbar />
+						<Sidebar />
+						<div className="content--main w-full  mx-auto rounded-xl overflow-hidden">
+							{children}
+						</div>
 					</div>
 				</ThemeProvider>
 			</body>
