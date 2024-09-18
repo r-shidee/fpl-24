@@ -17,9 +17,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
 	const players = await getData();
 
 	return (
-		<FilterComponent
-			players={players}
-			slug={params.slug}
-		/>
+		<div className="p-4">
+			<FilterComponent
+				players={players}
+				slug={params.slug}
+			/>
+		</div>
 	);
 }

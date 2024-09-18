@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+
 const clubClasses: { [key: string]: string } = {
 	1: "bg-gradient-to-r from-clubs-ars",
 	2: "bg-gradient-to-r from-clubs-avl",

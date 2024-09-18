@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const clubClasses: { [key: number]: string } = {
 	1: "bg-gradient-to-tr from-clubs-ars",
@@ -31,6 +32,13 @@ const positions: { [key: number]: string } = {
 	2: "Defender",
 	3: "Midfielder",
 	4: "Forward",
+};
+
+const slugTitle: { [key: string]: string } = {
+	goals_scored: "Goals",
+	assists: "Assists",
+	bps: "Bonus Points System",
+	points_per_game: "Points Per Game",
 };
 
 type Player = {
@@ -78,35 +86,15 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 
 	return (
 		<div className="flex flex-col gap-5">
-			<h1 className="text-2xl">{slug}</h1>
+			<h1 className="text-2xl">{slugTitle[slug]}</h1>
 
 			{/* Filter Buttons */}
 			<div className="flex gap-4 mb-4">
-				<button
-					onClick={() => setFilter("gk")}
-					className="px-4 py-2 bg-blue-500 text-white rounded">
-					GKP
-				</button>
-				<button
-					onClick={() => setFilter("df")}
-					className="px-4 py-2 bg-green-500 text-white rounded">
-					DEF
-				</button>
-				<button
-					onClick={() => setFilter("md")}
-					className="px-4 py-2 bg-yellow-500 text-white rounded">
-					MID
-				</button>
-				<button
-					onClick={() => setFilter("fw")}
-					className="px-4 py-2 bg-red-500 text-white rounded">
-					FOR
-				</button>
-				<button
-					onClick={() => setFilter(null)}
-					className="px-4 py-2 bg-gray-500 text-white rounded">
-					Reset Filter
-				</button>
+				<Button onClick={() => setFilter("gk")}>Goalkeeper</Button>
+				<Button onClick={() => setFilter("df")}>Defenders</Button>
+				<Button onClick={() => setFilter("md")}>Midfielders</Button>
+				<Button onClick={() => setFilter("fw")}>Forwards</Button>
+				<Button onClick={() => setFilter("null")}>Reset</Button>
 			</div>
 
 			{/* Players List */}
