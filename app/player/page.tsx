@@ -33,7 +33,7 @@ export default async function PlayerPage() {
 	const data = await getData();
 
 	return (
-		<div className="container mx-auto py-10">
+		<div className="">
 			<DataTable
 				columns={columns}
 				data={data}

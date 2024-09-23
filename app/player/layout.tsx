@@ -9,9 +9,5 @@ export default function PlayerLayout({
 	const params = useParams();
 	const slug = params.id; // Accessing the slug parameter
 
-	return (
-		<section className="max-w-7xl m-auto p-4 flex flex-col gap-5">
-			{children}
-		</section>
-	);
+	return <section className=" p-4 flex flex-col gap-5">{children}</section>;
 }
