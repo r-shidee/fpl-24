@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/card";
 
 import ChartPoints from "@/components/widgets/ChartPoints";
-import ChartStats from "@/components/widgets/ChartStats";
+import ChartMinutes from "@/components/widgets/ChartMinutes";
 
 interface Item {
 	season_name: string;
@@ -32,10 +32,13 @@ interface Item {
 	assists: number;
 	saves: number;
 }
-
 export default async function Page({ params }: { params: { id: number } }) {
 	const player = await fetchPlayer(params.id);
 	const fixtures = await getFixtures(params.id);
+
+	if (!player) {
+		return <div>No player data available</div>;
+	}
 	return (
 		<div className="flex flex-wrap gap-5 rounded-2xl">
 			<div className=" p-5 flex gap-4 justify-between w-full">
@@ -125,6 +128,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 				</CardContent>
 			</Card>
 			<ChartPoints fixtures={fixtures.history} />
+			<ChartMinutes fixtures={fixtures.history} />
 			<Card className="w-full">
 				<CardHeader>
 					<CardTitle>Previous Seasons</CardTitle>
