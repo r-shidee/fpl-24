@@ -1,6 +1,11 @@
 import Link from "next/link";
+import Image from "next/image";
 
-export default function Sidebar() {
+import { fetchTeams } from "@/utils";
+
+export default async function Sidebar() {
+	const teams = await fetchTeams();
+
 	return (
 		<div
 			className="sidebar--left w-[200px] rounded-lg bg-slate-900
@@ -19,6 +24,27 @@ export default function Sidebar() {
 						className="text-lg">
 						Teams
 					</Link>
+					<div className="grid grid-cols-4 gap-2 mt-2">
+						{teams.map((team) => (
+							<Link
+								href={"/teams/" + team.short_name.toLowerCase()}
+								key={team.id}
+								className={` relative flex justify-between items-center`}>
+								<Image
+									key={team.id}
+									src={
+										"https://resources.premierleague.com/premierleague/badges/rb/t" +
+										team.code +
+										".svg"
+									}
+									width={20}
+									height={20}
+									alt={"club"}
+									className="w-5 h-5"
+								/>
+							</Link>
+						))}
+					</div>
 				</div>
 				<div>
 					<div className="text-lg">
