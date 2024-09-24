@@ -35,8 +35,8 @@ export default async function Page({
 	return (
 		<>
 			<div
-				className={`club--${team.short_name.toLowerCase()} p-5 relative flex flex-col-reverse  md:flex-row justify-between items-center `}>
-				<div className="mt-auto">
+				className={`club--${team.short_name.toLowerCase()} p-5 relative flex flex-col-reverse  md:flex-row justify-between `}>
+				<div>
 					<h1 className="text-4xl font-semibold">{team.name}</h1>
 					<p>Upcoming Match :</p>
 				</div>
@@ -78,7 +78,7 @@ async function Players({
 		(a, b) =>
 			b.expected_goal_involvements_per_90 - a.expected_goal_involvements_per_90
 	);
-	filteredPlayers.sort((a, b) => b.now_cost - a.now_cost);
+	// filteredPlayers.sort((a, b) => b.now_cost - a.now_cost);
 
 	function getPlayersByTeamCode(teamCode: number): Player[] {
 		return players.filter(
@@ -87,7 +87,7 @@ async function Players({
 	}
 
 	return (
-		<div className="grid grid-cols-5">
+		<div className="grid grid-cols-6">
 			{filteredPlayers.map((player: Player) => (
 				<CardPlayer
 					key={player.id}

@@ -1,8 +1,24 @@
-"use client"; // Indicates that this is a client component
+"use client";
 import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import CardPlayer from "./widgets/CardPlayer";
+
+type Player = {
+	id: number;
+	team: number;
+	team_code: number;
+	now_cost: number;
+	goals_scored: number;
+	assists: number;
+	saves: number;
+	minutes: number;
+	starts: number;
+	element_type: number;
+	expected_goal_involvements_per_90: number;
+	web_name: string;
+	status: string;
+	photo: string;
+};
 
 const clubClasses: { [key: number]: string } = {
 	1: "bg-gradient-to-tr from-clubs-ars",
@@ -39,22 +55,6 @@ const slugTitle: { [key: string]: string } = {
 	assists: "Assists",
 	bps: "Bonus Points System",
 	points_per_game: "Points Per Game",
-};
-
-type Player = {
-	id: number;
-	web_name: string;
-	team: number;
-	team_code: number;
-	element_type: number;
-	now_cost: number;
-	goals_scored: number;
-	assists: number;
-	expected_goal_involvements: number;
-	minutes: number;
-	status: string;
-	photo: string;
-	[key: string]: any; // For dynamic property access
 };
 
 type FilterComponentProps = {
@@ -98,56 +98,13 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 			</div>
 
 			{/* Players List */}
-			<div className="flex flex-wrap gap-4">
-				{filteredPlayers.map((player) => (
-					<div
+			<div className="grid grid-cols-4 gap-4">
+				{filteredPlayers.map((player: Player) => (
+					<CardPlayer
 						key={player.id}
-						className="p-3 hover:bg-slate-900 rounded">
-						<div className="flex flex-col gap-2">
-							<div
-								className={`rounded relative flex justify-between items-center ${
-									clubClasses[player.team] || "bg-gray-200 text-black"
-								}`}>
-								<Image
-									src={
-										"https://resources.premierleague.com/premierleague/badges/rb/t" +
-										player.team_code +
-										".svg"
-									}
-									width={20}
-									height={20}
-									alt={player.team_code.toString()}
-									className="absolute top-1 left-1 h-5 w-5 "
-								/>
-								<div className=" absolute top-1 right-1 leading-tight">
-									<p className="text-xs">
-										${(player.now_cost / 10).toFixed(1)}
-									</p>
-								</div>
-								<Image
-									className="object-cover"
-									src={
-										"https://resources.premierleague.com/premierleague/photos/players/250x250/p" +
-										player.photo.replace("jpg", "png")
-									}
-									alt={player.web_name}
-									width={120}
-									height={120}
-								/>
-								<div className="absolute text-white  font-bold text-2xl w-full bottom-0 text-center bg-opacity-70 bg-slate-900 p-1 leading-none">
-									{player[slug]}
-								</div>
-							</div>
-							<div className="flex flex-col leading-tight">
-								<Link href={`/player/${player.id}`}>
-									<p className="font-bold">{player.web_name}</p>
-								</Link>
-								<p className=" text-gray-400 text-sm">
-									{positions[player.element_type]}
-								</p>
-							</div>
-						</div>
-					</div>
+						teamName="teamName"
+						player={player}
+					/>
 				))}
 			</div>
 		</div>
