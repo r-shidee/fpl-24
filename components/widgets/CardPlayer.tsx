@@ -19,6 +19,7 @@ type Player = {
 	starts: number;
 	element_type: number;
 	expected_goal_involvements_per_90: number;
+	expected_goals_conceded: number;
 	web_name: string;
 	status: string;
 	photo: string;
@@ -116,7 +117,7 @@ export default function CardPlayer({
 	return (
 		<div
 			key={player.id}
-			className="p-3 hover:bg-slate-900 rounded group ">
+			className=" hover:bg-slate-900 rounded group ">
 			<Link href={`/player/${player.id}`}>
 				<div className="grid relative gap-2">
 					<div className="flex relative gap-2 items-center">
@@ -175,24 +176,34 @@ export default function CardPlayer({
 									width: `calc( ${(player.minutes / (5 * 90)) * 100}%)`,
 								}}></div>
 							<div className="flex flex-col w-full items-center p-1 gap-1 leading-tight z-10">
-								<div className="justify-between items-center flex w-full">
-									<p className="text-xs font-mono">Mins</p>
-									<p className="font-mono">{player.minutes}</p>
+								<div className="justify-between items-center flex w-full font-mono text-xs">
+									<p>mins</p>
+									<p className="font-bold">{player.minutes}</p>
 								</div>
 								{player.element_type == 1 ? (
-									<div className="justify-between items-center flex w-full">
-										<p className="text-xs font-mono">Saves</p>
-										<p className="font-mono">{player.saves}</p>
+									<div className="justify-between items-center flex w-full font-mono text-xs">
+										<p>saves</p>
+										<p className="font-bold">{player.saves}</p>
 									</div>
 								) : (
 									""
 								)}
 
 								{player.element_type != 1 ? (
-									<div className="justify-between items-center flex w-full">
-										<p className="text-xs font-mono">xg/90</p>
-										<p className="font-mono">
+									<div className="justify-between items-center flex w-full font-mono text-xs">
+										<p>xg/90</p>
+										<p className="font-bold">
 											{player.expected_goal_involvements_per_90}
+										</p>
+									</div>
+								) : (
+									""
+								)}
+								{player.element_type < 3 ? (
+									<div className="justify-between items-center flex w-full font-mono text-xs">
+										<p>xgc</p>
+										<p className="font-bold">
+											{player.expected_goals_conceded}
 										</p>
 									</div>
 								) : (

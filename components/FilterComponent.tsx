@@ -98,7 +98,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 			</div>
 
 			{/* Players List */}
-			<div className="grid grid-cols-4 gap-4">
+			<div className="grid grid-cols-6 gap-4">
 				{filteredPlayers.map((player: Player) => (
 					<CardPlayer
 						key={player.id}
