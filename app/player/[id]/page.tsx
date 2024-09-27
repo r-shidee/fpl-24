@@ -22,6 +22,7 @@ import {
 
 import ChartPoints from "@/components/widgets/ChartPoints";
 import ChartMinutes from "@/components/widgets/ChartMinutes";
+import AddData from "@/components/AddData";
 
 interface Item {
 	season_name: string;
@@ -165,6 +166,8 @@ export default async function Page({ params }: { params: { id: number } }) {
 					))}
 				</CardContent>
 			</Card>
+
+			<AddData />
 		</div>
 	);
 }
