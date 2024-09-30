@@ -240,7 +240,6 @@ export default function CardPlayer({
 							)}
 						</div>
 					</div>
-					<div className="fixtures"></div>
 				</div>
 			</Link>
 		</div>

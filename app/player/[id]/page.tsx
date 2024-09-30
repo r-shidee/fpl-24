@@ -23,6 +23,7 @@ import {
 import ChartPoints from "@/components/widgets/ChartPoints";
 import ChartMinutes from "@/components/widgets/ChartMinutes";
 import AddData from "@/components/AddData";
+import Fixtures from "@/components/widgets/Fixtures";
 
 interface Item {
 	season_name: string;
@@ -33,6 +34,7 @@ interface Item {
 	assists: number;
 	saves: number;
 }
+
 export default async function Page({ params }: { params: { id: number } }) {
 	const player = await fetchPlayer(params.id);
 	const fixtures = await getFixtures(params.id);
@@ -61,9 +63,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 							{player.first_name} {player.second_name}
 						</h2>
 						<p>{getPlayersPosition(player.element_type)}</p>
-						<p>
-							{(player.now_cost / 10).toFixed(1)} {player.teamId}
-						</p>
+						<p>{(player.now_cost / 10).toFixed(1)}</p>
 					</div>
 				</div>
 				<div className="flex gap-4">
@@ -87,6 +87,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 					</div>
 				</div>
 			</div>
+			<Fixtures fixtures={fixtures.fixtures} />
 			<Card className="w-1/4">
 				<CardHeader>
 					<CardTitle>Expected Stats</CardTitle>

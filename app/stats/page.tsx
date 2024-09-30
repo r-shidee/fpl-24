@@ -1,10 +1,7 @@
 import { fetchPlayers } from "@/utils";
 import Standings from "@/components/widgets/Standings";
 
-type Player = {
-	id: number;
-	web_name: string;
-};
+
 export default async function Page() {
 	const players = await fetchPlayers();
 

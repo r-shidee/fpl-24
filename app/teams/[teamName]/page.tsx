@@ -19,6 +19,12 @@ type Player = {
 	photo: string;
 };
 
+type Fixture = any; // Replace 'any' with the actual fixture type
+
+type Props = {
+	players: Player[];
+	paramsID: string;
+};
 export default async function Page({
 	params: { teamName },
 }: {
@@ -142,3 +148,7 @@ async function Players({
 		</div>
 	);
 }
+
+// 1. passing teamID from page param eg. 'ars'
+// 2 . convert to Uppercase
+// 3. find all players with team

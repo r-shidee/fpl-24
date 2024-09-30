@@ -24,7 +24,30 @@ type Team = {
 
 type Player = {
 	id: number;
+	team: number;
+	team_code: number;
+	now_cost: number;
+	goals_scored: number;
+	assists: number;
+	saves: number;
+	minutes: number;
+	starts: number;
+	element_type: number;
+	expected_goals: number;
+	expected_assists: number;
+	expected_goal_involvements: number;
+	expected_goal_involvements_per_90: number;
+	expected_goals_conceded: number;
+	penalties_order: number;
+	first_name: string;
+	second_name: string;
 	web_name: string;
+	status: string;
+	photo: string;
+};
+
+type Fixture = {
+	id: number;
 };
 
 export async function fetchMySquad(teamID: number) {
@@ -87,14 +110,22 @@ export async function fetchTeamsByName(teamName: string): Promise<Team[]> {
 	return foundTeam;
 }
 
-// export async function getTeamFixtures(players, paramsID) {
-// 	const foundTeam = players.find(({ team }) => team === Number(paramsID));
+// export async function getTeamFixtures(teamID, players): Promise<Fixture> {
+// 	const foundTeam = players.find(({ team }) => team === Number(teamID));
+// 	console.log("gaga- " + teamID);
+// 	if (!foundTeam) {
+// 		throw new Error(`Team with ID not found.`);
+// 	}
 
-// 	const url = baseURL + "element-summary/" + foundTeam.id + endURL;
+// 	const url = `${baseURL}element-summary/${foundTeam.id}${endURL}`;
 
 // 	const response = await fetch(url);
-// 	const result = await response.json();
-// 	const fixtures = result;
+// 	if (!response.ok) {
+// 		throw new Error("Failed to fetch fixtures.");
+// 	}
+
+// 	const fixtures: Fixture = await response.json();
+
 // 	return fixtures;
 // }
 
@@ -256,3 +287,7 @@ export const getPlayerStatus = (code: string): string | undefined => {
 
 // 	console.log(fixtures
 // };
+
+export const getTeamFixtures = (teamID: number, player: Player) => {
+	console.log(player);
+};
