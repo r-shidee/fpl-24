@@ -41,14 +41,21 @@ interface Fixture {
 
 interface FixturesProps {
 	fixtures: Fixture[];
+	count: number;
 }
 
-export default async function Fixtures({ fixtures }: FixturesProps) {
+export default async function Fixtures({ fixtures, count }: FixturesProps) {
 	const teams = await fetchTeams();
+
+	if (count) {
+		fixtures = fixtures.slice(0, count + 1);
+	}
+
 	return (
-		<div className="flex flex-wrap gap-2">
+		<div className="flex flex-wrap gap-1">
 			{fixtures.map((fixture) => (
 				<div
+					key={fixture.code}
 					className={`border p-2 text-xs fixture--level-${fixture.difficulty}`}>
 					<div>{fixture.event_name.replace("Gameweek", "")}</div>
 					<div>

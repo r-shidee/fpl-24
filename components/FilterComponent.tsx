@@ -14,8 +14,14 @@ type Player = {
 	minutes: number;
 	starts: number;
 	element_type: number;
+	expected_goals: number;
+	expected_assists: number;
+	expected_goal_involvements: number;
 	expected_goal_involvements_per_90: number;
 	expected_goals_conceded: number;
+	penalties_order: number;
+	first_name: string;
+	second_name: string;
 	web_name: string;
 	status: string;
 	photo: string;
@@ -102,7 +108,6 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 	return (
 		<div className="flex flex-col gap-5">
 			<h1 className="text-2xl">{slugTitle[slug]}</h1>
-
 			<div className="flex flex-col">
 				<div className="flex gap-4 mb-4">
 					<Button onClick={() => setFilter("gk")}>Goalkeeper</Button>
@@ -128,9 +133,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 					<Button onClick={() => setPriceFilter(null)}>Reset Price</Button>
 				</div>
 			</div>
-
 			<div className="grid grid-cols-6 gap-4">
-				{filteredPlayers.map((player: Player) => (
+				{filteredPlayers.slice(0, +21).map((player: Player) => (
 					<CardPlayer
 						key={player.id}
 						teamName="teamName"

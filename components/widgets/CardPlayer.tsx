@@ -8,6 +8,8 @@ import {
 	faHospital,
 	faPlusSquare,
 } from "@fortawesome/free-regular-svg-icons";
+import { getFixtures } from "@/utils";
+import Fixtures from "./Fixtures";
 
 type Player = {
 	id: number;
@@ -20,10 +22,14 @@ type Player = {
 	minutes: number;
 	starts: number;
 	element_type: number;
+	expected_goals: number;
+	expected_assists: number;
 	expected_goal_involvements: number;
 	expected_goal_involvements_per_90: number;
 	expected_goals_conceded: number;
 	penalties_order: number;
+	first_name: string;
+	second_name: string;
 	web_name: string;
 	status: string;
 	photo: string;
@@ -189,6 +195,7 @@ export default async function CardPlayer({
 							)}
 						</div>
 					</div>
+
 					<div className={` text-slate-500 p-2`}>
 						<div
 							className="h-1 bg-red-500 max-w-full rounded-lg"
