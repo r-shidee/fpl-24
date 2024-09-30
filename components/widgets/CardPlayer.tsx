@@ -111,7 +111,7 @@ const RenderDivs = ({
 	);
 };
 
-export default function CardPlayer({
+export default async function CardPlayer({
 	player,
 	teamName,
 }: {
