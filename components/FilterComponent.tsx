@@ -15,32 +15,10 @@ type Player = {
 	starts: number;
 	element_type: number;
 	expected_goal_involvements_per_90: number;
+	expected_goals_conceded: number;
 	web_name: string;
 	status: string;
 	photo: string;
-};
-
-const clubClasses: { [key: number]: string } = {
-	1: "bg-gradient-to-tr from-clubs-ars",
-	2: "bg-gradient-to-tr from-clubs-avl",
-	3: "bg-gradient-to-tr from-clubs-bou",
-	4: "bg-gradient-to-tr from-clubs-bre",
-	5: "bg-gradient-to-tr from-clubs-bha",
-	6: "bg-gradient-to-tr from-clubs-che",
-	7: "bg-gradient-to-tr from-clubs-cry",
-	8: "bg-gradient-to-tr from-clubs-eve",
-	9: "bg-gradient-to-tr from-clubs-ful",
-	10: "bg-gradient-to-tr from-clubs-ips",
-	11: "bg-gradient-to-tr from-clubs-lei",
-	12: "bg-gradient-to-tr from-clubs-liv",
-	13: "bg-gradient-to-tr from-clubs-mci",
-	14: "bg-gradient-to-tr from-clubs-mun",
-	15: "bg-gradient-to-tr from-clubs-new",
-	16: "bg-gradient-to-tr from-clubs-nfo",
-	17: "bg-gradient-to-tr from-clubs-sou",
-	18: "bg-gradient-to-tr from-clubs-tot",
-	19: "bg-gradient-to-tr from-clubs-whu",
-	20: "bg-gradient-to-tr from-clubs-wol",
 };
 
 const positions: { [key: number]: string } = {
@@ -64,19 +42,45 @@ type FilterComponentProps = {
 
 const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 	const [filter, setFilter] = useState<string | null>(null);
+	const [priceFilter, setPriceFilter] = useState<{
+		min: number;
+		max: number;
+	} | null>(null);
+
+	// Helper function to generate price ranges from 4.0 to 15.5
+	const generatePriceRanges = (
+		minPrice: number,
+		maxPrice: number,
+		step: number
+	) => {
+		let ranges = [];
+		for (let i = minPrice; i <= maxPrice; i += step) {
+			const min = parseFloat(i.toFixed(1));
+			const max = parseFloat((i + step - 0.1).toFixed(1));
+			ranges.push({ min, max });
+		}
+		return ranges;
+	};
+	const priceRanges = generatePriceRanges(4.0, 15, 2); // Generate price ranges between 4.0 and 15.5
 
 	let filteredPlayers = players.filter((player) => {
+		// Ensure the slug property is greater than 0
 		if (player[slug] <= 0) return false;
 
-		if (!filter) return true;
-		if (filter === "gk") {
-			return player.element_type == 1;
-		} else if (filter === "df") {
-			return player.element_type == 2;
-		} else if (filter === "md") {
-			return player.element_type == 3;
-		} else if (filter === "fw") {
-			return player.element_type == 4;
+		// Filter based on position
+		if (filter) {
+			if (filter === "gk" && player.element_type !== 1) return false;
+			if (filter === "df" && player.element_type !== 2) return false;
+			if (filter === "md" && player.element_type !== 3) return false;
+			if (filter === "fw" && player.element_type !== 4) return false;
+		}
+
+		// Filter based on price range (player.now_cost is in 0.1 increments, so 4.0 becomes 40)
+		if (priceFilter !== null) {
+			const playerPrice = player.now_cost / 10; // Convert to decimal price
+			if (playerPrice < priceFilter.min || playerPrice > priceFilter.max) {
+				return false;
+			}
 		}
 
 		return true;
@@ -84,20 +88,47 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 
 	filteredPlayers.sort((a, b) => b[slug] - a[slug]);
 
+	// Toggle the price filter on and off
+	const handlePriceClick = (min: number, max: number) => {
+		if (priceFilter?.min === min && priceFilter?.max === max) {
+			// If the same price filter is clicked, reset it
+			setPriceFilter(null);
+		} else {
+			// Otherwise, set the new price filter
+			setPriceFilter({ min, max });
+		}
+	};
+
 	return (
 		<div className="flex flex-col gap-5">
 			<h1 className="text-2xl">{slugTitle[slug]}</h1>
 
-			{/* Filter Buttons */}
-			<div className="flex gap-4 mb-4">
-				<Button onClick={() => setFilter("gk")}>Goalkeeper</Button>
-				<Button onClick={() => setFilter("df")}>Defenders</Button>
-				<Button onClick={() => setFilter("md")}>Midfielders</Button>
-				<Button onClick={() => setFilter("fw")}>Forwards</Button>
-				<Button onClick={() => setFilter("null")}>Reset</Button>
+			<div className="flex flex-col">
+				<div className="flex gap-4 mb-4">
+					<Button onClick={() => setFilter("gk")}>Goalkeeper</Button>
+					<Button onClick={() => setFilter("df")}>Defenders</Button>
+					<Button onClick={() => setFilter("md")}>Midfielders</Button>
+					<Button onClick={() => setFilter("fw")}>Forwards</Button>
+					<Button onClick={() => setFilter("null")}>Reset</Button>
+				</div>
+				<div className="flex gap-4 flex-wrap">
+					{/* Loop through generated price ranges */}
+					{priceRanges.map(({ min, max }) => (
+						<Button
+							key={`${min}-${max}`}
+							onClick={() => handlePriceClick(min, max)}
+							className={
+								priceFilter?.min === min && priceFilter?.max === max
+									? "bg-red-300"
+									: ""
+							}>
+							{min === max ? `${min}` : `${min}`}
+						</Button>
+					))}
+					<Button onClick={() => setPriceFilter(null)}>Reset Price</Button>
+				</div>
 			</div>
 
-			{/* Players List */}
 			<div className="grid grid-cols-6 gap-4">
 				{filteredPlayers.map((player: Player) => (
 					<CardPlayer

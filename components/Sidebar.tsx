@@ -8,7 +8,7 @@ export default async function Sidebar() {
 
 	return (
 		<div
-			className="sidebar--left w-[200px] rounded-lg bg-slate-900
+			className="sidebar--left w-[200px] rounded-lg 
         ">
 			<nav className="gap-2 p-4 h-12 flex flex-col">
 				<div>
@@ -56,6 +56,10 @@ export default async function Sidebar() {
 						<Link href="/stats/saves">Saves</Link>
 						<Link href="/stats/bps">Bonus Points</Link>
 						<Link href="/stats/points_per_game">Points Per Game</Link>
+						<Link href="/stats/expected_goal_involvements_per_90">
+							xgi per 90
+						</Link>
+						<Link href="/stats/expected_goal_involvements">xgi</Link>
 					</div>
 				</div>
 			</nav>

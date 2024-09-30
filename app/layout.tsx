@@ -29,7 +29,7 @@ export default function RootLayout({
 					<div className="layout--main">
 						<Navbar />
 						<Sidebar />
-						<div className="content--main w-full overflow-y-scroll mx-auto rounded-xl h-dvh bg-slate-900">
+						<div className="content--main w-full overflow-y-scroll mx-auto rounded-xl h-dvh ">
 							{children}
 						</div>
 					</div>

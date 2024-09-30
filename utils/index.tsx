@@ -27,6 +27,13 @@ type Player = {
 	web_name: string;
 };
 
+export async function fetchMySquad(teamID: number) {
+	const url = baseURL + "my-team" + endURL + teamID;
+	const response = await fetch(url);
+	const result = await response.json();
+	return result;
+}
+
 export async function fetchData() {
 	const url = baseURL + "bootstrap-static" + endURL;
 	const response = await fetch(url);
