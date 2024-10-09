@@ -52,11 +52,11 @@ export default async function Fixtures({ fixtures, count }: FixturesProps) {
 	}
 
 	return (
-		<div className="flex flex-wrap gap-1">
+		<div className="grid grid-cols-5 gap-2">
 			{fixtures.map((fixture) => (
 				<div
 					key={fixture.code}
-					className={`border p-2 text-xs fixture--level-${fixture.difficulty}`}>
+					className={`border rounded p-2 text-xs fixture--level-${fixture.difficulty}`}>
 					<div>{fixture.event_name.replace("Gameweek", "")}</div>
 					<div>
 						{fixture.is_home ? (

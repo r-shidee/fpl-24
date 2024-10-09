@@ -2,6 +2,10 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import CardPlayer from "./widgets/CardPlayer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faIdCard, faListAlt } from "@fortawesome/free-regular-svg-icons";
+import Image from "next/image";
+import { fetchEvents, getFinishedEventIds } from "@/utils";
 
 type Player = {
 	id: number;
@@ -25,6 +29,7 @@ type Player = {
 	web_name: string;
 	status: string;
 	photo: string;
+	slug: number;
 };
 
 const positions: { [key: number]: string } = {
@@ -52,6 +57,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 		min: number;
 		max: number;
 	} | null>(null);
+	const [viewFormat, setViewFormat] = useState<"card" | "list">("card");
 
 	// Helper function to generate price ranges from 4.0 to 15.5
 	const generatePriceRanges = (
@@ -105,17 +111,101 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 		}
 	};
 
+	// Render players in card format
+	const renderCardView = () => (
+		<div className="grid grid-cols-6 gap-4">
+			{filteredPlayers.slice(0, 21).map((player: Player) => (
+				<CardPlayer
+					key={player.id}
+					teamName="teamName"
+					player={player}
+				/>
+			))}
+		</div>
+	);
+
+	// Render players in list format
+	const renderListView = () => (
+		<div className="">
+			<div className="border-b py-2 flex justify-between">
+				<div className="flex gap-4 items-center ">
+					<div className="font-mono text-xs w-8 text-center">$</div>
+				</div>
+				<div className="flex gap-3">
+					<div className="font-mono text-xs w-12 text-center">starts</div>
+					<div className="font-mono text-xs w-12 text-center">mins</div>
+					<div className="font-mono text-xs w-12 text-center">value</div>
+				</div>
+			</div>
+			<div className="flex flex-col">
+				{filteredPlayers.slice(0, 21).map((player: Player) => (
+					<div
+						key={player.id}
+						className="border-b py-2 flex justify-between">
+						<div className="flex gap-4 items-center ">
+							<div className="font-mono text-xs w-8 text-center">
+								{(player.now_cost / 10).toFixed(1)}
+							</div>
+							<Image
+								src={
+									"https://resources.premierleague.com/premierleague/badges/rb/t" +
+									player.team_code +
+									".svg"
+								}
+								width={32}
+								height={32}
+								alt={player.team_code.toString()}
+								className=" h-8 w-8 "
+							/>
+							<div className="flex flex-col">
+								<div className="font-semibold">{player.web_name}</div>
+								<div className="text-xs">{positions[player.element_type]}</div>
+							</div>
+						</div>
+						<div className="flex gap-4 items-center">
+							<div className="font-mono text-lg w-12 text-center">
+								{player.starts}
+							</div>
+							<div className="font-mono text-lg w-12 text-center">
+								{player.minutes}
+							</div>
+							<div className="font-mono text-lg w-12 text-center">
+								{player[slug]}
+							</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	);
+
 	return (
 		<div className="flex flex-col gap-5">
 			<h1 className="text-2xl">{slugTitle[slug]}</h1>
-			<div className="flex flex-col">
+			<div className="flex flex-wrap justify-between">
 				<div className="flex gap-4 mb-4">
-					<Button onClick={() => setFilter("gk")}>Goalkeeper</Button>
-					<Button onClick={() => setFilter("df")}>Defenders</Button>
-					<Button onClick={() => setFilter("md")}>Midfielders</Button>
-					<Button onClick={() => setFilter("fw")}>Forwards</Button>
-					<Button onClick={() => setFilter("null")}>Reset</Button>
+					<Button
+						onClick={() => setFilter(filter === "gk" ? null : "gk")}
+						className={filter === "gk" ? "bg-red-300" : ""}>
+						Goalkeeper
+					</Button>
+					<Button
+						onClick={() => setFilter(filter === "df" ? null : "df")}
+						className={filter === "df" ? "bg-red-300" : ""}>
+						Defenders
+					</Button>
+					<Button
+						onClick={() => setFilter(filter === "md" ? null : "md")}
+						className={filter === "md" ? "bg-red-300" : ""}>
+						Midfielders
+					</Button>
+					<Button
+						onClick={() => setFilter(filter === "fw" ? null : "fw")}
+						className={filter === "fw" ? "bg-red-300" : ""}>
+						Forwards
+					</Button>
 				</div>
+
 				<div className="flex gap-4 flex-wrap">
 					{/* Loop through generated price ranges */}
 					{priceRanges.map(({ min, max }) => (
@@ -130,18 +220,33 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 							{min === max ? `${min}` : `${min}`}
 						</Button>
 					))}
-					<Button onClick={() => setPriceFilter(null)}>Reset Price</Button>
+					{/* <Button onClick={() => setPriceFilter(null)}>Reset Price</Button> */}
 				</div>
 			</div>
-			<div className="grid grid-cols-6 gap-4">
-				{filteredPlayers.slice(0, +21).map((player: Player) => (
-					<CardPlayer
-						key={player.id}
-						teamName="teamName"
-						player={player}
+			{/* Toggle buttons for layout */}
+			<div className="flex gap-4 self-end">
+				<div
+					className=" flex gap-2 items-center justify-center h-12 p-2"
+					onClick={() => setViewFormat("card")}>
+					<FontAwesomeIcon
+						className=""
+						icon={faIdCard}
 					/>
-				))}
+					<div className="text-xs">Card View</div>
+				</div>
+				<div
+					className=" flex gap-2 items-center justify-center h-12 p-2"
+					onClick={() => setViewFormat("list")}>
+					<FontAwesomeIcon
+						className=""
+						icon={faListAlt}
+					/>
+					<div className="text-xs">List View</div>
+				</div>
 			</div>
+
+			{/* Conditionally render the view */}
+			{viewFormat === "card" ? renderCardView() : renderListView()}
 		</div>
 	);
 };

@@ -3,7 +3,6 @@ import { fetchPlayers, fetchTeams } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-
 type Player = {
 	id: number;
 	team: number;
@@ -48,7 +47,7 @@ export default async function Page({
 		return <div>Team not found</div>;
 	}
 	return (
-		<>
+		<div>
 			<div
 				className={`club--${team.short_name.toLowerCase()} p-5 relative flex flex-col-reverse  md:flex-row justify-between `}>
 				<div>
@@ -76,7 +75,7 @@ export default async function Page({
 					teamName={team.short_name}
 				/>
 			</div>
-		</>
+		</div>
 	);
 }
 

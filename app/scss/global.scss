@@ -111,11 +111,11 @@
 }
 
 $fdr: (
-    "1": #00FF87,
-    "2": #72FF45,
-    "3": #E4FE02,
-    "4": #F28034,
-    "5": #FF0166,
+    "1": #154084,
+    "2": #154084,
+    "3": #D7B418,
+    "4": #BA6E19,
+    "5": #9D2719,
 );
 
 @each $fdr,
@@ -297,17 +297,48 @@ $color in $clubs {
 
 .layout--main {
     display: grid;
-    grid-template-areas: "main-nav main-nav main-nav"
-        "left-sidebar main-content right-sidebar";
-    grid-template-rows: auto 1fr auto;
-    grid-template-columns: auto 1fr;
-    gap: 0.5rem;
+    gap: .5rem;
     padding: .5rem;
+    grid-template-areas: "main-nav main-nav main-nav"
+        "left-sidebar main-content right-sidebar"
+        "main-control main-control main-control";
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .layout--main {
+        display: grid;
+        grid-template-areas:
+            "main-nav"
+            "main-content"
+            "main-control";
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr;
+        position: relative;
+    }
+
+    .sidebar--left {
+        width: 100%;
+        position: absolute;
+        top: 48px;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 1;
+    }
+
+    .sidebar--left {
+        left: 0;
+    }
 }
 
 .sidebar--left {
     display: grid;
     grid-area: left-sidebar;
+    width: 360px;
 }
 
 .navbar--main {
@@ -318,4 +349,10 @@ $color in $clubs {
 .content--main {
     display: grid;
     grid-area: main-content;
+}
+
+.control--bar {
+    display: grid;
+    grid-area: main-control;
+    z-index: 10;
 }

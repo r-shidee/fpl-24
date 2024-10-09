@@ -131,7 +131,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 			</Card>
 			<ChartPoints fixtures={fixtures.history} />
 			<ChartMinutes fixtures={fixtures.history} />
-			<Card className="w-full">
+			{/* <Card className="w-full">
 				<CardHeader>
 					<CardTitle>Previous Seasons</CardTitle>
 				</CardHeader>
@@ -166,9 +166,9 @@ export default async function Page({ params }: { params: { id: number } }) {
 						</div>
 					))}
 				</CardContent>
-			</Card>
+			</Card> */}
 
-			<AddData />
+			{/* <AddData /> */}
 		</div>
 	);
 }

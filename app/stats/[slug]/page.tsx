@@ -1,6 +1,5 @@
 import FilterComponent from "@/components/FilterComponent";
 
-
 type Player = {
 	id: number;
 	team_code: number;
@@ -34,7 +33,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 	const players = await getData();
 
 	return (
-		<div className="p-4">
+		<div className="">
 			<FilterComponent
 				players={players}
 				slug={params.slug}

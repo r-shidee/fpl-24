@@ -63,9 +63,9 @@ const config: Config = {
 				fdr: {
 					"1": "#00FF87",
 					"2": "#72FF45",
-					"3": "#E4FE02",
+					"3": "#D7B418",
 					"4": "#F28034",
-					"5": "#FF0166",
+					"5": "#9D2719",
 				},
 				clubs: {
 					ars: "#a50009",
@@ -88,6 +88,13 @@ const config: Config = {
 					tot: "#d6d6d6",
 					whu: "#5b1b28",
 					wol: "#ffc245",
+				},
+				bauhaus: {
+					red: "#9D2719",
+					blue: "#154084",
+					yellow: "#D7B418",
+					white: "#EDEDED",
+					black: "#222222",
 				},
 			},
 		},

@@ -6,11 +6,32 @@ import { fetchTeams } from "@/utils";
 export default async function Sidebar() {
 	const teams = await fetchTeams();
 
+	const links = [
+		{
+			label: "Goals",
+			url: "/goals_scored",
+			icon: "sports_soccer",
+		},
+		{
+			label: "Assists",
+			url: "/assists",
+			icon: "handshake",
+		},
+		{
+			label: "Saves",
+			url: "/saves",
+			icon: "front_hand",
+		},
+		{
+			label: "Bonus Points",
+			url: "/bps",
+			icon: "bolt",
+		},
+	];
+
 	return (
-		<div
-			className="sidebar--left w-[200px] rounded-lg 
-        ">
-			<nav className="gap-2 p-4 h-12 flex flex-col">
+		<div className="sidebar--left p-1">
+			<nav className="gap-2 p-3 flex flex-col rounded-lg bg-slate-900">
 				<div>
 					<Link
 						href="/player"
@@ -18,18 +39,40 @@ export default async function Sidebar() {
 						Players
 					</Link>
 				</div>
+
 				<div>
-					<Link
+					<div className="text-lg">
+						<Link href="/stats">Stats</Link>
+					</div>
+					<div className="flex flex-col">
+						{links?.map((link, index) => (
+							<Link
+								href={`/stats` + link.url}
+								key={index}>
+								<div className="flex items-center gap-3 p-2 rounded hover:bg-gray-800">
+									<div className="aspect-square rounded border flex items-center justify-center w-12 h-12 bg-bauhaus-blue">
+										<span className="material-symbols-outlined">
+											{link.icon}
+										</span>
+									</div>
+									<span className="text-sm font-mono">{link.label}</span>
+								</div>
+							</Link>
+						))}
+					</div>
+				</div>
+				<div>
+					{/* <Link
 						href="/teams"
 						className="text-lg">
 						Teams
-					</Link>
-					<div className="grid grid-cols-4 gap-2 mt-2">
+					</Link> */}
+					<div className="grid grid-cols-4 gap-2 p-2">
 						{teams.map((team) => (
 							<Link
 								href={"/teams/" + team.short_name.toLowerCase()}
 								key={team.id}
-								className={` relative flex justify-between items-center`}>
+								className={`club--${team.short_name.toLowerCase()} relative flex justify-center items-center aspect-square w-12 h-12 rounded `}>
 								<Image
 									key={team.id}
 									src={
@@ -37,29 +80,13 @@ export default async function Sidebar() {
 										team.code +
 										".svg"
 									}
-									width={20}
-									height={20}
+									width={40}
+									height={40}
 									alt={"club"}
-									className="w-5 h-5"
+									className="w-8 h-8"
 								/>
 							</Link>
 						))}
-					</div>
-				</div>
-				<div>
-					<div className="text-lg">
-						<Link href="/stats">Stats</Link>
-					</div>
-					<div className="pl-2 flex flex-col">
-						<Link href="/stats/goals_scored">Goals</Link>
-						<Link href="/stats/assists">Assists</Link>
-						<Link href="/stats/saves">Saves</Link>
-						<Link href="/stats/bps">Bonus Points</Link>
-						<Link href="/stats/points_per_game">Points Per Game</Link>
-						<Link href="/stats/expected_goal_involvements_per_90">
-							xgi per 90
-						</Link>
-						<Link href="/stats/expected_goal_involvements">xgi</Link>
 					</div>
 				</div>
 			</nav>
