@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-
 const clubClasses: { [key: string]: string } = {
 	1: "bg-gradient-to-r from-clubs-ars",
 	2: "bg-gradient-to-r from-clubs-avl",
@@ -63,7 +62,7 @@ const Standings: React.FC<StandingsProps> = ({
 		<div>
 			<div className="flex justify-between">
 				<p className="mb-4">{description}</p>
-				<Link href={`/charts/${sortBy}`}>View all</Link>
+				<Link href={`/stats/${sortBy}`}>View all</Link>
 			</div>
 			{players?.map(
 				(player, index) =>

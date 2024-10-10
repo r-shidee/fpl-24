@@ -81,27 +81,9 @@ const RenderDivs = ({
 	position: number;
 }) => {
 	return (
-		<div className="flex justify-between flex-wrap gap-1 px-2">
-			<div className="flex flex-wrap gap-1">
-				{Array.from({ length: goals }, (_, index) => (
-					<FontAwesomeIcon
-						className="w-3 h-3 "
-						key={index}
-						icon={faFutbol}
-					/>
-				))}
-			</div>
-			<div className="flex flex-wrap gap-1 align-baseline">
-				{Array.from({ length: assists }, (_, index) => (
-					<FontAwesomeIcon
-						className="w-3 h-3 "
-						key={index}
-						icon={faCircleDot}
-					/>
-				))}
-			</div>
+		<div className="flex justify-between w-full flex-wrap gap-1 px-2 absolute top-1">
 			{position === 1 ? (
-				<div className="flex flex-wrap gap-1">
+				<div className="flex flex-col flex-wrap h-[150px] gap-1">
 					{Array.from({ length: saves }, (_, index) => (
 						<FontAwesomeIcon
 							className="w-3 h-3 "
@@ -111,8 +93,25 @@ const RenderDivs = ({
 					))}
 				</div>
 			) : (
-				""
+				<div className="flex flex-col flex-wrap gap-1">
+					{Array.from({ length: goals }, (_, index) => (
+						<FontAwesomeIcon
+							className="w-3 h-3 "
+							key={index}
+							icon={faFutbol}
+						/>
+					))}
+				</div>
 			)}
+			<div className="flex flex-col flex-wrap gap-1 align-baseline">
+				{Array.from({ length: assists }, (_, index) => (
+					<FontAwesomeIcon
+						className="w-3 h-3 "
+						key={index}
+						icon={faCircleDot}
+					/>
+				))}
+			</div>
 		</div>
 	);
 };
@@ -127,46 +126,15 @@ export default function CardPlayer({
 	return (
 		<div
 			key={player.id}
-			className=" hover:bg-slate-900 rounded group border aspect-[2/3] ">
+			className=" hover:bg-slate-900 rounded group ">
 			<Link href={`/player/${player.id}`}>
 				<div className="grid relative gap-2">
-					<div className="flex relative gap-2 items-center p-2">
-						<Image
-							src={
-								"https://resources.premierleague.com/premierleague/badges/rb/t" +
-								player.team_code +
-								".svg"
-							}
-							width={32}
-							height={32}
-							alt={player.team_code.toString()}
-							className=" h-8 w-8 "
-						/>
-						<div className="flex flex-col leading-tight w-full">
-							<div className="flex flex-wrap justify-between">
-								<p className="font-bold">{player.web_name}</p>
-							</div>
-							<p className=" text-gray-400 text-sm">
-								{positions[player.element_type]}
-							</p>
-						</div>
-						<div
-							className={` w-12 h-12 flex justify-end pt-2 pr-2 rounded-bl-full absolute right-0 text-sm font-serif `}>
-							{(player.now_cost / 10).toFixed(1)}
-						</div>
-					</div>
-					<RenderDivs
-						goals={player.goals_scored}
-						assists={player.assists}
-						saves={player.saves}
-						position={player.element_type}
-					/>
 					<div
-						className={`rounded relative overflow-hidden flex ease-in-out group-hover:bg-none items-center club--${
+						className={`rounded relative overflow-hidden aspect-square flex ease-in-out group-hover:bg-none items-center club--${
 							teams[player.team]
 						} `}>
 						<Image
-							className="object-cover group-hover:scale-105 w-full group-hover:z-0"
+							className="object-cover absolute bottom-0 w-full group-hover:z-0 group-hover:scale-95"
 							src={
 								"https://resources.premierleague.com/premierleague/photos/players/250x250/p" +
 								player.photo.replace("jpg", "png")
@@ -175,20 +143,25 @@ export default function CardPlayer({
 							width={250}
 							height={250}
 						/>
-						<div className="absolute bottom-0 p-1 flex gap-1 w-full">
+						<RenderDivs
+							goals={player.goals_scored}
+							assists={player.assists}
+							saves={player.saves}
+							position={player.element_type}
+						/>
+						<div className="absolute bottom-0 p-1 flex gap-1 w-full justify-center">
 							{player.penalties_order ? (
-								<div className="w-fit justify-between items-center flex font-mono text-xs bg-green-500 px-2 py-1 rounded-sm">
+								<div className="w-fit justify-between items-center flex font-mono text-xs bg-bauhaus-blue text-white px-2 py-1 rounded-sm">
 									PK-{player.penalties_order}
 								</div>
 							) : (
 								""
 							)}
 							{player.status === "i" ? (
-								<div className="justify-between items-center flex w-fit font-mono text-xs bg-red-500 px-2 py-1 rounded-sm">
-									<FontAwesomeIcon
-										className="w-3 h-3 "
-										icon={faHospital}
-									/>
+								<div className="justify-between items-center flex w-fit text-xs bg-bauhaus-red text-white px-2 py-1 rounded-sm">
+									<span className="material-symbols-outlined">
+										local_hospital
+									</span>
 								</div>
 							) : (
 								""
@@ -196,7 +169,7 @@ export default function CardPlayer({
 						</div>
 					</div>
 
-					<div className={` text-slate-500 p-2`}>
+					{/* <div className={` text-slate-500 p-2`}>
 						<div
 							className="h-1 bg-red-500 max-w-full rounded-lg"
 							style={{
@@ -245,6 +218,31 @@ export default function CardPlayer({
 							) : (
 								""
 							)}
+						</div>
+					</div> */}
+					<div className="flex relative gap-2 items-center">
+						{/* <Image
+							src={
+								"https://resources.premierleague.com/premierleague/badges/rb/t" +
+								player.team_code +
+								".svg"
+							}
+							width={32}
+							height={32}
+							alt={player.team_code.toString()}
+							className=" h-8 w-8 "
+						/> */}
+						<div className="flex flex-col leading-tight w-full">
+							<div className="flex flex-wrap justify-between">
+								<p className="font-bold">{player.web_name}</p>
+							</div>
+							<p className=" text-gray-400 text-sm">
+								{positions[player.element_type]}
+							</p>
+						</div>
+						<div
+							className={` w-12 h-12 flex justify-end pt-2 pr-2 rounded-bl-full absolute right-0 text-sm font-serif `}>
+							{(player.now_cost / 10).toFixed(1)}
 						</div>
 					</div>
 				</div>

@@ -19,7 +19,7 @@ export default function PlayerLayout({
 	const slug = params.id; // Accessing the slug parameter
 
 	return (
-		<section className="max-w-7xl m-auto p-4 flex flex-col gap-5">
+		<div className="flex flex-col gap-5">
 			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem>
@@ -36,6 +36,6 @@ export default function PlayerLayout({
 				</BreadcrumbList>
 			</Breadcrumb>
 			{children}
-		</section>
+		</div>
 	);
 }

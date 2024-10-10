@@ -52,7 +52,7 @@ export default async function Fixtures({ fixtures, count }: FixturesProps) {
 	}
 
 	return (
-		<div className="grid grid-cols-5 gap-2">
+		<div className="grid grid-cols-5 gap-2 col-span-2">
 			{fixtures.map((fixture) => (
 				<div
 					key={fixture.code}

@@ -22,8 +22,11 @@ import {
 
 import ChartPoints from "@/components/widgets/ChartPoints";
 import ChartMinutes from "@/components/widgets/ChartMinutes";
+import ChartExpected from "@/components/widgets/ChartExpected";
+import ChartDifficulty from "@/components/widgets/ChartDifficulty";
 import AddData from "@/components/AddData";
 import Fixtures from "@/components/widgets/Fixtures";
+import ChartMinutesBar from "@/components/widgets/ChartMinutesBar";
 
 interface Item {
 	season_name: string;
@@ -44,7 +47,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 	}
 	return (
 		<div className="flex flex-wrap gap-5 rounded-2xl">
-			<div className=" p-5 flex gap-4 justify-between w-full">
+			<div className="flex gap-4 justify-between w-full">
 				<div className="flex gap-4">
 					<div className="bg-slate-300 rounded aspect-square h-[120px] w-[120px] pt-2 overflow-hidden">
 						<Image
@@ -66,107 +69,80 @@ export default async function Page({ params }: { params: { id: number } }) {
 						<p>{(player.now_cost / 10).toFixed(1)}</p>
 					</div>
 				</div>
-				<div className="flex gap-4">
-					<div className="flex flex-col text-right">
-						<p className="text-sm">Starts</p>
-						<div className=" text-lg font-bold stats">{player.starts}</div>
+				<div className="grid grid-cols-4 gap-4">
+					<div className="flex flex-col border px-6 py-5">
+						<p className="text-xs">Starts</p>
+						<div className=" text-3xl font-bold stats">{player.starts}</div>
 					</div>
-					<div className="flex flex-col text-right">
-						<p className="text-sm">Minutes</p>
-						<div className=" text-lg font-bold stats">{player.minutes}</div>
+					<div className="flex flex-col border px-6 py-5">
+						<p className="text-xs">Minutes</p>
+						<div className=" text-3xl font-bold stats">{player.minutes}</div>
 					</div>
-					<div className="flex flex-col text-right">
-						<p className="text-sm">Goals</p>
-						<div className=" text-lg font-bold stats">
+					<div className="flex flex-col border px-6 py-5">
+						<p className="text-xs">Goals</p>
+						<div className="text-3xl font-bold stats">
 							{player.goals_scored}
 						</div>
 					</div>
-					<div className="flex flex-col text-right">
-						<p className="text-sm">Assists</p>
-						<div className=" text-lg font-bold stats">{player.assists}</div>
+					<div className="flex flex-col border px-6 py-5">
+						<p className="text-xs">Assists</p>
+						<div className="text-3xl font-bold stats">{player.assists}</div>
 					</div>
 				</div>
 			</div>
-			<Fixtures fixtures={fixtures.fixtures} />
-			<Card className="w-1/4">
-				<CardHeader>
-					<CardTitle>Expected Stats</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<Table>
-						<TableHeader>
-							<TableRow>
-								<TableHead className="w-[100px]">Stats</TableHead>
-								<TableHead className="text-right">Value</TableHead>
-							</TableRow>
-						</TableHeader>
-						<TableBody>
-							<TableRow>
-								<TableCell className="font-medium">xGI</TableCell>
-								<TableCell className="text-right">
-									{player.expected_goal_involvements}
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell className="font-medium">xG</TableCell>
-								<TableCell className="text-right">
-									{player.expected_goals}
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell className="font-medium">xA</TableCell>
-								<TableCell className="text-right">
-									{player.expected_assists}
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell className="font-medium">xGC</TableCell>
-								<TableCell className="text-right">
-									{player.expected_goals_conceded}
-								</TableCell>
-							</TableRow>
-						</TableBody>
-					</Table>
-				</CardContent>
-			</Card>
-			<ChartPoints fixtures={fixtures.history} />
-			<ChartMinutes fixtures={fixtures.history} />
-			{/* <Card className="w-full">
-				<CardHeader>
-					<CardTitle>Previous Seasons</CardTitle>
-				</CardHeader>
-				<CardContent>
-					{fixtures.history_past.map((item: Item) => (
-						<div
-							key={item.element_code}
-							className="mb-4">
-							<div className="mb-2">{item.season_name}</div>
-							<div className="flex gap-2">
-								<div className="flex flex-col p-4 border w-fit rounded items-center">
-									<div>Total Points</div>
-									<div className="text-xl font-bold">{item.total_points}</div>
-								</div>
-								<div className="flex flex-col p-4 border w-fit rounded items-center">
-									<div>Minutes</div>
-									<div className="text-xl font-bold">{item.minutes}</div>
-								</div>
-								<div className="flex flex-col p-4 border w-fit rounded items-center">
-									<div>Goals</div>
-									<div className="text-xl font-bold">{item.goals_scored}</div>
-								</div>
-								<div className="flex flex-col p-4 border w-fit rounded items-center">
-									<div>Assists</div>
-									<div className="text-xl font-bold">{item.assists}</div>
-								</div>
-								<div className="flex flex-col p-4 border w-fit rounded items-center">
-									<div>Saves</div>
-									<div className="text-xl font-bold">{item.saves}</div>
-								</div>
-							</div>
-						</div>
-					))}
-				</CardContent>
-			</Card> */}
+			<div className="grid grid-cols-4 gap-4 w-full">
+				<ChartMinutes fixtures={fixtures.history} />
+				<ChartMinutesBar fixtures={fixtures.history} />
+				<Card>
+					<CardHeader>
+						<CardTitle>Expected Stats</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<Table>
+							<TableHeader>
+								<TableRow>
+									<TableHead className="w-[100px]">Stats</TableHead>
+									<TableHead className="text-right">Value</TableHead>
+								</TableRow>
+							</TableHeader>
+							<TableBody>
+								<TableRow>
+									<TableCell className="font-medium">xGI</TableCell>
+									<TableCell className="text-right">
+										{player.expected_goal_involvements}
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell className="font-medium">xG</TableCell>
+									<TableCell className="text-right">
+										{player.expected_goals}
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell className="font-medium">xA</TableCell>
+									<TableCell className="text-right">
+										{player.expected_assists}
+									</TableCell>
+								</TableRow>
+								<TableRow>
+									<TableCell className="font-medium">xGC</TableCell>
+									<TableCell className="text-right">
+										{player.expected_goals_conceded}
+									</TableCell>
+								</TableRow>
+							</TableBody>
+						</Table>
+					</CardContent>
+				</Card>
+				<ChartExpected fixtures={fixtures.history} />
+				<ChartPoints fixtures={fixtures.history} />
+				<Fixtures
+					fixtures={fixtures.fixtures}
+					count={fixtures.fixtures.length}
+				/>
+				<ChartDifficulty fixtures={fixtures.fixtures} />
+			</div>
+			<div className="grid grid-cols-2 gap-4 w-full"></div>
 
 			{/* <AddData /> */}
 		</div>

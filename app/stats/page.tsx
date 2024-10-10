@@ -1,7 +1,6 @@
 import { fetchPlayers } from "@/utils";
 import Standings from "@/components/widgets/Standings";
 
-
 export default async function Page() {
 	const players = await fetchPlayers();
 

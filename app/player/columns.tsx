@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { getClubLogo } from "@/utils/index";
 
 export type Player = {
 	id: string;

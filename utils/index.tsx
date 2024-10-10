@@ -257,32 +257,32 @@ export const getPlayerStatus = (code: string): string | undefined => {
 // 	return clubs[code];
 // };
 
-// export const getClubShort = (code) => {
-// 	let clubs = {
-// 		1: "ars",
-// 		2: "avl",
-// 		3: "bou",
-// 		4: "bre",
-// 		5: "bha",
-// 		6: "bur",
-// 		7: "che",
-// 		8: "cry",
-// 		9: "eve",
-// 		10: "ful",
-// 		11: "liv",
-// 		12: "lut",
-// 		13: "mci",
-// 		14: "mun",
-// 		15: "new",
-// 		16: "nfo",
-// 		17: "shu",
-// 		18: "tot",
-// 		19: "whu",
-// 		20: "wol",
-// 	};
+export const getClubShort = (code: number) => {
+	let clubs = {
+		1: "ars",
+		2: "avl",
+		3: "bou",
+		4: "bre",
+		5: "bha",
+		6: "che",
+		7: "cry",
+		8: "eve",
+		9: "ful",
+		10: "ips",
+		11: "lei",
+		12: "liv",
+		13: "mci",
+		14: "mun",
+		15: "new",
+		16: "nfo",
+		17: "sou",
+		18: "tot",
+		19: "whu",
+		20: "wol",
+	};
 
-// 	return clubs[code];
-// };
+	return clubs[code as keyof typeof clubs];
+};
 
 // export const getClubLogo = (code) => {
 // 	let clubs = {

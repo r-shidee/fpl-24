@@ -179,7 +179,16 @@ $color in $clubs {
         // background: $color;
 
         // background: linear-gradient(135deg, $color, mix(black, $color, 20%) 10%);
-        background-image: linear-gradient(transparent 0%, $color 100%);
+        // background-image: linear-gradient(transparent 0%, $color 100%);
+        // background-color: darken($color, 50%);
+
+        background-color: darken($color, 50%);
+        // opacity: 0.5;
+        background-image: linear-gradient(135deg, $color 25%, transparent 25%), linear-gradient(225deg, $color 25%, transparent 25%), linear-gradient(45deg, $color 25%, transparent 25%), linear-gradient(315deg, $color 25%, invert($color, 20%) 25%);
+        background-position: 10px 0, 10px 0, 0 0, 0 0;
+        background-size: 20px 20px;
+        background-repeat: repeat;
+
 
     }
 }
@@ -300,10 +309,9 @@ $color in $clubs {
     gap: .5rem;
     padding: .5rem;
     grid-template-areas: "main-nav main-nav main-nav"
-        "left-sidebar main-content right-sidebar"
-        "main-control main-control main-control";
+        "left-sidebar main-content right-sidebar";
     grid-template-columns: auto 1fr;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: auto 1fr;
     position: relative;
     height: 100vh;
     width: 100%;
@@ -314,8 +322,7 @@ $color in $clubs {
         display: grid;
         grid-template-areas:
             "main-nav"
-            "main-content"
-            "main-control";
+            "main-content";
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
         position: relative;
@@ -326,7 +333,6 @@ $color in $clubs {
         position: absolute;
         top: 48px;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.8);
         z-index: 1;
     }
 
@@ -338,7 +344,6 @@ $color in $clubs {
 .sidebar--left {
     display: grid;
     grid-area: left-sidebar;
-    width: 360px;
 }
 
 .navbar--main {

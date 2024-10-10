@@ -30,8 +30,8 @@ export default async function Sidebar() {
 	];
 
 	return (
-		<div className="sidebar--left p-1">
-			<nav className="gap-2 p-3 flex flex-col rounded-lg bg-slate-900">
+		<div className="sidebar--left">
+			<nav className="gap-2 p-3 flex flex-col rounded-lg">
 				<div>
 					<Link
 						href="/player"
@@ -49,8 +49,8 @@ export default async function Sidebar() {
 							<Link
 								href={`/stats` + link.url}
 								key={index}>
-								<div className="flex items-center gap-3 p-2 rounded hover:bg-gray-800">
-									<div className="aspect-square rounded border flex items-center justify-center w-12 h-12 bg-bauhaus-blue">
+								<div className="flex items-center gap-3 p-2 rounded hover:bg-gray-800 hover:text-white">
+									<div className="aspect-square rounded border flex items-center justify-center w-12 h-12 bg-bauhaus-blue text-white">
 										<span className="material-symbols-outlined">
 											{link.icon}
 										</span>
@@ -72,7 +72,7 @@ export default async function Sidebar() {
 							<Link
 								href={"/teams/" + team.short_name.toLowerCase()}
 								key={team.id}
-								className={`club--${team.short_name.toLowerCase()} relative flex justify-center items-center aspect-square w-12 h-12 rounded `}>
+								className={`club--${team.short_name.toLowerCase()} relative flex justify-center items-center border aspect-square w-12 h-12 rounded `}>
 								<Image
 									key={team.id}
 									src={

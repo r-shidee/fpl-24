@@ -29,10 +29,9 @@ export default function RootLayout({
 					disableTransitionOnChange>
 					<Navbar />
 					<Sidebar />
-					<div className="content--main w-full overflow-y-scroll mx-auto rounded-xl">
+					<div className="content--main w-full overflow-y-scroll mx-auto rounded-xl p-4">
 						{children}
 					</div>
-					<div className="control--bar">bar</div>
 				</ThemeProvider>
 			</body>
 		</html>

@@ -112,46 +112,54 @@ async function Players({
 	const fwd = getPlayersByPosition(4);
 
 	return (
-		<div className="flex flex-col gap-4">
-			<h2>Forwards</h2>
-			<div className="grid grid-cols-6 gap-4">
-				{fwd.map((player: Player) => (
-					<CardPlayer
-						key={player.id}
-						teamName="teamName"
-						player={player}
-					/>
-				))}
+		<div className="flex flex-col gap-8">
+			<div>
+				<h2 className="mb-2">Forwards</h2>
+				<div className="grid grid-cols-6 gap-4">
+					{fwd.map((player: Player) => (
+						<CardPlayer
+							key={player.id}
+							teamName="teamName"
+							player={player}
+						/>
+					))}
+				</div>
 			</div>
-			<h2>Midfielders</h2>
-			<div className="grid grid-cols-6 gap-4">
-				{mid.map((player: Player) => (
-					<CardPlayer
-						key={player.id}
-						teamName="teamName"
-						player={player}
-					/>
-				))}
+			<div>
+				<h2 className="mb-2">Midfielders</h2>
+				<div className="grid grid-cols-6 gap-4">
+					{mid.map((player: Player) => (
+						<CardPlayer
+							key={player.id}
+							teamName="teamName"
+							player={player}
+						/>
+					))}
+				</div>
 			</div>
-			<h2>Defenders</h2>
-			<div className="grid grid-cols-6 gap-4">
-				{def.map((player: Player) => (
-					<CardPlayer
-						key={player.id}
-						teamName="teamName"
-						player={player}
-					/>
-				))}
+			<div>
+				<h2 className="mb-2">Defenders</h2>
+				<div className="grid grid-cols-6 gap-4">
+					{def.map((player: Player) => (
+						<CardPlayer
+							key={player.id}
+							teamName="teamName"
+							player={player}
+						/>
+					))}
+				</div>{" "}
 			</div>
-			<h2>Goalkeepers</h2>
-			<div className="grid grid-cols-6 gap-4">
-				{gks.map((player: Player) => (
-					<CardPlayer
-						key={player.id}
-						teamName="teamName"
-						player={player}
-					/>
-				))}
+			<div>
+				<h2 className="mb-2">Goalkeepers</h2>
+				<div className="grid grid-cols-6 gap-4">
+					{gks.map((player: Player) => (
+						<CardPlayer
+							key={player.id}
+							teamName="teamName"
+							player={player}
+						/>
+					))}
+				</div>{" "}
 			</div>
 		</div>
 	);

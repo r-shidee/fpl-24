@@ -73,11 +73,12 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 		}
 		return ranges;
 	};
-	const priceRanges = generatePriceRanges(4.0, 15, 2); // Generate price ranges between 4.0 and 15.5
+	const priceRanges = generatePriceRanges(4.0, 15, 1); // Generate price ranges between 4.0 and 15.5
 
 	let filteredPlayers = players.filter((player) => {
 		// Ensure the slug property is greater than 0
 		if (player[slug] <= 0) return false;
+		if (player.minutes == 0) return false;
 
 		// Filter based on position
 		if (filter) {
@@ -114,7 +115,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 	// Render players in card format
 	const renderCardView = () => (
 		<div className="grid grid-cols-6 gap-4">
-			{filteredPlayers.slice(0, 21).map((player: Player) => (
+			{/* {filteredPlayers.slice(0, 21).map((player: Player) => ( */}
+			{filteredPlayers.map((player: Player) => (
 				<CardPlayer
 					key={player.id}
 					teamName="teamName"
