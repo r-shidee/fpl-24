@@ -51,6 +51,8 @@ type Team = {
 };
 
 type Player = {
+	form: number;
+	selected_by_percent: number;
 	id: number;
 	team: number;
 	team_code: number;

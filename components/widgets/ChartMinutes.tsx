@@ -42,7 +42,7 @@ export default function ChartMinutes(props: any) {
 	} satisfies ChartConfig;
 
 	return (
-		<Card className="flex flex-col">
+		<Card className="flex flex-col w-full">
 			<CardHeader className="items-center pb-0">
 				<CardTitle>Playing Time</CardTitle>
 			</CardHeader>
@@ -104,7 +104,7 @@ export default function ChartMinutes(props: any) {
 			</CardContent>
 			<CardFooter className="flex-col gap-2 text-sm">
 				<div className="leading-none text-muted-foreground">
-					Showing total minutes for the last {props.fixtures.length} matches
+					Played for {props.fixtures.length} matches
 				</div>
 			</CardFooter>
 		</Card>

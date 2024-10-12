@@ -49,6 +49,7 @@ export default function ChartMinutesBar(props: any) {
 							tickMargin={8}
 							// tickFormatter={(value) => getClubShort(value)}
 						/>
+
 						<ChartTooltip
 							cursor={false}
 							content={<ChartTooltipContent hideLabel />}

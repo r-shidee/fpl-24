@@ -309,7 +309,7 @@ $color in $clubs {
     gap: .5rem;
     padding: .5rem;
     grid-template-areas: "main-nav main-nav main-nav"
-        "left-sidebar main-content right-sidebar";
+        "left-sidebar main-content main-content";
     grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr;
     position: relative;
@@ -322,7 +322,8 @@ $color in $clubs {
         display: grid;
         grid-template-areas:
             "main-nav"
-            "main-content";
+            "main-content"
+            "left-sidebar";
         grid-template-columns: 1fr;
         grid-template-rows: auto 1fr;
         position: relative;

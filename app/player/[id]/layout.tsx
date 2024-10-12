@@ -19,7 +19,7 @@ export default function PlayerLayout({
 	const slug = params.id; // Accessing the slug parameter
 
 	return (
-		<div className="flex flex-col gap-5">
+		<div className="grid grid-cols-1 gap-5">
 			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem>

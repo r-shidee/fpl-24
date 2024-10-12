@@ -1,4 +1,4 @@
-import { fetchPlayer, getFixtures } from "@/utils";
+import { fetchPlayer, getClubShort, getFixtures } from "@/utils";
 import Image from "next/image";
 import { getPlayersPosition } from "@/utils";
 import {
@@ -26,6 +26,7 @@ import ChartExpected from "@/components/widgets/ChartExpected";
 import ChartDifficulty from "@/components/widgets/ChartDifficulty";
 import AddData from "@/components/AddData";
 import Fixtures from "@/components/widgets/Fixtures";
+import TablePoints from "@/components/widgets/TablePoints";
 import ChartMinutesBar from "@/components/widgets/ChartMinutesBar";
 
 interface Item {
@@ -46,36 +47,64 @@ export default async function Page({ params }: { params: { id: number } }) {
 		return <div>No player data available</div>;
 	}
 	return (
-		<div className="flex flex-wrap gap-5 rounded-2xl">
-			<div className="flex gap-4 justify-between w-full">
-				<div className="flex gap-4">
-					<div className="bg-slate-300 rounded aspect-square h-[120px] w-[120px] pt-2 overflow-hidden">
-						<Image
-							className=""
-							src={
-								"https://resources.premierleague.com/premierleague/photos/players/250x250/p" +
-								player.photo.replace("jpg", "png")
-							}
-							alt={player.web_name}
-							width={120}
-							height={120}
-						/>
-					</div>
+		<div className="grid gap-5 rounded-2xl">
+			<div className="grid gap-4 lg:grid-cols-4 w-full">
+				<div className="card--player col-span-1 gap-2 grid">
 					<div className="card__info flex flex-col">
 						<h2 className="text-2xl font-bold tracking-tight">
 							{player.first_name} {player.second_name}
 						</h2>
-						<p>{getPlayersPosition(player.element_type)}</p>
-						<p>{(player.now_cost / 10).toFixed(1)}</p>
+					</div>
+					<div
+						className={`grid grid-cols-2 grid-rows-2 aspect-square overflow-hidden`}>
+						<div
+							className={`flex justify-center items-center club--${getClubShort(
+								player?.team
+							)}`}>
+							<Image
+								className="object-cover rounded-full bg-black"
+								src={
+									"https://resources.premierleague.com/premierleague/photos/players/250x250/p" +
+									player.photo.replace("jpg", "png")
+								}
+								alt={player.web_name}
+								width={120}
+								height={120}
+							/>
+						</div>
+						<div className="aspect-square bg-bauhaus-yellow text-black w-full flex flex-col justify-center items-center">
+							<p className="text-3xl font-bold leading-none">
+								{(player.now_cost / 10).toFixed(1)}
+							</p>
+							<p>price</p>
+						</div>
+						<div className="aspect-square bg-bauhaus-blue text-white w-full flex flex-col justify-center items-center">
+							<p className="text-3xl font-bold leading-none">{player.form}</p>
+							<p>form</p>
+						</div>
+						<div className="aspect-square bg-bauhaus-red text-white w-full flex flex-col justify-center items-center">
+							<p className="text-3xl font-bold leading-none">
+								{player.selected_by_percent}%
+							</p>
+							<p>ownership</p>
+						</div>
 					</div>
 				</div>
-				<div className="grid grid-cols-4 gap-4">
+				<TablePoints
+					fixtures={fixtures.history}
+					count={fixtures.fixtures.length}
+				/>
+				{/* <Fixtures
+					fixtures={fixtures.fixtures}
+					count={fixtures.fixtures.length}
+				/> */}
+				{/* <div className="grid grid-cols-2 gap-4">
 					<div className="flex flex-col border px-6 py-5">
 						<p className="text-xs">Starts</p>
 						<div className=" text-3xl font-bold stats">{player.starts}</div>
 					</div>
 					<div className="flex flex-col border px-6 py-5">
-						<p className="text-xs">Minutes</p>
+						<p className="text-xs">Total Minutes</p>
 						<div className=" text-3xl font-bold stats">{player.minutes}</div>
 					</div>
 					<div className="flex flex-col border px-6 py-5">
@@ -88,10 +117,9 @@ export default async function Page({ params }: { params: { id: number } }) {
 						<p className="text-xs">Assists</p>
 						<div className="text-3xl font-bold stats">{player.assists}</div>
 					</div>
-				</div>
+				</div> */}
 			</div>
-			<div className="grid grid-cols-4 gap-4 w-full">
-				<ChartMinutes fixtures={fixtures.history} />
+			<div className="stats grid gap-4">
 				<ChartMinutesBar fixtures={fixtures.history} />
 				<Card>
 					<CardHeader>
@@ -136,10 +164,9 @@ export default async function Page({ params }: { params: { id: number } }) {
 				</Card>
 				<ChartExpected fixtures={fixtures.history} />
 				<ChartPoints fixtures={fixtures.history} />
-				<Fixtures
-					fixtures={fixtures.fixtures}
-					count={fixtures.fixtures.length}
-				/>
+
+				<ChartMinutes fixtures={fixtures.history} />
+
 				<ChartDifficulty fixtures={fixtures.fixtures} />
 			</div>
 			<div className="grid grid-cols-2 gap-4 w-full"></div>

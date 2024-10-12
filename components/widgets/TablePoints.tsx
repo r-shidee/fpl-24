@@ -29,12 +29,14 @@ interface Fixture {
 	code: number;
 	team_h: number;
 	team_a: number;
+	opponent_team: number;
 	event: number;
 	minutes: number;
+	total_points: number;
 	difficulty: number;
 	finished: boolean;
 	provisional_start_time: boolean;
-	is_home: boolean;
+	was_home: boolean;
 	kickoff_time: string;
 	event_name: string;
 }
@@ -44,7 +46,7 @@ interface FixturesProps {
 	count: number;
 }
 
-export default async function Fixtures({ fixtures, count }: FixturesProps) {
+export default async function TablePoints({ fixtures, count }: FixturesProps) {
 	const teams = await fetchTeams();
 
 	if (count) {
@@ -52,21 +54,22 @@ export default async function Fixtures({ fixtures, count }: FixturesProps) {
 	}
 
 	return (
-		<div className="grid grid-cols-4 sm:grid-cols-5 gap-2 col-span-1">
-			{fixtures.map((fixture) => (
-				<div
-					key={fixture.code}
-					className={`border rounded p-2 text-xs fixture--level-${fixture.difficulty}`}>
-					<div>{fixture.event_name.replace("Gameweek", "")}</div>
-					<div>
-						{fixture.is_home ? (
-							<div>{teams[fixture.team_a - 1].short_name} (H)</div>
-						) : (
-							<div>{teams[fixture.team_h - 1].short_name} (A)</div>
-						)}
+		<div className="col-span-3">
+			<h2 className="mb-4">Latest Points</h2>
+			<div className="grid grid-cols-8 gap-2 col-span-2">
+				{fixtures.map((fixture) => (
+					<div
+						key={fixture.code}
+						className={`border p-2 text-xs fixture--level-${fixture.difficulty}`}>
+						<div className="flex">
+							{teams[fixture.opponent_team - 1].short_name}
+							{fixture.was_home ? <div>(H)</div> : <div>(A)</div>}
+						</div>
+
+						<div className="text-2xl font-bold">{fixture.total_points} pts</div>
 					</div>
-				</div>
-			))}
+				))}
+			</div>
 		</div>
 	);
 }
