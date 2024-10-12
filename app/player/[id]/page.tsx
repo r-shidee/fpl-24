@@ -1,4 +1,4 @@
-import { fetchPlayer, getClubShort, getFixtures } from "@/utils";
+import { fetchPlayer, fetchTeams, getClubShort, getFixtures } from "@/utils";
 import Image from "next/image";
 import { getPlayersPosition } from "@/utils";
 import {
@@ -28,6 +28,7 @@ import AddData from "@/components/AddData";
 import Fixtures from "@/components/widgets/Fixtures";
 import TablePoints from "@/components/widgets/TablePoints";
 import ChartMinutesBar from "@/components/widgets/ChartMinutesBar";
+import CalendarGameweek from "@/components/widgets/CalendarGameweek";
 
 interface Item {
 	season_name: string;
@@ -42,13 +43,14 @@ interface Item {
 export default async function Page({ params }: { params: { id: number } }) {
 	const player = await fetchPlayer(params.id);
 	const fixtures = await getFixtures(params.id);
+	const teams = await fetchTeams();
 
 	if (!player) {
 		return <div>No player data available</div>;
 	}
 	return (
 		<div className="grid gap-5 rounded-2xl">
-			<div className="grid gap-4 lg:grid-cols-4 w-full">
+			<div className="grid gap-4 grid-cols-1 lg:grid-cols-4 w-full">
 				<div className="card--player col-span-1 gap-2 grid">
 					<div className="card__info flex flex-col">
 						<h2 className="text-2xl font-bold tracking-tight">
@@ -90,9 +92,11 @@ export default async function Page({ params }: { params: { id: number } }) {
 						</div>
 					</div>
 				</div>
-				<TablePoints
-					fixtures={fixtures.history}
-					count={fixtures.fixtures.length}
+
+				<CalendarGameweek
+					teams={teams}
+					upcomingfixtures={fixtures.fixtures}
+					pastfixtures={fixtures.history}
 				/>
 				{/* <Fixtures
 					fixtures={fixtures.fixtures}
