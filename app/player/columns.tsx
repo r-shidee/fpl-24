@@ -5,18 +5,7 @@ import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-export type Player = {
-	id: string;
-	web_name: string;
-	expected_goal_involvements: number;
-	minutes: number;
-	now_cost: number;
-	team: number;
-	team_code: number;
-	element_type: number;
-	bps: number;
-};
+import { Player } from "@/types/Player";
 
 const teamNames: { [key: number]: string } = {
 	1: "ars",

@@ -6,31 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard, faListAlt } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import { fetchEvents, getFinishedEventIds } from "@/utils";
-
-type Player = {
-	id: number;
-	team: number;
-	team_code: number;
-	now_cost: number;
-	goals_scored: number;
-	assists: number;
-	saves: number;
-	minutes: number;
-	starts: number;
-	element_type: number;
-	expected_goals: number;
-	expected_assists: number;
-	expected_goal_involvements: number;
-	expected_goal_involvements_per_90: number;
-	expected_goals_conceded: number;
-	penalties_order: number;
-	first_name: string;
-	second_name: string;
-	web_name: string;
-	status: string;
-	photo: string;
-	slug: number;
-};
+import { Player } from '@/types/Player';
 
 const positions: { [key: number]: string } = {
 	1: "Goalkeeper",

@@ -1,20 +1,5 @@
 import FilterComponent from "@/components/FilterComponent";
-
-type Player = {
-	id: number;
-	team_code: number;
-	now_cost: number;
-	goals_scored: number;
-	assists: number;
-	saves: number;
-	minutes: number;
-	starts: number;
-	element_type: number;
-	expected_goal_involvements_per_90: number;
-	web_name: string;
-	status: string;
-	photo: string;
-};
+import { Player } from "@/types/Player";
 
 async function getData(): Promise<Player[]> {
 	let data = await fetch(

@@ -1,5 +1,7 @@
 import Standings from "@/components/widgets/Standings";
 import CardPlayer from "@/components/widgets/CardPlayer";
+import { Player } from '@/types/Player';
+
 export default async function Page() {
 	let data = await fetch(
 		"https://fantasy.premierleague.com/api/bootstrap-static/"
