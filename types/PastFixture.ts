@@ -1,4 +1,4 @@
-export type PastFixture = {
+export interface PastFixture {
 	id: number;
 	code: number;
 	team_h: number;
@@ -13,4 +13,4 @@ export type PastFixture = {
 	event_name: string;
 	is_home: boolean;
 	difficulty: number;
-};
+}

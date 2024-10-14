@@ -1,4 +1,4 @@
-export type UpcomingFixture = {
+export interface UpcomingFixture {
 	element: number;
 	fixture: number;
 	opponent_team: number;
@@ -35,4 +35,4 @@ export type UpcomingFixture = {
 	selected: number;
 	transfers_in: number;
 	transfers_out: number;
-};
+}

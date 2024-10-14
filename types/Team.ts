@@ -1,4 +1,4 @@
-export type Team = {
+export interface Team {
 	code: number;
 	draw: number;
 	form: number | null;
@@ -20,4 +20,4 @@ export type Team = {
 	strength_defence_home: number;
 	strength_defence_away: number;
 	pulse_id: number;
-};
+}

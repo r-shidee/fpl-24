@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard, faListAlt } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import { fetchEvents, getFinishedEventIds } from "@/utils";
-import { Player } from '@/types/Player';
+import { Player } from "@/types/Player";
 
 const positions: { [key: number]: string } = {
 	1: "Goalkeeper",
@@ -24,7 +24,7 @@ const slugTitle: { [key: string]: string } = {
 
 type FilterComponentProps = {
 	players: Player[];
-	slug: string;
+	slug?: string;
 };
 
 const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
