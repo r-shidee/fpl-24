@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function TeamPage() {
 	const teams = await fetchTeams();
 	return (
-		<div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4">
+		<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4">
 			{teams.map((team) => (
 				<Link
 					href={"teams/" + team.short_name.toLowerCase()}

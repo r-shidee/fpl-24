@@ -5,7 +5,6 @@ import CardPlayer from "./widgets/CardPlayer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard, faListAlt } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
-import { fetchEvents, getFinishedEventIds } from "@/utils";
 import { Player } from "@/types/Player";
 
 const positions: { [key: number]: string } = {
@@ -25,9 +24,14 @@ const slugTitle: { [key: string]: string } = {
 type FilterComponentProps = {
 	players: Player[];
 	slug?: string;
+	filtering?: boolean;
 };
 
-const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
+const FilterComponent: React.FC<FilterComponentProps> = ({
+	players,
+	slug,
+	filtering,
+}) => {
 	const [filter, setFilter] = useState<string | null>(null);
 	const [priceFilter, setPriceFilter] = useState<{
 		min: number;
@@ -184,22 +188,24 @@ const FilterComponent: React.FC<FilterComponentProps> = ({ players, slug }) => {
 					</Button>
 				</div>
 
-				<div className="flex gap-4 flex-wrap">
-					{/* Loop through generated price ranges */}
-					{priceRanges.map(({ min, max }) => (
-						<Button
-							key={`${min}-${max}`}
-							onClick={() => handlePriceClick(min, max)}
-							className={
-								priceFilter?.min === min && priceFilter?.max === max
-									? "bg-red-300"
-									: ""
-							}>
-							{min === max ? `${min}` : `${min}`}
-						</Button>
-					))}
-					{/* <Button onClick={() => setPriceFilter(null)}>Reset Price</Button> */}
-				</div>
+				{filtering && (
+					<div className="flex gap-4 flex-wrap">
+						{/* Loop through generated price ranges */}
+						{priceRanges.map(({ min, max }) => (
+							<Button
+								key={`${min}-${max}`}
+								onClick={() => handlePriceClick(min, max)}
+								className={
+									priceFilter?.min === min && priceFilter?.max === max
+										? "bg-red-300"
+										: ""
+								}>
+								{min === max ? `${min}` : `${min}`}
+							</Button>
+						))}
+						{/* <Button onClick={() => setPriceFilter(null)}>Reset Price</Button> */}
+					</div>
+				)}
 			</div>
 			{/* Toggle buttons for layout */}
 			<div className="flex gap-4 self-end">

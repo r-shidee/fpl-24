@@ -2,7 +2,7 @@ import CardPlayer from "@/components/widgets/CardPlayer";
 import { fetchPlayers, fetchTeams } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
-import { Player } from '@/types/Player';
+import { Player } from "@/types/Player";
 
 type Fixture = any; // Replace 'any' with the actual fixture type
 
@@ -45,7 +45,7 @@ export default async function Page({
 					/>
 				</div>
 			</div>
-			<div className="p-5 mt-4">
+			<div className="flex flex-col gap-8">
 				<h2 className="text-2xl font-semibold">Players</h2>
 				<Players
 					teamCode={team.code}
@@ -65,15 +65,13 @@ async function Players({
 }) {
 	const players = await fetchPlayers();
 	const filteredPlayers = getPlayersByTeamCode(teamCode);
-	filteredPlayers.sort(
-		(a, b) =>
-			b.expected_goal_involvements_per_90 - a.expected_goal_involvements_per_90
-	);
+	filteredPlayers.sort((a, b) => b.now_cost - a.now_cost);
 	// filteredPlayers.sort((a, b) => b.now_cost - a.now_cost);
 
 	function getPlayersByTeamCode(teamCode: number): Player[] {
 		return players.filter(
-			(player: Player) => player.team_code === teamCode && player.status == "a"
+			// (player: Player) => player.team_code === teamCode && player.status == "a"
+			(player: Player) => player.team_code === teamCode
 		);
 	}
 
@@ -92,7 +90,7 @@ async function Players({
 		<div className="flex flex-col gap-8">
 			<div>
 				<h2 className="mb-2">Forwards</h2>
-				<div className="grid grid-cols-6 gap-4">
+				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
 					{fwd.map((player: Player) => (
 						<CardPlayer
 							key={player.id}
@@ -104,7 +102,7 @@ async function Players({
 			</div>
 			<div>
 				<h2 className="mb-2">Midfielders</h2>
-				<div className="grid grid-cols-6 gap-4">
+				<div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
 					{mid.map((player: Player) => (
 						<CardPlayer
 							key={player.id}
@@ -116,7 +114,7 @@ async function Players({
 			</div>
 			<div>
 				<h2 className="mb-2">Defenders</h2>
-				<div className="grid grid-cols-6 gap-4">
+				<div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
 					{def.map((player: Player) => (
 						<CardPlayer
 							key={player.id}
@@ -128,7 +126,7 @@ async function Players({
 			</div>
 			<div>
 				<h2 className="mb-2">Goalkeepers</h2>
-				<div className="grid grid-cols-6 gap-4">
+				<div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
 					{gks.map((player: Player) => (
 						<CardPlayer
 							key={player.id}
