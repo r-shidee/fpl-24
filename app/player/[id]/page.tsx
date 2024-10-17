@@ -123,8 +123,8 @@ export default async function Page({ params }: { params: { id: number } }) {
 					</div>
 				</div> */}
 			</div>
-			<div className="stats grid gap-4">
-				<ChartMinutesBar fixtures={fixtures.history} />
+			<div className="stats grid lg:grid-cols-4 gap-4">
+				{/* <ChartMinutesBar fixtures={fixtures.history} /> */}
 				<Card>
 					<CardHeader>
 						<CardTitle>Expected Stats</CardTitle>
@@ -166,12 +166,10 @@ export default async function Page({ params }: { params: { id: number } }) {
 						</Table>
 					</CardContent>
 				</Card>
-				<ChartExpected fixtures={fixtures.history} />
-				<ChartPoints fixtures={fixtures.history} />
-
+				{/* <ChartExpected fixtures={fixtures.history} /> */}
+				{/* <ChartPoints fixtures={fixtures.history} /> */}
 				<ChartMinutes fixtures={fixtures.history} />
-
-				<ChartDifficulty fixtures={fixtures.fixtures} />
+				{/* <ChartDifficulty fixtures={fixtures.fixtures} /> */}
 			</div>
 			<div className="grid grid-cols-2 gap-4 w-full"></div>
 

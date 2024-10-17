@@ -1,4 +1,5 @@
 import FilterComponent from "@/components/FilterComponent";
+import Matches from "@/components/matches";
 import CardPlayer from "@/components/widgets/CardPlayer";
 import { Player } from "@/types/Player";
 
@@ -15,12 +16,17 @@ export default async function Page() {
 	);
 
 	return (
-		<div className="flex flex-col gap-4 p-4">
-			<h1 className="text-2xl">My Team</h1>
-			<FilterComponent
-				players={watchlistPlayers}
-				filtering={false}
-			/>
+		<div className="grid grid-cols-12">
+			<div className="flex flex-col gap-4 p-4 col-span-9">
+				<h1 className="text-2xl">My Team</h1>
+				<FilterComponent
+					players={watchlistPlayers}
+					filtering={false}
+				/>
+			</div>
+			<div className="flex flex-col gap-4 p-4 col-span-3">
+				<Matches />
+			</div>
 		</div>
 	);
 }

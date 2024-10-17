@@ -4,10 +4,7 @@ import { DataTable } from "./data-table";
 async function getData(): Promise<Player[]> {
 	// Fetch data from your API here.
 	let data = await fetch(
-		"https://fantasy.premierleague.com/api/bootstrap-static/",
-		{
-			cache: "no-store",
-		}
+		"https://fantasy.premierleague.com/api/bootstrap-static/"
 	);
 	let allData = await data.json();
 	let players = allData.elements;

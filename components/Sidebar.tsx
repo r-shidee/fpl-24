@@ -27,6 +27,26 @@ export default async function Sidebar() {
 			url: "/bps",
 			icon: "bolt",
 		},
+		{
+			label: "xG+xA",
+			url: "/expected_goal_involvements",
+		},
+		{
+			label: "xg ",
+			url: "/expected_goals",
+		},
+		{
+			label: "xa ",
+			url: "/expected_assists",
+		},
+		{
+			label: "xGC",
+			url: "/expected_goals_conceded",
+		},
+		{
+			label: "ict index",
+			url: "/ict_index",
+		},
 	];
 
 	return (
@@ -50,11 +70,6 @@ export default async function Sidebar() {
 								href={`/stats` + link.url}
 								key={index}>
 								<div className="flex items-center gap-3 p-2 rounded hover:bg-gray-800 hover:text-white">
-									<div className="aspect-square rounded border flex items-center justify-center w-12 h-12 bg-bauhaus-blue text-white">
-										<span className="material-symbols-outlined">
-											{link.icon}
-										</span>
-									</div>
 									<span className="text-sm font-mono">{link.label}</span>
 								</div>
 							</Link>

@@ -1,5 +1,6 @@
 "use client";
 import { useParams } from "next/navigation";
+import { ViewTransitions } from "next-view-transitions";
 
 import {
 	Breadcrumb,

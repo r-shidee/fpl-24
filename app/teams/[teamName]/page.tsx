@@ -3,6 +3,7 @@ import { fetchPlayers, fetchTeams } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { Player } from "@/types/Player";
+import CardPlayerDetailed from "@/components/widgets/CardPlayerDetailed";
 
 type Fixture = any; // Replace 'any' with the actual fixture type
 
@@ -90,11 +91,10 @@ async function Players({
 		<div className="flex flex-col gap-8">
 			<div>
 				<h2 className="mb-2">Forwards</h2>
-				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-4">
 					{fwd.map((player: Player) => (
-						<CardPlayer
+						<CardPlayerDetailed
 							key={player.id}
-							teamName="teamName"
 							player={player}
 						/>
 					))}
@@ -102,7 +102,7 @@ async function Players({
 			</div>
 			<div>
 				<h2 className="mb-2">Midfielders</h2>
-				<div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+				<div className="grid grid-cols-2 lg:grid-cols-10 gap-4">
 					{mid.map((player: Player) => (
 						<CardPlayer
 							key={player.id}
@@ -134,7 +134,7 @@ async function Players({
 							player={player}
 						/>
 					))}
-				</div>{" "}
+				</div>
 			</div>
 		</div>
 	);

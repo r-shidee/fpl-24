@@ -58,36 +58,43 @@ const RenderDivs = ({
 	position: number;
 }) => {
 	return (
-		<div className="flex justify-between w-full flex-wrap gap-1 px-2 absolute top-1">
+		<div className="flex flex-col flex-wrap px-2">
 			{position === 1 ? (
-				<div className="flex flex-col flex-wrap h-[150px] gap-1">
-					{Array.from({ length: saves }, (_, index) => (
-						<FontAwesomeIcon
-							className="w-3 h-3 "
-							key={index}
-							icon={faHand}
-						/>
-					))}
+				// <div className="flex flex-col flex-wrap h-[150px] gap-1">
+				// 	{Array.from({ length: saves }, (_, index) => (
+				// 		<FontAwesomeIcon
+				// 			className="w-3 h-3 "
+				// 			key={index}
+				// 			icon={faHand}
+				// 		/>
+				// 	))}
+				// </div>
+				<div className="flex items-center gap-1">
+					<FontAwesomeIcon
+						className="w-3 h-3 "
+						icon={faHand}
+					/>
+					<span className="text-sm">{saves}</span>
 				</div>
 			) : (
 				<div className="flex flex-col flex-wrap gap-1">
-					{Array.from({ length: goals }, (_, index) => (
+					<div className="flex items-center gap-1">
 						<FontAwesomeIcon
 							className="w-3 h-3 "
-							key={index}
 							icon={faFutbol}
 						/>
-					))}
+						<span className="text-sm">{goals}</span>
+					</div>
 				</div>
 			)}
 			<div className="flex flex-col flex-wrap gap-1 align-baseline">
-				{Array.from({ length: assists }, (_, index) => (
+				<div className="flex items-center gap-1">
 					<FontAwesomeIcon
 						className="w-3 h-3 "
-						key={index}
 						icon={faCircleDot}
 					/>
-				))}
+					<span className="text-sm">{assists}</span>
+				</div>
 			</div>
 		</div>
 	);
@@ -96,9 +103,11 @@ const RenderDivs = ({
 export default function CardPlayer({
 	player,
 	teamName,
+	highlightValue,
 }: {
 	player: Player;
 	teamName: string;
+	highlightValue?: string;
 }) {
 	return (
 		<div
@@ -107,11 +116,11 @@ export default function CardPlayer({
 			<Link href={`/player/${player.id}`}>
 				<div className="grid relative gap-2">
 					<div
-						className={`rounded relative overflow-hidden aspect-square flex ease-in-out group-hover:bg-none items-center club--${
+						className={`rounded relative overflow-hidden aspect-square flex ease-in-out items-center club--${
 							teams[player.team]
 						} `}>
 						<Image
-							className="object-cover absolute bottom-0 w-full group-hover:z-0 group-hover:scale-95"
+							className="object-cover absolute bottom-0 w-full group-hover:z-0 group-hover:scale-95 z-10 top-8 -left-8"
 							src={
 								"https://resources.premierleague.com/premierleague/photos/players/250x250/p" +
 								player.photo.replace("jpg", "png")
@@ -120,13 +129,18 @@ export default function CardPlayer({
 							width={250}
 							height={250}
 						/>
-						<RenderDivs
-							goals={player.goals_scored}
-							assists={player.assists}
-							saves={player.saves}
-							position={player.element_type}
-						/>
-						<div className="absolute bottom-0 p-1 flex gap-1 w-full justify-center">
+
+						<div className="absolute right-0 top-0 p-2">
+							{highlightValue ? (
+								<div className="font-mono text-2xl leading-none inline-flex text-shadow-md">
+									{highlightValue}
+								</div>
+							) : (
+								""
+							)}
+						</div>
+
+						<div className="absolute bottom-0 right-0 p-1 flex gap-1 justify-center z-20 flex-col">
 							{player.penalties_order ? (
 								<div className="w-fit justify-between items-center flex font-mono text-xs bg-bauhaus-blue text-white px-2 py-1 rounded-sm">
 									PK-{player.penalties_order}
@@ -134,6 +148,7 @@ export default function CardPlayer({
 							) : (
 								""
 							)}
+
 							{player.status === "i" ? (
 								<div className="justify-between items-center flex w-fit text-xs bg-bauhaus-red text-white px-2 py-1 rounded-sm">
 									<span className="material-symbols-outlined">
@@ -143,6 +158,12 @@ export default function CardPlayer({
 							) : (
 								""
 							)}
+							<RenderDivs
+								goals={player.goals_scored}
+								assists={player.assists}
+								saves={player.saves}
+								position={player.element_type}
+							/>
 						</div>
 					</div>
 
@@ -211,14 +232,14 @@ export default function CardPlayer({
 						/> */}
 						<div className="flex flex-col leading-tight w-full">
 							<div className="flex flex-wrap justify-between">
-								<p className="font-bold">{player.web_name}</p>
+								<p className="text-sm">{player.web_name}</p>
 							</div>
-							<p className=" text-gray-400 text-sm">
+							<p className=" text-gray-400 text-xs font-light">
 								{positions[player.element_type]}
 							</p>
 						</div>
 						<div
-							className={` w-12 h-12 flex justify-end pt-2 pr-2 rounded-bl-full absolute right-0 text-sm font-serif `}>
+							className={` w-12 h-12 flex justify-end pt-2 pr-2 rounded-bl-full absolute right-0 text-sm `}>
 							{(player.now_cost / 10).toFixed(1)}
 						</div>
 					</div>

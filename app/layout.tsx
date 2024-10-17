@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
+import { ViewTransitions } from "next-view-transitions";
+
 import Navbar from "@/components/Navbar";
 import Sidebar from "@/components/Sidebar";
 import "./globals.css";
@@ -20,20 +22,23 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
-			<body className={`layout--main ` + inter.className}>
-				<ThemeProvider
-					attribute="class"
-					defaultTheme="system"
-					enableSystem
-					disableTransitionOnChange>
-					<Navbar />
-					<Sidebar />
-					<div className="content--main w-full overflow-y-scroll mx-auto rounded-xl p-4">
-						{children}
-					</div>
-				</ThemeProvider>
-			</body>
-		</html>
+		<ViewTransitions>
+			<html
+				lang="en"
+				suppressHydrationWarning>
+				<body className={`layout--main ` + inter.className}>
+					<ThemeProvider
+						attribute="class"
+						defaultTheme="system"
+						enableSystem>
+						<Navbar />
+						<Sidebar />
+						<div className="content--main w-full overflow-y-scroll mx-auto rounded-xl p-4">
+							{children}
+						</div>
+					</ThemeProvider>
+				</body>
+			</html>
+		</ViewTransitions>
 	);
 }

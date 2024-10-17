@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard, faListAlt } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import { Player } from "@/types/Player";
-
+import { Link } from "next-view-transitions";
 const positions: { [key: number]: string } = {
 	1: "Goalkeeper",
 	2: "Defender",
@@ -94,13 +94,14 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
 	// Render players in card format
 	const renderCardView = () => (
-		<div className="grid grid-cols-6 gap-4">
+		<div className="grid grid-cols-2 lg:grid-cols-8 gap-4">
 			{/* {filteredPlayers.slice(0, 21).map((player: Player) => ( */}
 			{filteredPlayers.map((player: Player) => (
 				<CardPlayer
 					key={player.id}
 					teamName="teamName"
 					player={player}
+					highlightValue={player[slug]}
 				/>
 			))}
 		</div>
@@ -111,13 +112,13 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 		<div className="">
 			<div className="border-b py-2 flex justify-between">
 				<div className="flex gap-4 items-center ">
-					<div className="font-mono text-xs w-8 text-center">$</div>
+					{/* <div className="font-mono text-xs w-8 text-center">$</div> */}
 				</div>
-				<div className="flex gap-3">
+				{/* <div className="flex gap-3">
 					<div className="font-mono text-xs w-12 text-center">starts</div>
 					<div className="font-mono text-xs w-12 text-center">mins</div>
 					<div className="font-mono text-xs w-12 text-center">value</div>
-				</div>
+				</div> */}
 			</div>
 			<div className="flex flex-col">
 				{filteredPlayers.slice(0, 21).map((player: Player) => (
@@ -125,9 +126,9 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 						key={player.id}
 						className="border-b py-2 flex justify-between">
 						<div className="flex gap-4 items-center ">
-							<div className="font-mono text-xs w-8 text-center">
+							{/* <div className="font-mono text-xs w-8 text-center">
 								{(player.now_cost / 10).toFixed(1)}
-							</div>
+							</div> */}
 							<Image
 								src={
 									"https://resources.premierleague.com/premierleague/badges/rb/t" +
@@ -140,17 +141,22 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 								className=" h-8 w-8 "
 							/>
 							<div className="flex flex-col">
-								<div className="font-semibold">{player.web_name}</div>
-								<div className="text-xs">{positions[player.element_type]}</div>
+								<Link href={`/player/${player.id}`}>
+									<div className="font-semibold">{player.web_name}</div>
+								</Link>
+								<div className="flex gap-1 text-xs font-light text-gray-400">
+									<div>{positions[player.element_type]}</div>
+									<div>{(player.now_cost / 10).toFixed(1)}</div>
+								</div>
 							</div>
 						</div>
 						<div className="flex gap-4 items-center">
-							<div className="font-mono text-lg w-12 text-center">
+							{/* <div className="font-mono text-lg w-12 text-center">
 								{player.starts}
 							</div>
 							<div className="font-mono text-lg w-12 text-center">
 								{player.minutes}
-							</div>
+							</div> */}
 							<div className="font-mono text-lg w-12 text-center">
 								{player[slug]}
 							</div>
@@ -162,46 +168,49 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 	);
 
 	return (
-		<div className="flex flex-col gap-5">
-			<h1 className="text-2xl">{slugTitle[slug]}</h1>
-			<div className="flex flex-wrap justify-between">
-				<div className="flex gap-4 mb-4">
-					<Button
-						onClick={() => setFilter(filter === "gk" ? null : "gk")}
-						className={filter === "gk" ? "bg-red-300" : ""}>
-						Goalkeeper
-					</Button>
-					<Button
-						onClick={() => setFilter(filter === "df" ? null : "df")}
-						className={filter === "df" ? "bg-red-300" : ""}>
-						Defenders
-					</Button>
-					<Button
-						onClick={() => setFilter(filter === "md" ? null : "md")}
-						className={filter === "md" ? "bg-red-300" : ""}>
-						Midfielders
-					</Button>
-					<Button
-						onClick={() => setFilter(filter === "fw" ? null : "fw")}
-						className={filter === "fw" ? "bg-red-300" : ""}>
-						Forwards
-					</Button>
+		<div className="flex flex-col gap-5 relative">
+			<h1 className="text-4xl font-bold text-center">{slugTitle[slug]}</h1>
+			<div className="flex flex-wrap justify-between bg-black bg-opacity-30	  p-4 z-30">
+				<div className="flex flex-col">
+					Filter
+					<div className="flex flex-wrap gap-4 mb-4">
+						<Button
+							onClick={() => setFilter(filter === "gk" ? null : "gk")}
+							className={filter === "gk" ? "bg-red-300" : ""}>
+							GKP
+						</Button>
+						<Button
+							onClick={() => setFilter(filter === "df" ? null : "df")}
+							className={filter === "df" ? "bg-red-300" : ""}>
+							DEF
+						</Button>
+						<Button
+							onClick={() => setFilter(filter === "md" ? null : "md")}
+							className={filter === "md" ? "bg-red-300" : ""}>
+							MID
+						</Button>
+						<Button
+							onClick={() => setFilter(filter === "fw" ? null : "fw")}
+							className={filter === "fw" ? "bg-red-300" : ""}>
+							FOR
+						</Button>
+					</div>
 				</div>
 
 				{filtering && (
-					<div className="flex gap-4 flex-wrap">
+					<div className="flex gap-1 py-2 overflow-scroll">
 						{/* Loop through generated price ranges */}
 						{priceRanges.map(({ min, max }) => (
-							<Button
+							<div
 								key={`${min}-${max}`}
 								onClick={() => handlePriceClick(min, max)}
-								className={
+								className={`" p-2 border rounded w-8 h-8 flex justify-center items-center text-xs "+ ${
 									priceFilter?.min === min && priceFilter?.max === max
-										? "bg-red-300"
-										: ""
-								}>
+										? "bg-green-300 text-black"
+										: "bg-white text-black"
+								}`}>
 								{min === max ? `${min}` : `${min}`}
-							</Button>
+							</div>
 						))}
 						{/* <Button onClick={() => setPriceFilter(null)}>Reset Price</Button> */}
 					</div>
@@ -213,7 +222,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 					className=" flex gap-2 items-center justify-center h-12 p-2"
 					onClick={() => setViewFormat("card")}>
 					<FontAwesomeIcon
-						className=""
+						className="w-4 h-4"
 						icon={faIdCard}
 					/>
 					<div className="text-xs">Card View</div>
@@ -222,15 +231,13 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 					className=" flex gap-2 items-center justify-center h-12 p-2"
 					onClick={() => setViewFormat("list")}>
 					<FontAwesomeIcon
-						className=""
+						className="w-4 h-4"
 						icon={faListAlt}
 					/>
 					<div className="text-xs">List View</div>
 				</div>
 			</div>
-
-			{/* Conditionally render the view */}
-			{viewFormat === "card" ? renderCardView() : renderListView()}
+			<div>{viewFormat === "card" ? renderCardView() : renderListView()}</div>
 		</div>
 	);
 };

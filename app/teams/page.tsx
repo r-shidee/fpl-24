@@ -1,7 +1,7 @@
 import { fetchTeams } from "@/utils";
 import React from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 
 export default async function TeamPage() {
 	const teams = await fetchTeams();
