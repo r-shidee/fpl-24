@@ -1,5 +1,5 @@
 import FilterComponent from "@/components/FilterComponent";
-import Matches from "@/components/matches";
+import Matches from "@/components/Matches";
 import CardPlayer from "@/components/widgets/CardPlayer";
 import { Player } from "@/types/Player";
 
@@ -9,6 +9,7 @@ export default async function Page() {
 	);
 	let allData = await data.json();
 	let players = allData.elements;
+	let events = allData.events;
 
 	let watchlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 	let watchlistPlayers = players.filter((player: Player) =>
@@ -25,7 +26,7 @@ export default async function Page() {
 				/>
 			</div>
 			<div className="flex flex-col gap-4 p-4 col-span-3">
-				<Matches />
+				<Matches events={events} />
 			</div>
 		</div>
 	);
