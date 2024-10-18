@@ -1,7 +1,8 @@
-import FilterComponent from "@/components/FilterComponent";
-import Matches from "@/components/Matches";
-import CardPlayer from "@/components/widgets/CardPlayer";
 import { Player } from "@/types/Player";
+import { Event } from "@/types/Event";
+import { Countdown } from "@/components/widgets/Countdown";
+import FilterComponent from "@/components/FilterComponent";
+import WeeklyFixtures from "@/components/WeeklyFixtures";
 
 export default async function Page() {
 	let data = await fetch(
@@ -10,14 +11,21 @@ export default async function Page() {
 	let allData = await data.json();
 	let players = allData.elements;
 	let events = allData.events;
+	let nextEvent = events.find((event: Event) => event.is_next);
 
 	let watchlist = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 	let watchlistPlayers = players.filter((player: Player) =>
 		watchlist.includes(player.id)
 	);
 
+	// Fetch fixtures data
+	let fixturesData = await fetch(
+		`https://fantasy.premierleague.com/api/fixtures/?event=${nextEvent.id}`
+	);
+	let fixtures = await fixturesData.json();
+
 	return (
-		<div className="grid grid-cols-12">
+		<div className="grid lg:grid-cols-12">
 			<div className="flex flex-col gap-4 p-4 col-span-9">
 				<h1 className="text-2xl">My Team</h1>
 				<FilterComponent
@@ -26,7 +34,16 @@ export default async function Page() {
 				/>
 			</div>
 			<div className="flex flex-col gap-4 p-4 col-span-3">
-				<Matches events={events} />
+				<Countdown
+					deadline={nextEvent.deadline_time}
+					name={nextEvent.name}
+				/>
+				{nextEvent && (
+					<WeeklyFixtures
+						eventId={nextEvent.id}
+						fixtures={fixtures}
+					/>
+				)}
 			</div>
 		</div>
 	);
