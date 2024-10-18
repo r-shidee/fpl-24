@@ -30,6 +30,8 @@ import TablePoints from "@/components/widgets/TablePoints";
 import ChartMinutesBar from "@/components/widgets/ChartMinutesBar";
 import CalendarGameweek from "@/components/widgets/CalendarGameweek";
 
+import { Team } from "@/types/Team"; // Make sure to import the updated Team type
+
 interface Item {
 	season_name: string;
 	total_points: number;
@@ -43,7 +45,7 @@ interface Item {
 export default async function Page({ params }: { params: { id: number } }) {
 	const player = await fetchPlayer(params.id);
 	const fixtures = await getFixtures(params.id);
-	const teams = await fetchTeams();
+	const teams: Team[] = await fetchTeams(); // Explicitly type teams as Team[]
 
 	if (!player) {
 		return <div>No player data available</div>;
@@ -94,7 +96,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 				</div>
 
 				<CalendarGameweek
-					teams={teams}
+					teams={teams as Team[]}
 					upcomingfixtures={fixtures.fixtures}
 					pastfixtures={fixtures.history}
 				/>
