@@ -169,11 +169,37 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
 	return (
 		<div className="flex flex-col gap-5 relative">
-			<h1 className="text-4xl font-bold text-center">{slugTitle[slug]}</h1>
-			<div className="flex flex-wrap justify-between bg-black bg-opacity-30	  p-4 z-30">
+			<div className="flex justify-between">
+				<div className="flex gap-4 self-end">
+					<div
+						className=" flex gap-2 items-center justify-center h-12 p-2"
+						onClick={() => setViewFormat("card")}>
+						<FontAwesomeIcon
+							className="w-4 h-4"
+							icon={faIdCard}
+						/>
+						<div className="text-xs">Card View</div>
+					</div>
+					<div
+						className=" flex gap-2 items-center justify-center h-12 p-2"
+						onClick={() => setViewFormat("list")}>
+						<FontAwesomeIcon
+							className="w-4 h-4"
+							icon={faListAlt}
+						/>
+						<div className="text-xs">List View</div>
+					</div>
+				</div>
+			</div>
+
+			<div className="h-[72dvh] overflow-scroll pb-[80px]">
+				{viewFormat === "card" ? renderCardView() : renderListView()}
+			</div>
+
+			<div className="overflow-hidden absolute w-full bottom-0 left-0 right-0 flex flex-wrap justify-between bg-black bg-opacity-30 z-30">
 				<div className="flex flex-col">
 					Filter
-					<div className="flex flex-wrap gap-4 mb-4">
+					<div className="flex gap-2 mb-2 overflow-scroll">
 						<Button
 							onClick={() => setFilter(filter === "gk" ? null : "gk")}
 							className={filter === "gk" ? "bg-red-300" : ""}>
@@ -198,7 +224,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 				</div>
 
 				{filtering && (
-					<div className="flex gap-1 py-2 overflow-scroll">
+					<div className="flex gap-1 py-2 items-center overflow-scroll">
 						{/* Loop through generated price ranges */}
 						{priceRanges.map(({ min, max }) => (
 							<div
@@ -216,28 +242,6 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 					</div>
 				)}
 			</div>
-			{/* Toggle buttons for layout */}
-			<div className="flex gap-4 self-end">
-				<div
-					className=" flex gap-2 items-center justify-center h-12 p-2"
-					onClick={() => setViewFormat("card")}>
-					<FontAwesomeIcon
-						className="w-4 h-4"
-						icon={faIdCard}
-					/>
-					<div className="text-xs">Card View</div>
-				</div>
-				<div
-					className=" flex gap-2 items-center justify-center h-12 p-2"
-					onClick={() => setViewFormat("list")}>
-					<FontAwesomeIcon
-						className="w-4 h-4"
-						icon={faListAlt}
-					/>
-					<div className="text-xs">List View</div>
-				</div>
-			</div>
-			<div>{viewFormat === "card" ? renderCardView() : renderListView()}</div>
 		</div>
 	);
 };

@@ -27,10 +27,9 @@ export default async function Page({
 	return (
 		<div>
 			<div
-				className={`club--${team.short_name.toLowerCase()} p-5 relative flex flex-col-reverse  md:flex-row justify-between `}>
+				className={`club--${team.short_name.toLowerCase()} p-4 flex-col items- relative flex md:flex-row justify-center items-center gap-4 lg:justify-between mb-4`}>
 				<div>
 					<h1 className="text-4xl font-semibold">{team.name}</h1>
-					<p>Upcoming Match :</p>
 				</div>
 				<div>
 					<Image
@@ -40,14 +39,13 @@ export default async function Page({
 							team.code +
 							".svg"
 						}
-						width={160}
-						height={160}
+						width={120}
+						height={120}
 						alt={"club"}
 					/>
 				</div>
 			</div>
 			<div className="flex flex-col gap-8">
-				<h2 className="text-2xl font-semibold">Players</h2>
 				<Players
 					teamCode={team.code}
 					teamName={team.short_name}
@@ -93,8 +91,9 @@ async function Players({
 				<h2 className="mb-2">Forwards</h2>
 				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-4">
 					{fwd.map((player: Player) => (
-						<CardPlayerDetailed
+						<CardPlayer
 							key={player.id}
+							teamName="teamName"
 							player={player}
 						/>
 					))}

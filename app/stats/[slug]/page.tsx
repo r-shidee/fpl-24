@@ -16,7 +16,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 	return (
 		<div className="">
-			{params.slug}
+			<div className="text-4xl font-bold text-center">{params.slug}</div>
 			<FilterComponent
 				players={players}
 				slug={params.slug}
