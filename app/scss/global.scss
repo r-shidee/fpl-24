@@ -193,7 +193,11 @@ $color in $clubs {
     .bg-dark--#{$club} {
         background-color: $color;
         background-color: darken($color, 5%);
+    }
 
+    .bg--#{$club} {
+        background-color: $color;
+        color: isColorDark($color);
     }
 }
 

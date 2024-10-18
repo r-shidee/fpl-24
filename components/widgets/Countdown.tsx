@@ -56,7 +56,7 @@ export function Countdown({ deadline, name }: CountdownProps) {
 	}
 
 	return (
-		<div className="countdown bg-bauhaus-blue p-4 rounded-lg">
+		<div className="countdown border shadow p-4 rounded-lg">
 			<div className="countdown__title text-center tracking-widest font-mono uppercase border-b border-muted-foreground pb-2">
 				{name}
 			</div>
