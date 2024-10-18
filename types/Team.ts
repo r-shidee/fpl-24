@@ -1,7 +1,7 @@
 export interface Team {
 	code: number;
 	draw: number;
-	form: number | null;
+	form: null;
 	id: number;
 	loss: number;
 	name: string;
@@ -10,7 +10,7 @@ export interface Team {
 	position: number;
 	short_name: string;
 	strength: number;
-	team_division: number | null;
+	team_division: null;
 	unavailable: boolean;
 	win: number;
 	strength_overall_home: number;

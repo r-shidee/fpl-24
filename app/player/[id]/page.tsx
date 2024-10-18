@@ -32,15 +32,6 @@ import CalendarGameweek from "@/components/widgets/CalendarGameweek";
 
 import { Team } from "@/types/Team"; // Make sure to import the updated Team type
 
-interface Item {
-	season_name: string;
-	total_points: number;
-	element_code: number;
-	minutes: number;
-	goals_scored: number;
-	assists: number;
-	saves: number;
-}
 
 export default async function Page({ params }: { params: { id: number } }) {
 	const player = await fetchPlayer(params.id);
@@ -96,9 +87,9 @@ export default async function Page({ params }: { params: { id: number } }) {
 				</div>
 
 				<CalendarGameweek
-					teams={teams as Team[]}
 					upcomingfixtures={fixtures.fixtures}
 					pastfixtures={fixtures.history}
+					teams={teams}
 				/>
 				{/* <Fixtures
 					fixtures={fixtures.fixtures}
