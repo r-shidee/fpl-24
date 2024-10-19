@@ -1,6 +1,5 @@
 import { fetchPlayer, fetchTeams, getClubShort, getFixtures } from "@/utils";
 import Image from "next/image";
-import { getPlayersPosition } from "@/utils";
 import {
 	Table,
 	TableBody,
@@ -25,12 +24,12 @@ import ChartMinutes from "@/components/widgets/ChartMinutes";
 import ChartExpected from "@/components/widgets/ChartExpected";
 import ChartDifficulty from "@/components/widgets/ChartDifficulty";
 import AddData from "@/components/AddData";
-import Fixtures from "@/components/widgets/Fixtures";
 import TablePoints from "@/components/widgets/TablePoints";
 import ChartMinutesBar from "@/components/widgets/ChartMinutesBar";
 import CalendarGameweek from "@/components/widgets/CalendarGameweek";
+import { Team } from "@/types/Team";
 
-import { Team } from "@/types/Team"; // Make sure to import the updated Team type
+import Fixtures from "@/components/widgets/Fixtures";
 
 export default async function Page({ params }: { params: { id: number } }) {
 	const player = await fetchPlayer(params.id);
@@ -85,7 +84,10 @@ export default async function Page({ params }: { params: { id: number } }) {
 					</div>
 				</div>
 
-				<Fixtures fixtures={fixtures.fixtures} count={5} />
+				<Fixtures
+					fixtures={fixtures.fixtures}
+					teams={teams}
+				/>
 
 				{/* <Fixtures
 					fixtures={fixtures.fixtures}
