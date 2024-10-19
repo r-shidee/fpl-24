@@ -26,14 +26,7 @@ export default async function Page() {
 
 	return (
 		<div className="grid lg:grid-cols-12">
-			<div className="flex flex-col gap-4 p-4 col-span-9">
-				<h1 className="text-2xl">My Team</h1>
-				<FilterComponent
-					players={watchlistPlayers}
-					filtering={false}
-				/>
-			</div>
-			<div className="flex flex-col gap-4 p-4 col-span-3">
+			<div className="flex flex-col gap-4 p-4 col-span-3 xl:col-span-9">
 				<Countdown
 					deadline={nextEvent.deadline_time}
 					name={nextEvent.name}
