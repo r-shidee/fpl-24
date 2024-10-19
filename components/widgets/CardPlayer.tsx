@@ -3,10 +3,12 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faCircleDot,
+	faCircleXmark,
 	faClock,
 	faFutbol,
 	faHand,
 	faHospital,
+	faMeh,
 	faPlusSquare,
 } from "@fortawesome/free-regular-svg-icons";
 import { getFixtures } from "@/utils";
@@ -61,7 +63,16 @@ const RenderDivs = ({
 	position: number;
 }) => {
 	return (
-		<div className="flex flex-col flex-wrap px-2">
+		<div className="flex flex-wrap px-1 gap-2 items-center">
+			<div className="flex flex-col flex-wrap gap-1 align-baseline">
+				<div className="flex items-center gap-1">
+					<FontAwesomeIcon
+						className="w-3 h-3 "
+						icon={faClock}
+					/>
+					<span className="text-xs">{minutes}</span>
+				</div>
+			</div>
 			{position === 1 ? (
 				// <div className="flex flex-col flex-wrap h-[150px] gap-1">
 				// 	{Array.from({ length: saves }, (_, index) => (
@@ -77,7 +88,7 @@ const RenderDivs = ({
 						className="w-3 h-3 "
 						icon={faHand}
 					/>
-					<span className="text-sm">{saves}</span>
+					<span className="text-xs">{saves}</span>
 				</div>
 			) : (
 				<div className="flex flex-col flex-wrap gap-1">
@@ -86,7 +97,7 @@ const RenderDivs = ({
 							className="w-3 h-3 "
 							icon={faFutbol}
 						/>
-						<span className="text-sm">{goals}</span>
+						<span className="text-xs">{goals}</span>
 					</div>
 				</div>
 			)}
@@ -96,16 +107,7 @@ const RenderDivs = ({
 						className="w-3 h-3 "
 						icon={faCircleDot}
 					/>
-					<span className="text-sm">{assists}</span>
-				</div>
-			</div>
-			<div className="flex flex-col flex-wrap gap-1 align-baseline">
-				<div className="flex items-center gap-1">
-					<FontAwesomeIcon
-						className="w-3 h-3 "
-						icon={faClock}
-					/>
-					<span className="text-sm">{minutes}</span>
+					<span className="text-xs">{assists}</span>
 				</div>
 			</div>
 		</div>
@@ -151,8 +153,40 @@ export default function CardPlayer({
 								""
 							)}
 						</div>
+						<div className="absolute left-0 top-0 p-2">
+							{player.status === "i" ? (
+								<div className="justify-between items-center flex w-fit text-xs bg-bauhaus-red text-white rounded-full p-1">
+									<FontAwesomeIcon
+										className="w-3 h-3 "
+										icon={faPlusSquare}
+									/>
+								</div>
+							) : (
+								""
+							)}
+							{player.status === "s" ? (
+								<div className="justify-between items-center flex w-fit text-xs bg-bauhaus-red text-white rounded-full p-1">
+									<FontAwesomeIcon
+										className="w-3 h-3 "
+										icon={faCircleXmark}
+									/>
+								</div>
+							) : (
+								""
+							)}
+							{player.status === "d" ? (
+								<div className="justify-between items-center flex w-fit text-xs bg-bauhaus-yellow text-black rounded-full p-1">
+									<FontAwesomeIcon
+										className="w-3 h-3 "
+										icon={faMeh}
+									/>
+								</div>
+							) : (
+								""
+							)}
+						</div>
 
-						<div className="absolute left-0 top-0">
+						<div className="absolute bottom-0">
 							{player.element_type === 1 && player.minutes <= 180 && (
 								<div className="w-fit justify-between items-center flex font-mono text-xs bg-bauhaus-yellow text-black px-2 py-1 rounded-sm">
 									Backup
@@ -160,7 +194,7 @@ export default function CardPlayer({
 							)}
 						</div>
 
-						<div className="absolute bottom-0 right-0 p-1 flex gap-1 justify-center z-20 flex-col">
+						<div className="absolute bottom-0 left-0 p-1 flex gap-1 justify-center z-20 flex-col">
 							{player.penalties_order ? (
 								<div className="w-fit justify-between items-center flex font-mono text-xs bg-bauhaus-blue text-white px-2 py-1 rounded-sm">
 									PK-{player.penalties_order}
@@ -168,26 +202,15 @@ export default function CardPlayer({
 							) : (
 								""
 							)}
-
-							{player.status === "i" ? (
-								<div className="justify-between items-center flex w-fit text-xs bg-bauhaus-red text-white px-2 py-1 rounded-sm">
-									<span className="material-symbols-outlined">
-										local_hospital
-									</span>
-								</div>
-							) : (
-								""
-							)}
-
-							<RenderDivs
-								minutes={player.minutes}
-								goals={player.goals_scored}
-								assists={player.assists}
-								saves={player.saves}
-								position={player.element_type}
-							/>
 						</div>
 					</div>
+					<RenderDivs
+						minutes={player.minutes}
+						goals={player.goals_scored}
+						assists={player.assists}
+						saves={player.saves}
+						position={player.element_type}
+					/>
 
 					{/* <div className={` text-slate-500 p-2`}>
 						<div

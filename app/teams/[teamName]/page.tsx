@@ -101,7 +101,7 @@ async function Players({
 			</div>
 			<div>
 				<h2 className="mb-2">Midfielders</h2>
-				<div className="grid grid-cols-2 lg:grid-cols-10 gap-4">
+				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-4">
 					{mid.map((player: Player) => (
 						<CardPlayer
 							key={player.id}
@@ -113,7 +113,7 @@ async function Players({
 			</div>
 			<div>
 				<h2 className="mb-2">Defenders</h2>
-				<div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-4">
 					{def.map((player: Player) => (
 						<CardPlayer
 							key={player.id}
@@ -125,7 +125,7 @@ async function Players({
 			</div>
 			<div>
 				<h2 className="mb-2">Goalkeepers</h2>
-				<div className="grid grid-cols-2 lg:grid-cols-6 gap-4">
+				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-8 gap-4">
 					{gks.map((player: Player) => (
 						<CardPlayer
 							key={player.id}
