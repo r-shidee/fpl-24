@@ -2,7 +2,6 @@
 import { useState } from "react";
 import Link from "next/link";
 
-
 export default function Navbar() {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -19,7 +18,6 @@ export default function Navbar() {
 					}`}
 					onClick={toggleMenu}
 					aria-label="Toggle menu">
-					aaa
 					<span className="header__toggle-bar"></span>
 					<span className="header__toggle-bar"></span>
 					<span className="header__toggle-bar"></span>
