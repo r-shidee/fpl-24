@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faCircleDot,
+	faClock,
 	faFutbol,
 	faHand,
 	faHospital,
@@ -50,8 +51,10 @@ const RenderDivs = ({
 	goals,
 	assists,
 	saves,
+	minutes,
 	position,
 }: {
+	minutes: number;
 	goals: number;
 	assists: number;
 	saves: number;
@@ -96,6 +99,15 @@ const RenderDivs = ({
 					<span className="text-sm">{assists}</span>
 				</div>
 			</div>
+			<div className="flex flex-col flex-wrap gap-1 align-baseline">
+				<div className="flex items-center gap-1">
+					<FontAwesomeIcon
+						className="w-3 h-3 "
+						icon={faClock}
+					/>
+					<span className="text-sm">{minutes}</span>
+				</div>
+			</div>
 		</div>
 	);
 };
@@ -120,7 +132,7 @@ export default function CardPlayer({
 							teams[player.team]
 						} `}>
 						<Image
-							className="object-cover absolute bottom-0 w-full group-hover:z-0 group-hover:scale-95 z-10 top-8 -left-8"
+							className="object-cover absolute bottom-0 w-full group-hover:z-0 group-hover:scale-95 z-10 top-8 -left-4"
 							src={
 								"https://resources.premierleague.com/premierleague/photos/players/250x250/p" +
 								player.photo.replace("jpg", "png")
@@ -137,6 +149,14 @@ export default function CardPlayer({
 								</div>
 							) : (
 								""
+							)}
+						</div>
+
+						<div className="absolute left-0 top-0">
+							{player.element_type === 1 && player.minutes <= 180 && (
+								<div className="w-fit justify-between items-center flex font-mono text-xs bg-bauhaus-yellow text-black px-2 py-1 rounded-sm">
+									Backup
+								</div>
 							)}
 						</div>
 
@@ -158,7 +178,9 @@ export default function CardPlayer({
 							) : (
 								""
 							)}
+
 							<RenderDivs
+								minutes={player.minutes}
 								goals={player.goals_scored}
 								assists={player.assists}
 								saves={player.saves}

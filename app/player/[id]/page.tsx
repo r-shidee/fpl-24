@@ -85,6 +85,8 @@ export default async function Page({ params }: { params: { id: number } }) {
 					</div>
 				</div>
 
+				<Fixtures fixtures={fixtures.fixtures} count={5} />
+
 				{/* <Fixtures
 					fixtures={fixtures.fixtures}
 					count={fixtures.fixtures.length}

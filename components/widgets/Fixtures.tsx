@@ -1,42 +1,13 @@
-import { fetchTeams } from "@/utils";
-
-interface Team {
-	code: number;
-	draw: number;
-	form: null;
-	id: number;
-	loss: number;
-	name: string;
-	played: number;
-	points: number;
-	position: number;
-	short_name: string;
-	strength: number;
-	team_division: null;
-	unavailable: boolean;
-	win: number;
-	strength_overall_home: number;
-	strength_overall_away: number;
-	strength_attack_home: number;
-	strength_attack_away: number;
-	strength_defence_home: number;
-	strength_defence_away: number;
-	pulse_id: number;
-}
+import React from "react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 interface Fixture {
-	id: number;
-	code: number;
+	event: number;
+	opponent_team: number;
+	is_home: boolean;
+	difficulty: number;
 	team_h: number;
 	team_a: number;
-	event: number;
-	minutes: number;
-	difficulty: number;
-	finished: boolean;
-	provisional_start_time: boolean;
-	is_home: boolean;
-	kickoff_time: string;
-	event_name: string;
 }
 
 interface FixturesProps {
@@ -44,29 +15,26 @@ interface FixturesProps {
 	count: number;
 }
 
-export default async function Fixtures({ fixtures, count }: FixturesProps) {
-	const teams = await fetchTeams();
-
-	if (count) {
-		fixtures = fixtures.slice(0, count + 1);
-	}
-
+const Fixtures: React.FC<FixturesProps> = ({ fixtures, count }) => {
 	return (
-		<div className="grid grid-cols-4 sm:grid-cols-5 gap-2 col-span-1">
-			{fixtures.map((fixture) => (
-				<div
-					key={fixture.code}
-					className={`border rounded p-2 text-xs fixture--level-${fixture.difficulty}`}>
-					<div>{fixture.event_name.replace("Gameweek", "")}</div>
-					<div>
-						{fixture.is_home ? (
-							<div>{teams[fixture.team_a - 1].short_name} (H)</div>
-						) : (
-							<div>{teams[fixture.team_h - 1].short_name} (A)</div>
-						)}
-					</div>
+		<Card>
+			<CardHeader>
+				<CardTitle>Upcoming Fixtures</CardTitle>
+			</CardHeader>
+			<CardContent>
+				<div className="grid grid-cols-5">
+					{fixtures.slice(0, count).map((fixture, index) => (
+						<div
+							key={index}
+							className="mb-2">
+							GW{fixture.event}: {fixture.is_home ? "H" : "A"} vs{" "}
+							{fixture.opponent_team} (FDR: {fixture.difficulty})
+						</div>
+					))}
 				</div>
-			))}
-		</div>
+			</CardContent>
+		</Card>
 	);
-}
+};
+
+export default Fixtures;
