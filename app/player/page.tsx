@@ -1,5 +1,4 @@
 import { Player } from "@/types/Player";
-import { columns } from "./columns";
 import { DataTable } from "./data-table";
 
 async function getData(): Promise<Player[]> {
@@ -32,10 +31,10 @@ export default async function PlayerPage() {
 
 	return (
 		<div className="">
-			<DataTable
+			{/* <DataTable
 				columns={columns}
 				data={data}
-			/>
+			/> */}
 		</div>
 	);
 }

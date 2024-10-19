@@ -2,8 +2,8 @@
 import { db } from "../lib/firebase";
 import { collection, addDoc } from "firebase/firestore";
 
-const AddFavoritePlayer = (playerID: number) => {
-	const AddFavoritePlayer = async (playerID) => {
+const AddFavoritePlayer = ({ playerID }: { playerID: number }) => {
+	const handleAddFavorite = async () => {
 		try {
 			const docRef = await addDoc(collection(db, "watchlist"), {
 				name: "John Doe",
@@ -15,7 +15,7 @@ const AddFavoritePlayer = (playerID: number) => {
 		}
 	};
 
-	return <button onClick={AddFavoritePlayer}>Add Data</button>;
+	return <button onClick={handleAddFavorite}>Add Data</button>;
 };
 
 export default AddFavoritePlayer;

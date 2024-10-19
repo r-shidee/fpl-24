@@ -40,15 +40,13 @@ interface Player {
 interface StandingsProps {
 	players: Player[];
 	description: string;
-	sortBy: Extract<
-		keyof Player,
-		| "expected_goal_involvements"
+	sortBy:
 		| "goals_scored"
-		| "assists"
+		| "expected_goal_involvements"
 		| "saves"
-		| "bps"
+		| "assists"
 		| "points_per_game"
-	>; // Only numeric keys
+		| "bps";
 }
 
 const Standings: React.FC<StandingsProps> = ({
@@ -56,7 +54,11 @@ const Standings: React.FC<StandingsProps> = ({
 	description,
 	sortBy,
 }) => {
-	players.sort((a, b) => b[sortBy] - a[sortBy]);
+	players.sort((a, b) => {
+		const aValue = Number(a[sortBy as keyof Player]) || 0;
+		const bValue = Number(b[sortBy as keyof Player]) || 0;
+		return bValue - aValue;
+	});
 
 	return (
 		<div>
@@ -102,7 +104,7 @@ const Standings: React.FC<StandingsProps> = ({
 										</div>
 
 										<div className="text-2xl font-bold p-4">
-											{player[sortBy]}
+											{player[sortBy as keyof Player]}
 										</div>
 									</div>
 								) : (
@@ -123,7 +125,9 @@ const Standings: React.FC<StandingsProps> = ({
 												<div className="p-2">{player.web_name}</div>
 											</Link>
 										</div>
-										<div className="font-bold p-2"> {player[sortBy]}</div>
+										<div className="font-bold p-2">
+											{player[sortBy as keyof Player]}
+										</div>
 									</div>
 								)}
 							</div>

@@ -56,8 +56,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 	const priceRanges = generatePriceRanges(4.0, 15, 1); // Generate price ranges between 4.0 and 15.5
 
 	let filteredPlayers = players.filter((player) => {
-		// Ensure the slug property is greater than 0
-		if (player[slug] <= 0) return false;
+		// Ensure slug is defined and the property is greater than 0
+		if (!slug || player[slug as keyof Player] == 0) return false;
 		if (player.minutes == 0) return false;
 
 		// Filter based on position
@@ -79,7 +79,11 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 		return true;
 	});
 
-	filteredPlayers.sort((a, b) => b[slug] - a[slug]);
+	filteredPlayers.sort((a, b) => {
+		const aValue = Number(a[slug as keyof Player]) || 0;
+		const bValue = Number(b[slug as keyof Player]) || 0;
+		return bValue - aValue;
+	});
 
 	// Toggle the price filter on and off
 	const handlePriceClick = (min: number, max: number) => {
@@ -101,7 +105,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 					key={player.id}
 					teamName="teamName"
 					player={player}
-					highlightValue={player[slug]}
+					highlightValue={(player[slug as keyof Player] ?? '').toString()}
 				/>
 			))}
 		</div>
@@ -158,7 +162,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 								{player.minutes}
 							</div> */}
 							<div className="font-mono text-lg w-12 text-center">
-								{player[slug]}
+								{player[slug as keyof Player]}
 							</div>
 						</div>
 					</div>
