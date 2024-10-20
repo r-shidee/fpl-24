@@ -3,6 +3,7 @@ import { Event } from "@/types/Event";
 import { Countdown } from "@/components/widgets/Countdown";
 import FilterComponent from "@/components/FilterComponent";
 import WeeklyFixtures from "@/components/WeeklyFixtures";
+import CardPlayer from "@/components/widgets/CardPlayer";
 
 export default async function Page() {
 	let data = await fetch(
@@ -24,9 +25,27 @@ export default async function Page() {
 	);
 	let fixtures = await fixturesData.json();
 
+	// Sort players by price (descending) and limit to 20
+	let topPlayers = players
+		.sort((a: Player, b: Player) => b.now_cost - a.now_cost)
+		.slice(0, 24);
+
 	return (
-		<div className="grid lg:grid-cols-12">
-			<div className="flex flex-col gap-4 p-4 col-span-3 xl:col-span-9">
+		<div className="grid lg:grid-cols-12 gap-5">
+			<div className="flex flex-col gap-4 xl:col-span-9 ">
+				<h1>Players</h1>
+				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+					{topPlayers.map((player: Player) => (
+						<CardPlayer
+							key={player.id}
+							teamName="teamName"
+							player={player}
+						/>
+					))}
+				</div>
+			</div>
+
+			<div className="flex flex-col gap-4 col-span-1 xl:col-span-3">
 				<Countdown
 					deadline={nextEvent.deadline_time}
 					name={nextEvent.name}
