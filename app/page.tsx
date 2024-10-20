@@ -31,10 +31,10 @@ export default async function Page() {
 		.slice(0, 24);
 
 	return (
-		<div className="grid lg:grid-cols-12 gap-5">
+		<div className="grid xl:grid-cols-12 gap-5">
 			<div className="flex flex-col gap-4 xl:col-span-9 ">
 				<h1>Players</h1>
-				<div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+				<div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4">
 					{topPlayers.map((player: Player) => (
 						<CardPlayer
 							key={player.id}
