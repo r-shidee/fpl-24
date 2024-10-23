@@ -55,11 +55,6 @@ const items = [
 		title: "ict index",
 		url: "/ict_index",
 	},
-	// {
-	// 	title: "Settings",
-	// 	url: "#",
-	// 	icon: Settings,
-	// },
 ];
 
 export function AppSidebar() {
