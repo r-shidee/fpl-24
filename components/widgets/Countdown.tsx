@@ -52,13 +52,13 @@ export function Countdown({ deadline, name }: CountdownProps) {
 	}, [deadline]);
 
 	if (isExpired) {
-		return <div className="countdown__clock">The event has started!</div>;
+		return <div className="countdown__clock">No more fixtures.</div>;
 	}
 
 	return (
 		<div className="countdown border shadow p-4 rounded-lg">
-			<div className="countdown__title text-center tracking-widest font-mono uppercase border-b border-muted-foreground pb-2">
-				{name}
+			<div className="countdown__title tracking-widest font-mono uppercase border-b border-muted-foreground pb-2">
+				Deadline - {name}
 			</div>
 
 			<div className="countdown__clock rounded grid grid-cols-4 p-3 ">

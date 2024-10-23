@@ -68,7 +68,8 @@ export default async function Sidebar() {
 						{links?.map((link, index) => (
 							<Link
 								href={`/stats` + link.url}
-								key={index}>
+								key={index}
+							>
 								<div className="flex items-center gap-3 p-2 rounded hover:bg-gray-800 hover:text-white">
 									<span className="text-sm font-mono">{link.label}</span>
 								</div>
@@ -87,7 +88,8 @@ export default async function Sidebar() {
 							<Link
 								href={"/teams/" + team.short_name.toLowerCase()}
 								key={team.id}
-								className={`club--${team.short_name.toLowerCase()} relative flex justify-center items-center border aspect-square w-12 h-12 rounded `}>
+								className={`relative flex justify-center items-center self-center border aspect-square w-full rounded `}
+							>
 								<Image
 									key={team.id}
 									src={

@@ -19,24 +19,5 @@ export default function PlayerLayout({
 	const params = useParams();
 	const slug = params.id; // Accessing the slug parameter
 
-	return (
-		<div className="grid grid-cols-1 gap-5">
-			<Breadcrumb>
-				<BreadcrumbList>
-					<BreadcrumbItem>
-						<BreadcrumbLink href="/">Home</BreadcrumbLink>
-					</BreadcrumbItem>
-					<BreadcrumbSeparator />
-					<BreadcrumbItem>
-						<BreadcrumbLink href="/player">Players</BreadcrumbLink>
-					</BreadcrumbItem>
-					<BreadcrumbSeparator />
-					<BreadcrumbItem>
-						<BreadcrumbPage>{slug}</BreadcrumbPage>
-					</BreadcrumbItem>
-				</BreadcrumbList>
-			</Breadcrumb>
-			{children}
-		</div>
-	);
+	return <div className="grid grid-cols-1 gap-5">{children}</div>;
 }
