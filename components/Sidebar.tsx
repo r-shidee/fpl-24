@@ -52,14 +52,6 @@ export default async function Sidebar() {
 	return (
 		<div className="sidebar--left hidden">
 			<nav className="gap-2 p-3 flex flex-col rounded-lg">
-				{/* <div>
-					<Link
-						href="/player"
-						className="text-lg">
-						Players
-					</Link>
-				</div> */}
-
 				<div>
 					<div className="text-lg">
 						<Link href="/stats">Stats</Link>

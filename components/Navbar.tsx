@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareMinus } from "@fortawesome/free-regular-svg-icons";
 
@@ -24,7 +24,11 @@ export default function Navbar() {
 					<FontAwesomeIcon icon={faSquareMinus} />
 				</button>
 			</div>
-			{isMenuOpen ? <div className="absolute bottom-0 ">menu content</div> : ""}
+			{isMenuOpen ? (
+				<div className="absolute -bottom- flex w-full justify-center h-full  "></div>
+			) : (
+				""
+			)}
 		</nav>
 	);
 }
