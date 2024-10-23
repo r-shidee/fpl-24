@@ -222,7 +222,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 								<div className="w-full">
 									<Slider
 										className=""
-										onValueChange={(i) => handlePriceClick(4, i)}
+										onValueChange={(i) => handlePriceClick(4, i[0])}
 										defaultValue={[4]}
 										min={4}
 										max={15}
