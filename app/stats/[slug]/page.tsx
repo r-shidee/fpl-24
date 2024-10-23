@@ -16,7 +16,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
 	return (
 		<div className="">
-			<div className="text-4xl font-bold text-center">{params.slug}</div>
+			<div className="py-8 text-4xl font-bold capitalize">
+				{params.slug.replaceAll("_", " ")}
+			</div>
 			<FilterComponent
 				players={players}
 				slug={params.slug}

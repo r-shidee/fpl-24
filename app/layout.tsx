@@ -26,7 +26,7 @@ export default function RootLayout({
 				lang="en"
 				suppressHydrationWarning
 			>
-				<body className={`layout--main ` + inter.className}>
+				<body className={inter.className}>
 					<ThemeProvider
 						attribute="class"
 						defaultTheme="system"
@@ -34,7 +34,7 @@ export default function RootLayout({
 					>
 						<SidebarProvider>
 							<AppSidebar />
-							<main>
+							<main className="w-full">
 								<SidebarTrigger />
 								<div className="content--main w-full overflow-y-scroll mx-auto rounded-xl p-4">
 									{children}

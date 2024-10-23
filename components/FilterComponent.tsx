@@ -7,6 +7,8 @@ import { faIdCard, faListAlt } from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import { Player } from "@/types/Player";
 import { Link } from "next-view-transitions";
+import { Slider } from "@/components/ui/slider";
+
 const positions: { [key: number]: string } = {
 	1: "Goalkeeper",
 	2: "Defender",
@@ -125,15 +127,13 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 				</div> */}
 			</div>
 			<div className="flex flex-col">
-				{filteredPlayers.slice(0, 21).map((player: Player) => (
+				{filteredPlayers.slice(0, 21).map((player: Player, index: number) => (
 					<div
 						key={player.id}
 						className="border-b py-2 flex justify-between"
 					>
 						<div className="flex gap-4 items-center ">
-							{/* <div className="font-mono text-xs w-8 text-center">
-								{(player.now_cost / 10).toFixed(1)}
-							</div> */}
+							<div className="font-mono w-8 text-center">{index + 1}</div>
 							<Image
 								src={
 									"https://resources.premierleague.com/premierleague/badges/rb/t" +
@@ -174,7 +174,67 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
 	return (
 		<div className="flex flex-col gap-5 relative">
-			<div className="flex justify-between">
+			<div className="flex flex-wrap">
+				<div className="overflow-hidden  w-full flex flex-col lg:flex-row flex-wrap gap-4 bg-black bg-opacity-30 z-30 p-2">
+					<div className="flex flex-col gap-1">
+						Filter by Position
+						<div className="flex gap-2 mb-2 overflow-scroll">
+							<div
+								onClick={() => setFilter(filter === "gk" ? null : "gk")}
+								className={`${
+									filter === "gk" ? "bg-red-300" : ""
+								} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+							>
+								GKP
+							</div>
+							<div
+								onClick={() => setFilter(filter === "df" ? null : "df")}
+								className={`${
+									filter === "df" ? "bg-red-300" : ""
+								} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+							>
+								DEF
+							</div>
+							<div
+								onClick={() => setFilter(filter === "md" ? null : "md")}
+								className={`${
+									filter === "md" ? "bg-red-300" : ""
+								} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+							>
+								MID
+							</div>
+							<div
+								onClick={() => setFilter(filter === "fw" ? null : "fw")}
+								className={`${
+									filter === "fw" ? "bg-red-300" : ""
+								} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+							>
+								FOR
+							</div>
+						</div>
+					</div>
+
+					{filtering && (
+						<div className="lg:w-1/3 flex flex-col gap-2">
+							<p>Filter by Pricing</p>
+							<div className="flex gap-2 items-center">
+								<div className="">4</div>
+								<div className="w-full">
+									<Slider
+										className=""
+										onValueChange={(i) => handlePriceClick(4, i)}
+										defaultValue={[4]}
+										min={4}
+										max={15}
+										step={0.5}
+									/>
+								</div>
+
+								<div className="">15</div>
+							</div>
+						</div>
+					)}
+				</div>
 				<div className="flex gap-4 self-end">
 					<div
 						className=" flex gap-2 items-center justify-center h-12 p-2"
@@ -201,58 +261,6 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 
 			<div className="h-[72dvh] overflow-scroll pb-[80px]">
 				{viewFormat === "card" ? renderCardView() : renderListView()}
-			</div>
-
-			<div className="overflow-hidden absolute w-full bottom-0 left-0 right-0 flex flex-wrap justify-between bg-black bg-opacity-30 z-30 p-2">
-				<div className="flex flex-col gap-1">
-					Filter
-					<div className="flex gap-2 mb-2 overflow-scroll">
-						<Button
-							onClick={() => setFilter(filter === "gk" ? null : "gk")}
-							className={filter === "gk" ? "bg-red-300" : ""}
-						>
-							GKP
-						</Button>
-						<Button
-							onClick={() => setFilter(filter === "df" ? null : "df")}
-							className={filter === "df" ? "bg-red-300" : ""}
-						>
-							DEF
-						</Button>
-						<Button
-							onClick={() => setFilter(filter === "md" ? null : "md")}
-							className={filter === "md" ? "bg-red-300" : ""}
-						>
-							MID
-						</Button>
-						<Button
-							onClick={() => setFilter(filter === "fw" ? null : "fw")}
-							className={filter === "fw" ? "bg-red-300" : ""}
-						>
-							FOR
-						</Button>
-					</div>
-				</div>
-
-				{filtering && (
-					<div className="flex gap-1 py-2 items-center overflow-scroll">
-						{/* Loop through generated price ranges */}
-						{priceRanges.map(({ min, max }) => (
-							<div
-								key={`${min}-${max}`}
-								onClick={() => handlePriceClick(min, max)}
-								className={`" p-2 border rounded w-8 h-8 flex justify-center items-center text-xs "+ ${
-									priceFilter?.min === min && priceFilter?.max === max
-										? "bg-green-300 text-black"
-										: "bg-white text-black"
-								}`}
-							>
-								{min === max ? `${min}` : `${min}`}
-							</div>
-						))}
-						{/* <Button onClick={() => setPriceFilter(null)}>Reset Price</Button> */}
-					</div>
-				)}
 			</div>
 		</div>
 	);

@@ -1,7 +1,9 @@
 import {
 	Calendar,
+	Database,
 	Goal,
 	Hand,
+	HelpCircle,
 	Home,
 	Inbox,
 	Search,
@@ -24,18 +26,35 @@ const items = [
 	{
 		title: "Goals",
 		url: "/goals_scored",
-		icon: Goal,
+	},
+	{
+		title: "Assists",
+		url: "/assists",
 	},
 	{
 		title: "Saves",
 		url: "/saves",
-		icon: Hand,
 	},
-	// {
-	// 	title: "Search",
-	// 	url: "#",
-	// 	icon: Search,
-	// },
+	{
+		title: "xG",
+		url: "/expected_goals",
+	},
+	{
+		title: "xA",
+		url: "/expected_assists",
+	},
+	{
+		title: "xGC",
+		url: "/expected_goals_conceded",
+	},
+	{
+		title: "xGI",
+		url: "/expected_goal_involvements",
+	},
+	{
+		title: "ict index",
+		url: "/ict_index",
+	},
 	// {
 	// 	title: "Settings",
 	// 	url: "#",
@@ -55,7 +74,6 @@ export function AppSidebar() {
 								<SidebarMenuItem key={item.title}>
 									<SidebarMenuButton asChild>
 										<a href={`/stats` + item.url}>
-											<item.icon />
 											<span>{item.title}</span>
 										</a>
 									</SidebarMenuButton>
