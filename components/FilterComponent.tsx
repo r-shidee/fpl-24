@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import CardPlayer from "./widgets/CardPlayer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faIdCard, faListAlt } from "@fortawesome/free-regular-svg-icons";
@@ -14,13 +13,6 @@ const positions: { [key: number]: string } = {
 	2: "Defender",
 	3: "Midfielder",
 	4: "Forward",
-};
-
-const slugTitle: { [key: string]: string } = {
-	goals_scored: "Goals",
-	assists: "Assists",
-	bps: "Bonus Points System",
-	points_per_game: "Points Per Game",
 };
 
 type FilterComponentProps = {
@@ -176,61 +168,42 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 		<div className="flex flex-col gap-5 relative">
 			<div className="flex flex-wrap">
 				<div className="overflow-hidden  w-full flex flex-col lg:flex-row flex-wrap gap-4 bg-black bg-opacity-30 z-30 p-2">
-					<div className="flex flex-col gap-1">
-						Filter by Position
-						<div className="flex gap-2 mb-2 overflow-scroll">
-							<div
-								onClick={() => setFilter(filter === "gk" ? null : "gk")}
-								className={`${
-									filter === "gk" ? "bg-red-300" : ""
-								} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
-							>
-								GKP
-							</div>
-							<div
-								onClick={() => setFilter(filter === "df" ? null : "df")}
-								className={`${
-									filter === "df" ? "bg-red-300" : ""
-								} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
-							>
-								DEF
-							</div>
-							<div
-								onClick={() => setFilter(filter === "md" ? null : "md")}
-								className={`${
-									filter === "md" ? "bg-red-300" : ""
-								} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
-							>
-								MID
-							</div>
-							<div
-								onClick={() => setFilter(filter === "fw" ? null : "fw")}
-								className={`${
-									filter === "fw" ? "bg-red-300" : ""
-								} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
-							>
-								FOR
-							</div>
-						</div>
-					</div>
-
 					{filtering && (
-						<div className="lg:w-1/3 flex flex-col gap-2">
-							<p>Filter by Pricing</p>
-							<div className="flex gap-2 items-center">
-								<div className="">4</div>
-								<div className="w-full">
-									<Slider
-										className=""
-										defaultValue={[40, 150]}
-										min={40}
-										max={150}
-										step={5}
-										minStepsBetweenThumbs={5}
-									/>
+						<div className="flex flex-col gap-1">
+							Filter by Position
+							<div className="flex gap-2 mb-2 overflow-scroll">
+								<div
+									onClick={() => setFilter(filter === "gk" ? null : "gk")}
+									className={`${
+										filter === "gk" ? "bg-red-300" : ""
+									} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+								>
+									GKP
 								</div>
-
-								<div className="">15</div>
+								<div
+									onClick={() => setFilter(filter === "df" ? null : "df")}
+									className={`${
+										filter === "df" ? "bg-red-300" : ""
+									} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+								>
+									DEF
+								</div>
+								<div
+									onClick={() => setFilter(filter === "md" ? null : "md")}
+									className={`${
+										filter === "md" ? "bg-red-300" : ""
+									} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+								>
+									MID
+								</div>
+								<div
+									onClick={() => setFilter(filter === "fw" ? null : "fw")}
+									className={`${
+										filter === "fw" ? "bg-red-300" : ""
+									} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+								>
+									FOR
+								</div>
 							</div>
 						</div>
 					)}

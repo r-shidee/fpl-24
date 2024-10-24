@@ -1,3 +1,5 @@
+import { notFound } from "next/navigation";
+
 import { fetchPlayer, fetchTeams, getClubShort, getFixtures } from "@/utils";
 import Image from "next/image";
 import {
@@ -37,7 +39,7 @@ export default async function Page({ params }: { params: { id: number } }) {
 	const teams: Team[] = await fetchTeams(); // Explicitly type teams as Team[]
 
 	if (!player) {
-		return <div>No player data available</div>;
+		notFound();
 	}
 	return (
 		<div className="grid gap-5 rounded-2xl">
@@ -49,11 +51,13 @@ export default async function Page({ params }: { params: { id: number } }) {
 						</h2>
 					</div>
 					<div
-						className={`grid grid-cols-2 grid-rows-2 aspect-square overflow-hidden`}>
+						className={`grid grid-cols-2 grid-rows-2 aspect-square overflow-hidden`}
+					>
 						<div
 							className={`flex justify-center items-center club--${getClubShort(
 								player?.team
-							)}`}>
+							)}`}
+						>
 							<Image
 								className="object-cover rounded-full bg-black"
 								src={
