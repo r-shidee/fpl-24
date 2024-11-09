@@ -126,13 +126,15 @@ export default function CardPlayer({
 	return (
 		<div
 			key={player.id}
-			className=" hover:bg-slate-900 rounded group ">
+			className=" hover:bg-slate-900 rounded group "
+		>
 			<Link href={`/player/${player.id}`}>
 				<div className="grid relative gap-2">
 					<div
 						className={`rounded relative overflow-hidden aspect-square flex ease-in-out items-center club--${
 							teams[player.team]
-						} `}>
+						} `}
+					>
 						<Image
 							className="object-cover absolute bottom-0 w-full group-hover:z-0 group-hover:scale-95 z-10 top-8 -left-4"
 							src={
@@ -284,7 +286,8 @@ export default function CardPlayer({
 							</p>
 						</div>
 						<div
-							className={` w-12 h-12 flex justify-end pt-2 pr-2 rounded-bl-full absolute right-0 text-sm `}>
+							className={` w-12 h-12 flex justify-end pt-2 pr-2 rounded-bl-full absolute right-0 text-sm `}
+						>
 							{(player.now_cost / 10).toFixed(1)}
 						</div>
 					</div>

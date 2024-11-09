@@ -31,7 +31,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 		min: number;
 		max: number;
 	} | null>(null);
-	const [viewFormat, setViewFormat] = useState<"card" | "list">("card");
+	const [viewFormat, setViewFormat] = useState<"card" | "list">("list");
 
 	// Helper function to generate price ranges from 4.0 to 15.5
 	const generatePriceRanges = (
@@ -154,7 +154,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 							<div className="font-mono text-lg w-12 text-center">
 								{player.minutes}
 							</div> */}
-							<div className="font-mono text-lg w-12 text-center">
+							<div className="font-mono text-lg  text-center">
 								{player[slug as keyof Player]}
 							</div>
 						</div>
@@ -167,7 +167,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 	return (
 		<div className="flex flex-col gap-5 relative">
 			<div className="flex flex-wrap">
-				<div className="overflow-hidden  w-full flex flex-col lg:flex-row flex-wrap gap-4 bg-black bg-opacity-30 z-30 p-2">
+				<div className="overflow-hidden w-full flex flex-col lg:flex-row flex-wrap gap-4 bg-black bg-opacity-30 z-30 p-2">
 					{filtering && (
 						<div className="flex flex-col gap-1">
 							Filter by Position
@@ -232,8 +232,8 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 				</div>
 			</div>
 
-			<div className="h-[72dvh] overflow-scroll pb-[80px]">
-				{viewFormat === "card" ? renderCardView() : renderListView()}
+			<div className="h-[72dvh] pb-[80px]">
+				{viewFormat === "list" ? renderListView() : renderCardView()}
 			</div>
 		</div>
 	);

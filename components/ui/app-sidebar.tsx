@@ -1,3 +1,7 @@
+"use client";
+
+import { useState, useEffect } from "react";
+
 import {
 	Calendar,
 	Database,
@@ -20,6 +24,7 @@ import {
 	SidebarMenuButton,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Team } from "@/types/Team";
 
 // Menu items.
 const items = [
@@ -58,6 +63,17 @@ const items = [
 ];
 
 export function AppSidebar() {
+	const [teams, setTeams] = useState<any[]>([]);
+
+	useEffect(() => {
+		async function fetchTeams() {
+			let res = await fetch("/api/teams");
+			let data = await res.json();
+			setTeams(data);
+		}
+		fetchTeams();
+	}, []);
+
 	return (
 		<Sidebar>
 			<SidebarContent>
