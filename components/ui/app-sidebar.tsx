@@ -26,6 +26,8 @@ import {
 } from "@/components/ui/sidebar";
 import { Team } from "@/types/Team";
 
+import Link from "next/link";
+
 // Menu items.
 const items = [
 	{
@@ -78,7 +80,9 @@ export function AppSidebar() {
 		<Sidebar>
 			<SidebarContent>
 				<SidebarGroup>
-					<SidebarGroupLabel>FPL-24</SidebarGroupLabel>
+					<SidebarGroupLabel>
+						<Link href="/">FPL-24</Link>
+					</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
 							{items.map((item) => (
