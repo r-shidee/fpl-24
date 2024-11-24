@@ -25,7 +25,7 @@ export default function Navbar() {
 				</button>
 			</div>
 			{isMenuOpen ? (
-				<div className="absolute -bottom- flex w-full justify-center h-full  "></div>
+				<div className="absolute -bottom- flex w-full justify-center h-full"></div>
 			) : (
 				""
 			)}

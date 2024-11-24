@@ -27,9 +27,10 @@ export default async function Page({
 	return (
 		<div>
 			<div
-				className={`club--${team.short_name.toLowerCase()} p-4 flex-col items- relative flex md:flex-row justify-center items-center gap-4 lg:justify-between mb-4`}>
+				className={`club--${team.short_name.toLowerCase()} p-4 flex-col items- relative flex md:flex-row justify-center items-center gap-4 lg:justify-between mb-4 rounded-2xl`}
+			>
 				<div>
-					<h1 className="text-4xl font-semibold">{team.name}</h1>
+					<h1 className="text-4xl font-semibold hidden xl:flex">{team.name}</h1>
 				</div>
 				<div>
 					<Image
@@ -42,6 +43,7 @@ export default async function Page({
 						width={120}
 						height={120}
 						alt={"club"}
+						className="h-[120px] w-full"
 					/>
 				</div>
 			</div>
@@ -69,8 +71,8 @@ async function Players({
 
 	function getPlayersByTeamCode(teamCode: number): Player[] {
 		return players.filter(
-			// (player: Player) => player.team_code === teamCode && player.status == "a"
-			(player: Player) => player.team_code === teamCode
+			(player: Player) => player.team_code === teamCode && player.status == "a"
+			// (player: Player) => player.team_code === teamCode
 		);
 	}
 
