@@ -31,11 +31,11 @@ export default async function Page() {
 		.slice(0, 24);
 
 	return (
-		<div className="grid xl:grid-cols-12 gap-5">
+		<div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
 			<div className="col-span-12">
 				<h1 className="text-3xl">Welcome</h1>
 			</div>
-			<div className="flex flex-col gap-4 xl:col-span-9 ">
+			<div className="flex flex-col gap-4 col-span-12 xl:col-span-9 ">
 				<h1>Players</h1>
 				<div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-4">
 					{topPlayers.map((player: Player) => (
@@ -48,7 +48,7 @@ export default async function Page() {
 				</div>
 			</div>
 
-			<div className="flex flex-col gap-4 col-span-1 xl:col-span-3">
+			<div className="flex flex-col gap-4 col-span-12 xl:col-span-3">
 				<Countdown
 					deadline={nextEvent.deadline_time}
 					name={nextEvent.name}
