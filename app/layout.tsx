@@ -35,7 +35,9 @@ export default function RootLayout({
 						<SidebarProvider>
 							<AppSidebar />
 							<main className="w-full">
-								<SidebarTrigger />
+								<div className="p-2">
+									<SidebarTrigger />
+								</div>
 								<div className="content--main w-full overflow-y-scroll mx-auto rounded-xl p-4">
 									{children}
 								</div>

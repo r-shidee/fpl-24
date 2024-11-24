@@ -119,7 +119,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 				</div> */}
 			</div>
 			<div className="flex flex-col">
-				{filteredPlayers.slice(0, 21).map((player: Player, index: number) => (
+				{filteredPlayers.map((player: Player, index: number) => (
 					<div
 						key={player.id}
 						className="border-b py-2 flex justify-between"
