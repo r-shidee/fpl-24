@@ -2,7 +2,11 @@
 import { useState } from "react";
 import CardPlayer from "./widgets/CardPlayer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faIdCard, faListAlt } from "@fortawesome/free-regular-svg-icons";
+import {
+	faClock,
+	faIdCard,
+	faListAlt,
+} from "@fortawesome/free-regular-svg-icons";
 import Image from "next/image";
 import { Player } from "@/types/Player";
 import { Link } from "next-view-transitions";
@@ -27,27 +31,30 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 	filtering,
 }) => {
 	const [filter, setFilter] = useState<string | null>(null);
-	const [priceFilter, setPriceFilter] = useState<{
-		min: number;
-		max: number;
-	} | null>(null);
+	const [maxPriceFilter, setMaxPriceFilter] = useState<number | null>(null);
 	const [viewFormat, setViewFormat] = useState<"card" | "list">("list");
+	const [visibleCount, setVisibleCount] = useState(10);
 
-	// Helper function to generate price ranges from 4.0 to 15.5
-	const generatePriceRanges = (
-		minPrice: number,
-		maxPrice: number,
-		step: number
-	) => {
-		let ranges = [];
-		for (let i = minPrice; i <= maxPrice; i += step) {
-			const min = parseFloat(i.toFixed(1));
-			const max = parseFloat((i + step - 0.1).toFixed(1));
-			ranges.push({ min, max });
-		}
-		return ranges;
+	// Get min and max prices from players
+	const priceRange = players.reduce(
+		(acc, player) => {
+			const price = player.now_cost / 10;
+			return {
+				min: Math.min(acc.min, price),
+				max: Math.max(acc.max, price),
+			};
+		},
+		{ min: 4.0, max: -Infinity }
+	);
+
+	// Round the values for better UX
+	const minPrice = 4.0;
+	const maxPrice = Math.ceil(priceRange.max);
+
+	// Update price filter handler
+	const handlePriceChange = (value: number[]) => {
+		setMaxPriceFilter(value[0]);
 	};
-	const priceRanges = generatePriceRanges(4.0, 15, 1); // Generate price ranges between 4.0 and 15.5
 
 	let filteredPlayers = players.filter((player) => {
 		// Ensure slug is defined and the property is greater than 0
@@ -62,10 +69,10 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 			if (filter === "fw" && player.element_type !== 4) return false;
 		}
 
-		// Filter based on price range (player.now_cost is in 0.1 increments, so 4.0 becomes 40)
-		if (priceFilter !== null) {
-			const playerPrice = player.now_cost / 10; // Convert to decimal price
-			if (playerPrice < priceFilter.min || playerPrice > priceFilter.max) {
+		// Filter based on max price only
+		if (maxPriceFilter !== null) {
+			const playerPrice = player.now_cost / 10;
+			if (playerPrice > maxPriceFilter) {
 				return false;
 			}
 		}
@@ -79,22 +86,33 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 		return bValue - aValue;
 	});
 
-	// Toggle the price filter on and off
-	const handlePriceClick = (min: number, max: number) => {
-		if (priceFilter?.min === min && priceFilter?.max === max) {
-			// If the same price filter is clicked, reset it
-			setPriceFilter(null);
-		} else {
-			// Otherwise, set the new price filter
-			setPriceFilter({ min, max });
-		}
+	// Add this function to check if there are players of a specific position type
+	const hasPlayersOfPosition = (elementType: number) => {
+		return players.some(
+			(player) =>
+				player.element_type === elementType &&
+				Number(player[slug as keyof Player]) > 0 &&
+				player.minutes > 0
+		);
+	};
+
+	// Add this function to check how many positions have players with stats
+	const getPositionsWithStats = () => {
+		const positions = [1, 2, 3, 4].filter((elementType) =>
+			players.some(
+				(player) =>
+					player.element_type === elementType &&
+					(player[slug as keyof Player] as number) > 0 &&
+					player.minutes > 0
+			)
+		);
+		return positions;
 	};
 
 	// Render players in card format
 	const renderCardView = () => (
-		<div className="grid grid-cols-2 lg:grid-cols-8 gap-4">
-			{/* {filteredPlayers.slice(0, 21).map((player: Player) => ( */}
-			{filteredPlayers.map((player: Player) => (
+		<div className="grid grid-cols-2 lg:grid-cols-10 gap-4">
+			{filteredPlayers.slice(0, visibleCount).map((player: Player) => (
 				<CardPlayer
 					key={player.id}
 					teamName="teamName"
@@ -102,132 +120,173 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 					highlightValue={(player[slug as keyof Player] ?? "").toString()}
 				/>
 			))}
+			{visibleCount < filteredPlayers.length && (
+				<button
+					onClick={() => setVisibleCount(visibleCount + 20)}
+					className="mt-4 py-2 border"
+				>
+					Show More
+				</button>
+			)}
 		</div>
 	);
 
 	// Render players in list format
 	const renderListView = () => (
-		<div className="">
-			<div className="border-b py-2 flex justify-between">
-				<div className="flex gap-4 items-center ">
-					{/* <div className="font-mono text-xs w-8 text-center">$</div> */}
+		<div className="pb-4">
+			<div className="flex justify-between">
+				<div className="flex gap-2 items-center">Players</div>
+				<div className="flex gap-4 items-center">
+					<div className="w-16 text-right">
+						<FontAwesomeIcon
+							className="w-3 h-3 "
+							icon={faClock}
+						/>
+					</div>
+					<p className="w-16 font-mono text-xs text-right">{slug}</p>
 				</div>
-				{/* <div className="flex gap-3">
-					<div className="font-mono text-xs w-12 text-center">starts</div>
-					<div className="font-mono text-xs w-12 text-center">mins</div>
-					<div className="font-mono text-xs w-12 text-center">value</div>
-				</div> */}
 			</div>
 			<div className="flex flex-col">
-				{filteredPlayers.map((player: Player, index: number) => (
-					<div
-						key={player.id}
-						className="border-b py-2 flex justify-between"
-					>
-						<div className="flex gap-4 items-center ">
-							<div className="font-mono w-8 text-center">{index + 1}</div>
-							<Image
-								src={
-									"https://resources.premierleague.com/premierleague/badges/rb/t" +
-									player.team_code +
-									".svg"
-								}
-								width={32}
-								height={32}
-								alt={player.team_code.toString()}
-								className=" h-8 w-8 "
-							/>
-							<div className="flex flex-col">
-								<Link href={`/player/${player.id}`}>
-									<div className="font-semibold">{player.web_name}</div>
-								</Link>
-								<div className="flex gap-1 text-xs font-light text-gray-400">
-									<div>{positions[player.element_type]}</div>
-									<div>{(player.now_cost / 10).toFixed(1)}</div>
+				{filteredPlayers
+					.slice(0, visibleCount)
+					.map((player: Player, index: number) => (
+						<div
+							key={player.id}
+							className="border-b py-2 flex justify-between"
+						>
+							<div className="flex gap-2 items-center ">
+								<div className="font-mono w-5 text-left ">{index + 1}</div>
+								<Image
+									src={
+										"https://resources.premierleague.com/premierleague/badges/rb/t" +
+										player.team_code +
+										".svg"
+									}
+									width={32}
+									height={32}
+									alt={player.team_code.toString()}
+									className="h-5 w-5 sm:h-8 sm:w-8 "
+								/>
+								<div className="flex flex-col">
+									<Link href={`/player/${player.id}`}>
+										<div className="font-semibold text-xs">
+											{player.web_name}
+										</div>
+									</Link>
+									<div className="flex gap-1 text-xs font-light text-gray-400">
+										<div>{positions[player.element_type]}</div>
+										<div>{(player.now_cost / 10).toFixed(1)}</div>
+									</div>
+								</div>
+							</div>
+							<div className="flex gap-4 items-center">
+								<div className="font-mono text-xs xl:w-16 text-right">
+									{player.minutes}
+								</div>
+								<div className="font-mono text-lg w-16 text-right">
+									{player[slug as keyof Player]}
 								</div>
 							</div>
 						</div>
-						<div className="flex gap-4 items-center">
-							{/* <div className="font-mono text-lg w-12 text-center">
-								{player.starts}
-							</div>
-							<div className="font-mono text-lg w-12 text-center">
-								{player.minutes}
-							</div> */}
-							<div className="font-mono text-lg  text-center">
-								{player[slug as keyof Player]}
-							</div>
-						</div>
-					</div>
-				))}
+					))}
+				{visibleCount < filteredPlayers.length && (
+					<button
+						onClick={() => setVisibleCount(visibleCount + 10)}
+						className="mt-4 py-2 border"
+					>
+						Show More
+					</button>
+				)}
 			</div>
 		</div>
 	);
 
 	return (
-		<div className="flex flex-col gap-5 relative">
-			<div className="flex flex-wrap">
-				<div className="overflow-hidden w-full flex flex-col lg:flex-row flex-wrap gap-4 bg-black bg-opacity-30 z-30 p-2">
-					{filtering && (
-						<div className="flex flex-col gap-1">
-							Filter by Position
+		<div className="flex flex-col gap-5 relative p-4 z-10">
+			<div className="flex flex-wrap justify-between">
+				<div className="overflow-hidden flex flex-col lg:flex-row flex-wrap gap-4 z-30 p-2">
+					{filtering && getPositionsWithStats().length > 1 && (
+						<div className="flex gap-2 items-center">
 							<div className="flex gap-2 mb-2 overflow-scroll">
-								<div
-									onClick={() => setFilter(filter === "gk" ? null : "gk")}
-									className={`${
-										filter === "gk" ? "bg-red-300" : ""
-									} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
-								>
-									GKP
-								</div>
-								<div
-									onClick={() => setFilter(filter === "df" ? null : "df")}
-									className={`${
-										filter === "df" ? "bg-red-300" : ""
-									} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
-								>
-									DEF
-								</div>
-								<div
-									onClick={() => setFilter(filter === "md" ? null : "md")}
-									className={`${
-										filter === "md" ? "bg-red-300" : ""
-									} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
-								>
-									MID
-								</div>
-								<div
-									onClick={() => setFilter(filter === "fw" ? null : "fw")}
-									className={`${
-										filter === "fw" ? "bg-red-300" : ""
-									} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
-								>
-									FOR
-								</div>
+								{hasPlayersOfPosition(1) && (
+									<div
+										onClick={() => setFilter(filter === "gk" ? null : "gk")}
+										className={`${
+											filter === "gk" ? "bg-bauhaus-yellow text-black" : ""
+										} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+									>
+										GKP
+									</div>
+								)}
+								{hasPlayersOfPosition(2) && (
+									<div
+										onClick={() => setFilter(filter === "df" ? null : "df")}
+										className={`${
+											filter === "df" ? "bg-bauhaus-yellow text-black" : ""
+										} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+									>
+										DEF
+									</div>
+								)}
+								{hasPlayersOfPosition(3) && (
+									<div
+										onClick={() => setFilter(filter === "md" ? null : "md")}
+										className={`${
+											filter === "md" ? "bg-bauhaus-yellow text-black" : ""
+										} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+									>
+										MID
+									</div>
+								)}
+								{hasPlayersOfPosition(4) && (
+									<div
+										onClick={() => setFilter(filter === "fw" ? null : "fw")}
+										className={`${
+											filter === "fw" ? "bg-bauhaus-yellow text-black" : ""
+										} bg-bauhaus-blue text-xs inline-flex items-center px-2 py-1 rounded`}
+									>
+										FOR
+									</div>
+								)}
 							</div>
+						</div>
+					)}
+					{filtering && (
+						<div className="flex flex-col gap-2 w-full max-w-xs">
+							<div className="flex justify-between text-xs text-muted-foreground">
+								<span>Max Price</span>
+								<span>
+									{maxPriceFilter
+										? `£${maxPriceFilter.toFixed(1)}`
+										: `£${maxPrice.toFixed(1)}`}
+								</span>
+							</div>
+							<Slider
+								defaultValue={[maxPrice]}
+								min={minPrice}
+								max={maxPrice}
+								step={0.5}
+								value={[maxPriceFilter ?? maxPrice]}
+								onValueChange={handlePriceChange}
+								className="w-full"
+							/>
 						</div>
 					)}
 				</div>
 				<div className="flex gap-4 self-end">
 					<div
-						className=" flex gap-2 items-center justify-center h-12 p-2"
-						onClick={() => setViewFormat("card")}
+						className={`flex gap-2 items-center justify-center h-12 p-2 `}
+						onClick={() =>
+							setViewFormat(viewFormat === "card" ? "list" : "card")
+						}
 					>
 						<FontAwesomeIcon
 							className="w-4 h-4"
-							icon={faIdCard}
+							icon={viewFormat === "card" ? faListAlt : faIdCard}
 						/>
-						<div className="text-xs">Card View</div>
-					</div>
-					<div
-						className=" flex gap-2 items-center justify-center h-12 p-2"
-						onClick={() => setViewFormat("list")}
-					>
-						<FontAwesomeIcon
-							className="w-4 h-4"
-							icon={faListAlt}
-						/>
-						<div className="text-xs">List View</div>
+						<div className="text-xs">
+							{viewFormat === "card" ? "List View" : "Card View"}
+						</div>
 					</div>
 				</div>
 			</div>

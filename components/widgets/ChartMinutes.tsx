@@ -9,7 +9,6 @@ import {
 } from "recharts";
 
 import {
-	Card,
 	CardContent,
 	CardDescription,
 	CardFooter,
@@ -42,20 +41,22 @@ export default function ChartMinutes(props: any) {
 	} satisfies ChartConfig;
 
 	return (
-		<Card className="flex flex-col w-full">
-			<CardHeader className="items-center pb-0">
-				<CardTitle>Playing Time</CardTitle>
-			</CardHeader>
-			<CardContent className="flex-1 pb-0">
+		<div className="flex flex-col w-full p-4">
+			<div className="countdown__title tracking-widest font-mono uppercase border-b border-muted-foreground pb-2 mb-2">
+				Playing Time
+			</div>
+			<div className="flex-1 pb-0">
 				<ChartContainer
 					config={chartConfig}
-					className="mx-auto aspect-square max-h-[250px]">
+					className="mx-auto aspect-square max-h-[250px]"
+				>
 					<RadialBarChart
 						data={chartData}
 						startAngle={0}
 						endAngle={percent * 360}
 						innerRadius={80}
-						outerRadius={110}>
+						outerRadius={110}
+					>
 						<PolarGrid
 							gridType="circle"
 							radialLines={false}
@@ -71,7 +72,8 @@ export default function ChartMinutes(props: any) {
 						<PolarRadiusAxis
 							tick={false}
 							tickLine={false}
-							axisLine={false}>
+							axisLine={false}
+						>
 							<Label
 								content={({ viewBox }) => {
 									if (viewBox && "cx" in viewBox && "cy" in viewBox) {
@@ -80,17 +82,20 @@ export default function ChartMinutes(props: any) {
 												x={viewBox.cx}
 												y={viewBox.cy}
 												textAnchor="middle"
-												dominantBaseline="middle">
+												dominantBaseline="middle"
+											>
 												<tspan
 													x={viewBox.cx}
 													y={viewBox.cy}
-													className="fill-foreground text-4xl font-bold">
+													className="fill-foreground text-4xl font-bold"
+												>
 													{(percent * 100).toPrecision(3)}%
 												</tspan>
 												<tspan
 													x={viewBox.cx}
 													y={(viewBox.cy || 0) + 24}
-													className="fill-muted-foreground">
+													className="fill-muted-foreground"
+												>
 													{sum}/{totalAvailableMins}
 												</tspan>
 											</text>
@@ -101,12 +106,10 @@ export default function ChartMinutes(props: any) {
 						</PolarRadiusAxis>
 					</RadialBarChart>
 				</ChartContainer>
-			</CardContent>
-			<CardFooter className="flex-col gap-2 text-sm">
-				<div className="leading-none text-muted-foreground">
+				<div className="leading-none text-center text-muted-foreground">
 					Played for {props.fixtures.length} matches
 				</div>
-			</CardFooter>
-		</Card>
+			</div>
+		</div>
 	);
 }

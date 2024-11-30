@@ -31,7 +31,7 @@ export default async function Page() {
 		.slice(0, 24);
 
 	return (
-		<div className="grid grid-cols-1 xl:grid-cols-12 gap-5">
+		<div className="grid grid-cols-1 xl:grid-cols-12 gap-5 p-5">
 			<div className="col-span-12">
 				<h1 className="text-3xl">Welcome</h1>
 			</div>

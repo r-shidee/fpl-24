@@ -74,15 +74,6 @@ const RenderDivs = ({
 				</div>
 			</div>
 			{position === 1 ? (
-				// <div className="flex flex-col flex-wrap h-[150px] gap-1">
-				// 	{Array.from({ length: saves }, (_, index) => (
-				// 		<FontAwesomeIcon
-				// 			className="w-3 h-3 "
-				// 			key={index}
-				// 			icon={faHand}
-				// 		/>
-				// 	))}
-				// </div>
 				<div className="flex items-center gap-1">
 					<FontAwesomeIcon
 						className="w-3 h-3 "

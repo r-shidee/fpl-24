@@ -7,7 +7,7 @@ export default async function Page() {
 	return (
 		<div className="p-4">
 			<h1 className="text-2xl">Stats</h1>
-			<div className="grid grid-cols-3 gap-4">
+			<div className="grid xl:grid-cols-3 gap-4">
 				<Standings
 					players={players}
 					description="Goals"

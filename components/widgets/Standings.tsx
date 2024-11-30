@@ -64,20 +64,27 @@ const Standings: React.FC<StandingsProps> = ({
 		<div>
 			<div className="flex justify-between">
 				<p className="mb-4">{description}</p>
-				<Link href={`/stats/${sortBy}`}>View all</Link>
+				<Link
+					className="font-mono text-xs"
+					href={`/stats/${sortBy}`}
+				>
+					View all
+				</Link>
 			</div>
 			{players?.map(
 				(player, index) =>
 					index < 5 && (
 						<div
 							className="stats"
-							key={player.id}>
+							key={player.id}
+						>
 							<div className="stats__table border-b">
 								{index === 0 ? (
 									<div
 										className={`stats__item flex justify-between items-center ${
 											clubClasses[player.team] || "bg-gray-200 text-black"
-										}`}>
+										}`}
+									>
 										<div className="flex items-center">
 											<div className="h-20 overflow-hidden flex items-start relative">
 												<Image

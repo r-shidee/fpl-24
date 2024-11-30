@@ -27,7 +27,7 @@ export default async function Page({
 	return (
 		<div>
 			<div
-				className={`club--${team.short_name.toLowerCase()} p-4 flex-col items- relative flex md:flex-row justify-center items-center gap-4 lg:justify-between mb-4 rounded-2xl`}
+				className={`club--${team.short_name.toLowerCase()} p-4 flex-col items- relative flex md:flex-row justify-center items-center gap-4 lg:justify-between mb-4 `}
 			>
 				<div>
 					<h1 className="text-4xl font-semibold hidden xl:flex">{team.name}</h1>
@@ -47,7 +47,7 @@ export default async function Page({
 					/>
 				</div>
 			</div>
-			<div className="flex flex-col gap-8">
+			<div className="flex flex-col gap-8 p-4">
 				<Players
 					teamCode={team.code}
 					teamName={team.short_name}
@@ -66,7 +66,7 @@ async function Players({
 }) {
 	const players = await fetchPlayers();
 	const filteredPlayers = getPlayersByTeamCode(teamCode);
-	filteredPlayers.sort((a, b) => b.now_cost - a.now_cost);
+	filteredPlayers.sort((a, b) => b.minutes - a.minutes);
 	// filteredPlayers.sort((a, b) => b.now_cost - a.now_cost);
 
 	function getPlayersByTeamCode(teamCode: number): Player[] {

@@ -50,7 +50,7 @@ const Fixtures: React.FC<FixturesProps> = async ({
 			<div className="countdown__title tracking-widest font-mono uppercase border-b border-muted-foreground pb-2 mb-2">
 				Fixtures
 			</div>
-			<div className="grid grid-cols-5  xl:grid-cols-10">
+			<div className="grid grid-cols-5 ">
 				{displayedFixtures.map((fixture, index) => (
 					<div
 						key={index}
@@ -81,11 +81,7 @@ const Fixtures: React.FC<FixturesProps> = async ({
 					</div>
 				))}
 			</div>
-			<div className="leading-none text-muted-foreground">
-				{/* <p>Total FDR: {totalFDR}</p>
-					<p>Average FDR: {averageFDR.toFixed(2)}</p> */}
-				{/* Add description based on total FDR */}
-			</div>
+			<div className="leading-none text-muted-foreground"></div>
 		</div>
 	);
 };
