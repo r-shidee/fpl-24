@@ -143,7 +143,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 							icon={faClock}
 						/>
 					</div>
-					<p className="w-16 font-mono text-xs text-right">{slug}</p>
+					<p className="w-[200px] font-mono text-xs text-right">{slug}</p>
 				</div>
 			</div>
 			<div className="flex flex-col">
@@ -183,7 +183,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 								<div className="font-mono text-xs xl:w-16 text-right">
 									{player.minutes}
 								</div>
-								<div className="font-mono text-lg w-16 text-right">
+								<div className="font-mono text-lg w-[200px]  text-right">
 									{player[slug as keyof Player]}
 								</div>
 							</div>

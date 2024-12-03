@@ -33,11 +33,20 @@ import { Team } from "@/types/Team";
 
 import Fixtures from "@/components/widgets/Fixtures";
 import LatestMatches from "@/components/widgets/LatestMatches";
+import PlayerICTChart from "@/components/widgets/PlayerICTChart";
+import { Link } from "next-view-transitions";
 
 export default async function Page({ params }: { params: { id: number } }) {
 	const player = await fetchPlayer(params.id);
 	const fixtures = await getFixtures(params.id);
 	const teams: Team[] = await fetchTeams(); // Explicitly type teams as Team[]
+
+	const positions: { [key: number]: string } = {
+		1: "Goalkeeper",
+		2: "Defender",
+		3: "Midfielder",
+		4: "Forward",
+	};
 
 	if (!player) {
 		notFound();
@@ -51,22 +60,40 @@ export default async function Page({ params }: { params: { id: number } }) {
 							player.team - 1
 						].short_name.toLowerCase()}`}
 					>
-						<div className="flex flex-col gap-4 p-4">
-							<h2 className="text-4xl font-bold tracking-tight">
+						<div className="flex flex-col p-4">
+							<div className="flex gap-2">
+								<Image
+									className="w-6 h-6"
+									width={24}
+									height={24}
+									alt={teams[player.team - 1].short_name}
+									src={`https://resources.premierleague.com/premierleague/badges/rb/t${player.team_code}.svg`}
+								/>
+								<Link
+									className="hover:underline"
+									href={`/teams/${teams[
+										player.team - 1
+									].short_name.toLowerCase()}`}
+								>
+									{teams[player.team - 1].name}
+								</Link>
+								•<div>{positions[player.element_type]}</div>
+							</div>
+							<h2 className="mt-1 text-4xl font-bold tracking-tight">
 								{player.first_name} {player.second_name}
 							</h2>
-							<div className="grid xl:grid-cols-4 font-mono text-xs gap-4">
-								<div className="flex flex-col p-3 gap-1 rounded-sm border">
-									<p>Price</p>
-									<p> {(player.now_cost / 10).toFixed(1)}</p>
+							<div className="mt-2 flex flex-wrap gap-1 items-center font-mono text-xs">
+								{player.news ? <p>{player.news} </p> : ""}
+							</div>
+							<div className="flex gap-2 mt-2 items-center">
+								<div className="bg-bauhaus-blue px-2 h-8 text-white flex items-center justify-center rounded-sm">
+									${(player.now_cost / 10).toFixed(1)}
 								</div>
-								<div className="flex flex-col p-3 gap-1 rounded-sm border ">
-									<p>Ownership</p>
-									<p>{player.selected_by_percent}%</p>
+								<div className="bg-bauhaus-yellow w-5 h-8 text-black flex items-center justify-center rounded-sm">
+									{player.yellow_cards}
 								</div>
-								<div className="flex flex-col p-3 gap-1 rounded-sm border ">
-									<p>Form</p>
-									<p>{player.form}</p>
+								<div className="bg-bauhaus-red w-5 h-8 text-white flex items-center justify-center rounded-sm">
+									{player.red_cards}
 								</div>
 							</div>
 						</div>
@@ -86,7 +113,6 @@ export default async function Page({ params }: { params: { id: number } }) {
 				<LatestMatches
 					matches={fixtures.history}
 					teams={teams}
-					position={player.element_type}
 				/>
 				<div className="col-span-1 p-4">
 					<div className="">

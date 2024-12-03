@@ -51,6 +51,10 @@ const items = [
 		title: "ict index",
 		url: "/ict_index",
 	},
+	{
+		title: "Yellow Cards",
+		url: "/yellow_cards",
+	},
 ];
 
 const teams = [

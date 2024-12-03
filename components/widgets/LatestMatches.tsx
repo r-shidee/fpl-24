@@ -53,10 +53,9 @@ interface Match {
 interface MatchProps {
 	matches: Match[];
 	teams: Team[];
-	position: number;
 }
 
-const LatestMatches: React.FC<MatchProps> = ({ matches, teams, position }) => {
+const LatestMatches: React.FC<MatchProps> = ({ matches, teams }) => {
 	const [showAll, setShowAll] = React.useState(false);
 
 	// Reverse the matches array once when received
@@ -112,6 +111,22 @@ const LatestMatches: React.FC<MatchProps> = ({ matches, teams, position }) => {
 														icon={faClock}
 													/>
 													<span className="text-xs">{match.minutes}</span>
+												</div>
+											</div>
+										)}
+										{match.yellow_cards !== 0 && (
+											<div className="flex flex-col flex-wrap gap-1 align-baseline">
+												<div className="flex items-center gap-1">
+													<div className="bg-bauhaus-yellow w-2 h-2 text-black flex items-center justify-center rounded-sm"></div>
+													<span className="text-xs">{match.yellow_cards}</span>
+												</div>
+											</div>
+										)}
+										{match.red_cards !== 0 && (
+											<div className="flex flex-col flex-wrap gap-1 align-baseline">
+												<div className="flex items-center gap-1">
+													<div className="bg-bauhaus-red w-2 h-2 flex items-center justify-center rounded-sm"></div>
+													<span className="text-xs">{match.red_cards}</span>
 												</div>
 											</div>
 										)}
