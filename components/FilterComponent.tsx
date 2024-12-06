@@ -61,7 +61,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 		if (!slug || player[slug as keyof Player] == 0) return false;
 		if (player.minutes == 0) return false;
 
-		// Filter based on position
+		// Filter position
 		if (filter) {
 			if (filter === "gk" && player.element_type !== 1) return false;
 			if (filter === "df" && player.element_type !== 2) return false;
@@ -69,7 +69,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 			if (filter === "fw" && player.element_type !== 4) return false;
 		}
 
-		// Filter based on max price only
+		// Filtering max price
 		if (maxPriceFilter !== null) {
 			const playerPrice = player.now_cost / 10;
 			if (playerPrice > maxPriceFilter) {
@@ -86,17 +86,7 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 		return bValue - aValue;
 	});
 
-	// Add this function to check if there are players of a specific position type
-	const hasPlayersOfPosition = (elementType: number) => {
-		return players.some(
-			(player) =>
-				player.element_type === elementType &&
-				Number(player[slug as keyof Player]) > 0 &&
-				player.minutes > 0
-		);
-	};
-
-	// Add this function to check how many positions have players with stats
+	// certains stats only valid for certain position, eg. saves= gk
 	const getPositionsWithStats = () => {
 		const positions = [1, 2, 3, 4].filter((elementType) =>
 			players.some(
@@ -107,6 +97,16 @@ const FilterComponent: React.FC<FilterComponentProps> = ({
 			)
 		);
 		return positions;
+	};
+
+	// check if certain positions have certain stats, gk: rarely'scores
+	const hasPlayersOfPosition = (elementType: number) => {
+		return players.some(
+			(player) =>
+				player.element_type === elementType &&
+				Number(player[slug as keyof Player]) > 0 &&
+				player.minutes > 0
+		);
 	};
 
 	// Render players in card format
