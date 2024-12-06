@@ -33,7 +33,6 @@ import { Team } from "@/types/Team";
 
 import Fixtures from "@/components/widgets/Fixtures";
 import LatestMatches from "@/components/widgets/LatestMatches";
-import PlayerICTChart from "@/components/widgets/PlayerICTChart";
 import { Link } from "next-view-transitions";
 
 export default async function Page({ params }: { params: { id: number } }) {
